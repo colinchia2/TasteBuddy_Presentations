@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TasteBuddy — Your Personal Restaurant Tracker</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+    <style>
+        /* ===========================================
+           TASTEBUDDY THEME VARIABLES
+           =========================================== */
+        :root {
+            --tb-bg: #f8f9fa;
+            --tb-amber: #b8860b;
+            --tb-burgundy: #a3415b;
+            --tb-sage: #2d8a4e;
+            --tb-blue: #0d6efd;
+            --tb-dark: #212529;
+            --tb-muted: #6c757d;
+            --tb-white: #ffffff;
+            --tb-light-border: rgba(0,0,0,0.08);
+            --tier-s: #ffc107; --tier-a: #0d6efd; --tier-b: #6b7b8d; --tier-c: #adb5bd; --tier-tbe: #a3415b;
+            --font-display: 'Outfit', sans-serif;
+            --font-body: 'DM Sans', sans-serif;
+            --title-size: clamp(2rem, 5.5vw, 4.5rem);
+            --h2-size: clamp(1.4rem, 3.5vw, 2.5rem);
+            --h3-size: clamp(1rem, 2vw, 1.5rem);
+            --body-size: clamp(0.75rem, 1.3vw, 1.05rem);
+            --small-size: clamp(0.65rem, 1vw, 0.85rem);
+            --tag-size: clamp(0.6rem, 0.9vw, 0.78rem);
+            --slide-padding: clamp(1.5rem, 4vw, 4rem);
+            --content-gap: clamp(0.75rem, 2vw, 2rem);
+            --element-gap: clamp(0.3rem, 1vw, 0.75rem);
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+            --duration: 0.6s;
+        }
+
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-snap-type: y mandatory; scroll-behavior: smooth; height: 100%; overflow-x: hidden; }
+        body { font-family: var(--font-body); background: var(--tb-bg); color: var(--tb-dark); height: 100%; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+        h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 700; line-height: 1.15; }
+
+        /* SLIDE CONTAINER */
+        .slide { width: 100vw; height: 100vh; height: 100dvh; overflow: hidden; scroll-snap-align: start; display: flex; flex-direction: column; position: relative; padding: var(--slide-padding); }
+        .slide-content { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; max-height: 100%; overflow: hidden; }
+
+        /* PROGRESS + NAV */
+        .progress-bar { position: fixed; top: 0; left: 0; height: 3px; background: linear-gradient(90deg, var(--tb-amber), var(--tb-burgundy)); z-index: 1000; transition: width 0.3s ease; width: 0%; }
+        .nav-dots { position: fixed; right: clamp(0.75rem, 2vw, 1.5rem); top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 10px; z-index: 100; }
+        .nav-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--tb-muted); opacity: 0.3; cursor: pointer; transition: all 0.3s ease; border: none; }
+        .nav-dot.active { opacity: 1; background: var(--tb-amber); transform: scale(1.3); }
+        .nav-dot:hover { opacity: 0.7; transform: scale(1.2); }
+        .keyboard-hint { position: fixed; bottom: clamp(0.75rem, 2vw, 1.5rem); left: 50%; transform: translateX(-50%); font-size: var(--small-size); color: var(--tb-muted); opacity: 0.5; z-index: 100; pointer-events: none; transition: opacity 0.5s; }
+
+        /* ANIMATIONS */
+        .reveal { opacity: 0; transform: translateY(24px); transition: opacity var(--duration) var(--ease-out-expo), transform var(--duration) var(--ease-out-expo); }
+        .reveal-left { opacity: 0; transform: translateX(-30px); transition: opacity var(--duration) var(--ease-out-expo), transform var(--duration) var(--ease-out-expo); }
+        .reveal-right { opacity: 0; transform: translateX(30px); transition: opacity var(--duration) var(--ease-out-expo), transform var(--duration) var(--ease-out-expo); }
+        .reveal-scale { opacity: 0; transform: scale(0.85); transition: opacity var(--duration) var(--ease-out-expo), transform var(--duration) var(--ease-out-expo); }
+        .slide.visible .reveal, .slide.visible .reveal-left, .slide.visible .reveal-right, .slide.visible .reveal-scale { opacity: 1; transform: translateY(0) translateX(0) scale(1); }
+        .slide.visible .stagger > *:nth-child(1) { transition-delay: 0.05s; }
+        .slide.visible .stagger > *:nth-child(2) { transition-delay: 0.12s; }
+        .slide.visible .stagger > *:nth-child(3) { transition-delay: 0.19s; }
+        .slide.visible .stagger > *:nth-child(4) { transition-delay: 0.26s; }
+        .slide.visible .stagger > *:nth-child(5) { transition-delay: 0.33s; }
+        .slide.visible .stagger > *:nth-child(6) { transition-delay: 0.40s; }
+
+        /* SHARED */
+        .card { background: var(--tb-white); border-radius: 14px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); border: 1px solid var(--tb-light-border); }
+        .glass-card { background: rgba(255,255,255,0.75); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-radius: 14px; box-shadow: 0 4px 20px rgba(0,0,0,0.06); border: 1px solid rgba(255,255,255,0.6); }
+        .slide-subtitle { font-size: var(--body-size); color: var(--tb-muted); text-align: center; max-width: 600px; line-height: 1.5; }
+
+        /* ===========================================
+           SLIDE 1 — TITLE
+           =========================================== */
+        .slide-title { background: var(--tb-white); text-align: center; }
+        .slide-title .slide-content { gap: var(--content-gap); }
+        .title-deco { font-size: clamp(2rem, 4vw, 3.5rem); letter-spacing: 0.3em; opacity: 0.18; }
+        .title-main { font-size: var(--title-size); font-weight: 800; background: linear-gradient(135deg, var(--tb-amber), var(--tb-burgundy)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; letter-spacing: -0.02em; }
+        .title-tagline { font-size: clamp(1rem, 2.5vw, 1.6rem); font-weight: 300; color: var(--tb-muted); }
+        .title-divider { width: clamp(40px, 8vw, 80px); height: 3px; border-radius: 2px; background: var(--tb-amber); margin: 0 auto; }
+        .food-float { position: absolute; font-size: clamp(1.2rem, 2.5vw, 2rem); opacity: 0.12; animation: floatSoft 6s ease-in-out infinite; }
+        .food-float:nth-child(1) { top: 12%; left: 10%; } .food-float:nth-child(2) { top: 18%; right: 12%; animation-delay: 1s; }
+        .food-float:nth-child(3) { bottom: 18%; left: 14%; animation-delay: 2s; } .food-float:nth-child(4) { bottom: 14%; right: 10%; animation-delay: 3s; }
+        .food-float:nth-child(5) { top: 45%; left: 5%; animation-delay: 1.5s; } .food-float:nth-child(6) { top: 40%; right: 6%; animation-delay: 2.5s; }
+        @keyframes floatSoft { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-10px) rotate(5deg); } }
+
+        /* ===========================================
+           SLIDE 2 — ONE APP, NOT FIVE
+           =========================================== */
+        .slide-replace { background: var(--tb-bg); }
+        .slide-replace .slide-content { gap: clamp(0.6rem, 1.5vw, 1.2rem); align-items: center; }
+        .slide-replace h2 { font-size: var(--h2-size); text-align: center; }
+
+        .replace-grid { display: grid; grid-template-columns: 1fr auto 1fr; gap: clamp(8px, 1.5vw, 18px); width: min(95%, 850px); align-items: center; }
+        .app-stack { display: flex; flex-direction: column; gap: clamp(4px, 0.6vw, 7px); }
+        .app-row { display: flex; align-items: center; gap: clamp(6px, 0.8vw, 10px); padding: clamp(5px, 0.7vw, 9px) clamp(8px, 1vw, 13px); border-radius: 10px; background: var(--tb-white); border: 1px solid var(--tb-light-border); }
+        .app-icon { width: clamp(26px, 3vw, 34px); height: clamp(26px, 3vw, 34px); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: clamp(0.8rem, 1.3vw, 1rem); flex-shrink: 0; }
+        .app-name { font-family: var(--font-display); font-weight: 600; font-size: var(--small-size); }
+        .app-for { font-size: var(--tag-size); color: var(--tb-muted); line-height: 1.3; }
+        .arrow-merge { display: flex; flex-direction: column; align-items: center; color: var(--tb-amber); font-size: clamp(1.5rem, 3vw, 2.2rem); }
+
+        .tb-result { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: clamp(6px, 1vw, 12px); padding: clamp(14px, 2vw, 26px); }
+        .tb-logo-text { font-family: var(--font-display); font-weight: 800; font-size: clamp(1.3rem, 2.8vw, 2rem); background: linear-gradient(135deg, var(--tb-amber), var(--tb-burgundy)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .tb-features { display: flex; flex-direction: column; gap: 3px; font-size: var(--tag-size); color: var(--tb-muted); }
+        .tb-features span { display: flex; align-items: center; gap: 4px; }
+        .check { color: var(--tb-sage); font-weight: 700; }
+
+        /* ===========================================
+           SLIDE 3 — FLEXIBLE CATEGORIES
+           =========================================== */
+        .slide-categories { background: var(--tb-white); }
+        .slide-categories .slide-content { gap: clamp(0.6rem, 1.5vw, 1.2rem); align-items: center; }
+        .slide-categories h2 { font-size: var(--h2-size); text-align: center; }
+
+        .cat-layout { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(10px, 1.5vw, 18px); width: min(95%, 820px); }
+        .cat-demo-card { padding: clamp(10px, 1.5vw, 16px); }
+        .cat-demo-card h4 { font-size: var(--body-size); font-weight: 600; margin-bottom: clamp(5px, 0.6vw, 8px); }
+        .cat-label { font-size: var(--tag-size); font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--tb-muted); margin-top: clamp(4px, 0.5vw, 6px); }
+        .cat-chips { display: flex; gap: clamp(3px, 0.4vw, 5px); flex-wrap: wrap; }
+        .cat-chip { padding: clamp(2px, 0.3vw, 4px) clamp(7px, 0.9vw, 11px); border-radius: 14px; font-size: var(--tag-size); font-weight: 500; border: 1.5px solid var(--tb-light-border); background: var(--tb-white); }
+        .cat-chip.core { background: rgba(45,138,78,0.06); border-color: rgba(45,138,78,0.25); color: var(--tb-sage); }
+        .cat-chip.custom { background: rgba(184,134,11,0.06); border-color: rgba(184,134,11,0.25); color: var(--tb-amber); }
+        .cat-chip.custom::after { content: ' +'; font-weight: 700; opacity: 0.5; }
+        .entry-row { display: flex; align-items: center; gap: clamp(6px, 0.8vw, 10px); padding: clamp(4px, 0.5vw, 7px) clamp(8px, 1vw, 12px); border-radius: 8px; background: var(--tb-bg); font-size: var(--small-size); }
+        .entry-name { font-weight: 600; flex-shrink: 0; }
+        .entry-cat { padding: 1px 6px; border-radius: 8px; font-size: var(--tag-size); font-weight: 500; }
+        .entry-tier { margin-left: auto; font-family: var(--font-display); font-weight: 800; font-size: var(--tag-size); padding: 1px 6px; border-radius: 5px; color: var(--tb-white); }
+        .vs-beli-row { display: flex; align-items: center; gap: clamp(4px, 0.6vw, 8px); font-size: var(--tag-size); color: var(--tb-muted); }
+        .vs-x { color: var(--tb-burgundy); font-weight: 700; }
+        .vs-check { color: var(--tb-sage); font-weight: 700; }
+
+        /* ===========================================
+           SLIDE 4 — RANK & RATE
+           =========================================== */
+        .slide-rank { background: var(--tb-bg); }
+        .slide-rank .slide-content { gap: clamp(0.75rem, 2vw, 1.5rem); align-items: center; }
+        .slide-rank h2 { font-size: var(--h2-size); text-align: center; }
+        .rank-layout { display: flex; gap: clamp(0.75rem, 2vw, 2rem); width: min(95%, 850px); align-items: flex-start; }
+        .tier-column { flex: 1; display: flex; flex-direction: column; gap: var(--element-gap); }
+        .tier-row { display: flex; align-items: center; gap: clamp(6px, 0.8vw, 10px); padding: clamp(4px, 0.6vw, 8px) clamp(6px, 1vw, 12px); border-radius: 8px; background: var(--tb-white); }
+        .tier-badge { width: clamp(26px, 3.5vw, 38px); height: clamp(26px, 3.5vw, 38px); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 800; font-size: var(--body-size); color: var(--tb-white); flex-shrink: 0; }
+        .tier-badge.s { background: var(--tier-s); color: #333; } .tier-badge.a { background: var(--tier-a); } .tier-badge.b { background: var(--tier-b); } .tier-badge.c { background: var(--tier-c); color: #555; }
+        .tier-items { display: flex; flex-direction: column; gap: 2px; }
+        .tier-entry { font-size: var(--small-size); display: flex; align-items: center; gap: 4px; }
+        .tier-entry .rank-num { font-weight: 700; color: var(--tb-amber); font-size: var(--tag-size); font-family: var(--font-display); }
+        .compare-card { flex: 0.8; display: flex; flex-direction: column; gap: var(--element-gap); }
+        .compare-box { padding: clamp(10px, 1.5vw, 18px); text-align: center; }
+        .compare-box h4 { font-size: var(--small-size); color: var(--tb-muted); font-weight: 500; margin-bottom: clamp(4px, 0.5vw, 8px); }
+        .vs-row { display: flex; align-items: center; justify-content: center; gap: clamp(6px, 1vw, 12px); }
+        .vs-option { padding: clamp(6px, 0.8vw, 10px) clamp(10px, 1.2vw, 16px); border-radius: 8px; background: var(--tb-bg); font-size: var(--small-size); font-weight: 500; border: 2px solid transparent; }
+        .vs-option.pick { border-color: var(--tb-amber); background: rgba(184,134,11,0.06); }
+        .vs-label { font-size: var(--tag-size); font-weight: 700; color: var(--tb-muted); opacity: 0.5; }
+        .visit-card { padding: clamp(8px, 1vw, 14px) clamp(10px, 1.5vw, 18px); }
+        .visit-card h4 { font-size: var(--small-size); color: var(--tb-muted); font-weight: 500; margin-bottom: clamp(4px, 0.5vw, 6px); }
+        .occasion-tags { display: flex; gap: 4px; flex-wrap: wrap; }
+        .occasion-tag { padding: 2px clamp(6px, 0.8vw, 10px); border-radius: 12px; font-size: var(--tag-size); background: var(--tb-bg); color: var(--tb-muted); font-weight: 500; }
+        .occasion-tag.active { background: rgba(184,134,11,0.1); color: var(--tb-amber); }
+
+        /* ===========================================
+           SLIDE 5 — LOG EVERY VISIT
+           =========================================== */
+        .slide-visit-log { background: var(--tb-white); }
+        .slide-visit-log .slide-content { gap: clamp(0.6rem, 1.5vw, 1.2rem); align-items: center; }
+        .slide-visit-log h2 { font-size: var(--h2-size); text-align: center; }
+        .visit-layout { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(10px, 1.5vw, 18px); width: min(95%, 820px); }
+        .form-mockup { padding: clamp(10px, 1.5vw, 16px); display: flex; flex-direction: column; gap: clamp(6px, 0.8vw, 10px); }
+        .form-mockup h4 { font-size: var(--small-size); color: var(--tb-muted); font-weight: 500; margin-bottom: clamp(2px, 0.3vw, 4px); }
+        .form-field { display: flex; flex-direction: column; gap: 2px; }
+        .form-field label { font-size: var(--tag-size); font-weight: 600; color: var(--tb-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+        .form-input { padding: clamp(4px, 0.5vw, 7px) clamp(6px, 0.8vw, 10px); border-radius: 6px; background: var(--tb-bg); border: 1px solid var(--tb-light-border); font-size: var(--tag-size); color: var(--tb-dark); }
+        .visit-example { padding: clamp(10px, 1.5vw, 16px); display: flex; flex-direction: column; gap: clamp(6px, 0.8vw, 10px); }
+        .visit-example h4 { font-size: var(--body-size); font-weight: 600; }
+        .visit-example-rating { display: flex; align-items: center; gap: 6px; }
+        .visit-example-rating .score { font-family: var(--font-display); font-weight: 800; font-size: clamp(1.2rem, 2.5vw, 1.8rem); color: var(--tb-amber); }
+        .visit-example-detail { font-size: var(--tag-size); color: var(--tb-muted); line-height: 1.5; }
+        .visit-example-photos { display: flex; gap: clamp(4px, 0.5vw, 6px); }
+        .visit-example-photos .photo-thumb { width: clamp(40px, 5vw, 60px); height: clamp(40px, 5vw, 60px); border-radius: 8px; background: var(--tb-bg); display: flex; align-items: center; justify-content: center; font-size: clamp(1rem, 1.5vw, 1.3rem); }
+
+        /* ===========================================
+           SLIDE 6 — AI CONCIERGE
+           =========================================== */
+        .slide-ai { background: var(--tb-white); }
+        .slide-ai .slide-content { gap: clamp(0.6rem, 1.5vw, 1.2rem); align-items: center; }
+        .slide-ai h2 { font-size: var(--h2-size); text-align: center; }
+        .ai-layout { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(10px, 1.5vw, 18px); width: min(95%, 820px); }
+        .chat-mockup { padding: clamp(10px, 1.5vw, 16px); display: flex; flex-direction: column; gap: clamp(5px, 0.7vw, 9px); }
+        .chat-header { display: flex; align-items: center; gap: 6px; padding-bottom: clamp(5px, 0.5vw, 7px); border-bottom: 1px solid var(--tb-light-border); }
+        .chat-avatar { width: clamp(22px, 2.5vw, 30px); height: clamp(22px, 2.5vw, 30px); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: clamp(0.6rem, 1vw, 0.8rem); }
+        .chat-header-text { font-family: var(--font-display); font-weight: 600; font-size: var(--small-size); }
+        .chat-bubble { padding: clamp(5px, 0.7vw, 9px) clamp(7px, 0.9vw, 11px); border-radius: 12px; font-size: var(--tag-size); line-height: 1.4; max-width: 88%; }
+        .chat-user { background: var(--tb-blue); color: var(--tb-white); align-self: flex-end; border-bottom-right-radius: 4px; }
+        .chat-ai { background: var(--tb-bg); color: var(--tb-dark); align-self: flex-start; border-bottom-left-radius: 4px; }
+        .chat-ai strong { color: var(--tb-amber); }
+        .chat-input { display: flex; align-items: center; gap: 6px; padding: clamp(4px, 0.5vw, 7px) clamp(8px, 1vw, 12px); border-radius: 20px; background: var(--tb-bg); font-size: var(--tag-size); color: var(--tb-muted); margin-top: auto; }
+        .ai-caps { display: flex; flex-direction: column; gap: clamp(5px, 0.7vw, 9px); }
+        .ai-cap-card { padding: clamp(7px, 1vw, 12px); display: flex; gap: clamp(7px, 0.9vw, 11px); align-items: flex-start; }
+        .ai-cap-icon { width: clamp(26px, 3vw, 34px); height: clamp(26px, 3vw, 34px); border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: clamp(0.75rem, 1.2vw, 0.95rem); flex-shrink: 0; }
+        .ai-cap-text h4 { font-size: var(--small-size); font-weight: 600; }
+        .ai-cap-text p { font-size: var(--tag-size); color: var(--tb-muted); line-height: 1.35; }
+        .ai-powered-by { font-size: var(--tag-size); color: var(--tb-muted); text-align: center; }
+        .ai-powered-by strong { color: var(--tb-dark); }
+
+        /* ===========================================
+           SLIDE 7 — TASTEBOARD
+           =========================================== */
+        .slide-dashboard { background: var(--tb-bg); }
+        .slide-dashboard .slide-content { gap: clamp(0.4rem, 1.2vw, 1rem); align-items: center; }
+        .slide-dashboard h2 { font-size: var(--h2-size); text-align: center; }
+        .dash-top { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(6px, 1vw, 12px); width: min(95%, 780px); }
+        .stat-tile { padding: clamp(7px, 1vw, 13px); text-align: center; }
+        .stat-value { font-family: var(--font-display); font-size: clamp(1.2rem, 2.5vw, 1.8rem); font-weight: 800; }
+        .stat-label { font-size: var(--tag-size); color: var(--tb-muted); font-weight: 500; margin-top: 2px; }
+        .dash-mid { display: grid; grid-template-columns: 1.3fr 1fr; gap: clamp(6px, 1vw, 12px); width: min(95%, 780px); }
+        .chart-card { padding: clamp(7px, 1vw, 12px); }
+        .chart-card h4 { font-size: var(--tag-size); color: var(--tb-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: clamp(2px, 0.4vw, 5px); }
+        .chart-wrap { height: clamp(60px, 11vh, 115px); position: relative; }
+        .crown-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(6px, 1vw, 12px); width: min(95%, 780px); }
+        .crown-tile { padding: clamp(5px, 0.7vw, 9px); text-align: center; display: flex; flex-direction: column; align-items: center; gap: 2px; }
+        .crown-icon { font-size: clamp(0.9rem, 1.5vw, 1.2rem); }
+        .crown-label { font-size: var(--tag-size); font-weight: 600; }
+        .crown-desc { font-size: var(--tag-size); color: var(--tb-muted); }
+
+        /* ===========================================
+           SLIDE 8 — TECH STACK
+           =========================================== */
+        .slide-tech { background: var(--tb-white); }
+        .slide-tech .slide-content { gap: clamp(1rem, 2.5vw, 2rem); align-items: center; }
+        .slide-tech h2 { font-size: var(--h2-size); text-align: center; }
+        .tech-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(6px, 1vw, 12px); width: min(90%, 680px); }
+        .tech-badge { display: flex; flex-direction: column; align-items: center; gap: clamp(4px, 0.6vw, 8px); padding: clamp(10px, 1.5vw, 18px) clamp(6px, 1vw, 12px); transition: transform 0.3s var(--ease-out-expo), box-shadow 0.3s; }
+        .tech-badge:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+        .tech-icon { font-size: clamp(1.2rem, 2.5vw, 1.8rem); width: clamp(36px, 4.5vw, 48px); height: clamp(36px, 4.5vw, 48px); display: flex; align-items: center; justify-content: center; border-radius: 12px; background: var(--tb-bg); }
+        .tech-name { font-family: var(--font-display); font-weight: 600; font-size: var(--small-size); }
+        .tech-desc { font-size: var(--tag-size); color: var(--tb-muted); text-align: center; }
+        .slide-footer { text-align: center; font-size: var(--small-size); color: var(--tb-muted); }
+        .slide-footer a { color: var(--tb-amber); text-decoration: none; font-weight: 600; }
+        .slide-footer a:hover { text-decoration: underline; }
+        .built-by { font-size: var(--tag-size); color: var(--tb-muted); margin-top: clamp(4px, 0.5vw, 8px); }
+
+        /* ===========================================
+           RESPONSIVE
+           =========================================== */
+        @media (max-height: 700px) { :root { --slide-padding: clamp(0.75rem, 3vw, 2rem); --content-gap: clamp(0.4rem, 1.5vw, 1rem); --title-size: clamp(1.5rem, 5vw, 3rem); --h2-size: clamp(1.1rem, 3vw, 1.8rem); } }
+        @media (max-height: 600px) { :root { --slide-padding: clamp(0.5rem, 2.5vw, 1.5rem); --content-gap: clamp(0.3rem, 1vw, 0.75rem); } .nav-dots, .keyboard-hint, .food-float { display: none; } }
+        @media (max-height: 500px) { :root { --slide-padding: clamp(0.4rem, 2vw, 1rem); --title-size: clamp(1rem, 3.5vw, 1.5rem); --h2-size: clamp(0.9rem, 2.5vw, 1.25rem); --body-size: clamp(0.65rem, 1vw, 0.85rem); } }
+        @media (max-width: 700px) { .replace-grid { grid-template-columns: 1fr; } .arrow-merge { transform: rotate(90deg); } .cat-layout, .ai-layout, .visit-layout, .dash-mid { grid-template-columns: 1fr; } .rank-layout { flex-direction: column; } .tech-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.2s !important; } html { scroll-behavior: auto; } }
+    </style>
+</head>
+<body>
+
+    <div class="progress-bar" id="progressBar"></div>
+    <nav class="nav-dots" id="navDots"></nav>
+    <div class="keyboard-hint" id="keyHint">Use arrow keys or scroll to navigate</div>
+
+    <!-- ==========================================
+         SLIDE 1: TITLE
+         ========================================== -->
+    <section class="slide slide-title" data-slide="0">
+        <div class="food-float">&#127835;</div><div class="food-float">&#127858;</div><div class="food-float">&#127843;</div>
+        <div class="food-float">&#127836;</div><div class="food-float">&#127834;</div><div class="food-float">&#127856;</div>
+        <div class="slide-content stagger">
+            <div class="title-deco reveal">&#127860; &#127863; &#127869;</div>
+            <h1 class="title-main reveal">TasteBuddy</h1>
+            <div class="title-divider reveal"></div>
+            <p class="title-tagline reveal">Your personal restaurant tracker</p>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         SLIDE 2: ONE APP, NOT FIVE
+         ========================================== -->
+    <section class="slide slide-replace" data-slide="1">
+        <div class="slide-content stagger">
+            <h2 class="reveal">One App, Not Five</h2>
+            <p class="slide-subtitle reveal">Stop juggling multiple apps to manage your dining life</p>
+
+            <div class="replace-grid reveal">
+                <div class="app-stack stagger">
+                    <div class="app-row reveal">
+                        <div class="app-icon" style="background:rgba(163,65,91,0.1)">&#127942;</div>
+                        <div class="app-info">
+                            <div class="app-name">Beli</div>
+                            <div class="app-for">Tracking &amp; social, but fixed categories only</div>
+                        </div>
+                    </div>
+                    <div class="app-row reveal">
+                        <div class="app-icon" style="background:rgba(13,110,253,0.1)">&#128197;</div>
+                        <div class="app-info">
+                            <div class="app-name">Resy / OpenTable</div>
+                            <div class="app-for">Reservations &amp; booking only</div>
+                        </div>
+                    </div>
+                    <div class="app-row reveal">
+                        <div class="app-icon" style="background:rgba(45,138,78,0.1)">&#128205;</div>
+                        <div class="app-info">
+                            <div class="app-name">Google Maps Saved</div>
+                            <div class="app-for">"Want to go" pins with no ranking or detail</div>
+                        </div>
+                    </div>
+                    <div class="app-row reveal">
+                        <div class="app-icon" style="background:rgba(184,134,11,0.1)">&#129302;</div>
+                        <div class="app-info">
+                            <div class="app-name">Zesty / ChatGPT</div>
+                            <div class="app-for">AI food recs, but doesn't know your history</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="arrow-merge reveal-scale">&#10132;</div>
+
+                <div class="tb-result glass-card reveal-scale">
+                    <div style="font-size:clamp(1.5rem,3vw,2.2rem)">&#127860;</div>
+                    <div class="tb-logo-text">TasteBuddy</div>
+                    <div class="tb-features">
+                        <span><span class="check">&#10003;</span> Flexible ranking &amp; custom categories</span>
+                        <span><span class="check">&#10003;</span> Reservation planning &amp; reminders</span>
+                        <span><span class="check">&#10003;</span> Smart wishlist with priorities</span>
+                        <span><span class="check">&#10003;</span> AI concierge that knows your taste</span>
+                        <span><span class="check">&#10003;</span> Visit history, analytics &amp; maps</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         SLIDE 3: FLEXIBLE CATEGORIES
+         ========================================== -->
+    <section class="slide slide-categories" data-slide="2">
+        <div class="slide-content stagger">
+            <h2 class="reveal">Categories Your Way</h2>
+            <p class="slide-subtitle reveal">Unlike Beli's fixed system, create custom categories and rank the same restaurant multiple ways</p>
+
+            <div class="cat-layout">
+                <div class="cat-demo-card card reveal-left">
+                    <h4>Two-Tier Category System</h4>
+                    <div class="cat-label">Meal / Occasion (fully customizable)</div>
+                    <div class="cat-chips">
+                        <span class="cat-chip core">Breakfast</span>
+                        <span class="cat-chip core">Lunch</span>
+                        <span class="cat-chip core">Dinner</span>
+                        <span class="cat-chip custom">Dessert</span>
+                        <span class="cat-chip custom">Coffee</span>
+                        <span class="cat-chip custom">Ramen Night</span>
+                        <span class="cat-chip custom">Tasting Menus</span>
+                    </div>
+                    <div class="cat-label">Cuisine / Food Type (free-form)</div>
+                    <div class="cat-chips">
+                        <span class="cat-chip">Japanese</span>
+                        <span class="cat-chip">Italian</span>
+                        <span class="cat-chip">Thai</span>
+                        <span class="cat-chip">Burger</span>
+                        <span class="cat-chip">Sushi</span>
+                        <span class="cat-chip">Mexican</span>
+                    </div>
+                    <div style="display:flex;flex-direction:column;gap:3px;margin-top:clamp(6px,0.6vw,8px);">
+                        <div class="vs-beli-row"><span class="vs-x">&#10007;</span> Beli: Fixed categories, one entry per restaurant</div>
+                        <div class="vs-beli-row"><span class="vs-check">&#10003;</span> TasteBuddy: Unlimited custom categories, drag-to-reorder</div>
+                    </div>
+                </div>
+
+                <div class="cat-demo-card card reveal-right">
+                    <h4>One Restaurant, Multiple Rankings</h4>
+                    <div style="font-size:var(--small-size);color:var(--tb-muted);margin-bottom:3px;">Thai Diner ranked separately for each meal...</div>
+
+                    <div class="entry-row">
+                        <span class="entry-name">Thai Diner</span>
+                        <div style="display:flex;gap:3px;">
+                            <span class="entry-cat" style="background:rgba(45,138,78,0.08);color:var(--tb-sage)">Breakfast</span>
+                            <span class="entry-cat" style="background:rgba(184,134,11,0.08);color:var(--tb-amber)">Thai</span>
+                        </div>
+                        <span class="entry-tier" style="background:var(--tier-s);color:#333">S</span>
+                    </div>
+                    <div class="entry-row">
+                        <span class="entry-name">Thai Diner</span>
+                        <div style="display:flex;gap:3px;">
+                            <span class="entry-cat" style="background:rgba(163,65,91,0.08);color:var(--tb-burgundy)">Dinner</span>
+                            <span class="entry-cat" style="background:rgba(184,134,11,0.08);color:var(--tb-amber)">Thai</span>
+                        </div>
+                        <span class="entry-tier" style="background:var(--tier-a);">A</span>
+                    </div>
+                    <div class="entry-row">
+                        <span class="entry-name">Thai Diner</span>
+                        <div style="display:flex;gap:3px;">
+                            <span class="entry-cat" style="background:rgba(107,123,141,0.1);color:var(--tb-muted)">Dessert</span>
+                            <span class="entry-cat" style="background:rgba(184,134,11,0.08);color:var(--tb-amber)">Thai</span>
+                        </div>
+                        <span class="entry-tier" style="background:var(--tier-b);">B</span>
+                    </div>
+
+                    <div style="font-size:var(--tag-size);color:var(--tb-muted);margin-top:clamp(4px,0.4vw,6px);line-height:1.4;">
+                        Each entry gets its own tier, visit history, and S-tier position. Your best breakfast spots are ranked independently from your best dinner spots.
+                    </div>
+                    <div style="display:flex;flex-direction:column;gap:3px;margin-top:clamp(4px,0.4vw,6px);">
+                        <div class="vs-beli-row"><span class="vs-x">&#10007;</span> Beli: One rating per restaurant, period</div>
+                        <div class="vs-beli-row"><span class="vs-check">&#10003;</span> TasteBuddy: Rank for breakfast, dinner, AND dessert</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         SLIDE 4: RANK & RATE
+         ========================================== -->
+    <section class="slide slide-rank" data-slide="3">
+        <div class="slide-content stagger">
+            <h2 class="reveal">Rank &amp; Rate</h2>
+            <div class="rank-layout">
+                <div class="tier-column reveal-left stagger">
+                    <div class="tier-row">
+                        <div class="tier-badge s">S</div>
+                        <div class="tier-items">
+                            <div class="tier-entry"><span class="rank-num">#1</span> Sukiyabashi Jiro</div>
+                            <div class="tier-entry"><span class="rank-num">#2</span> Le Bernardin</div>
+                            <div class="tier-entry"><span class="rank-num">#3</span> Peter Luger</div>
+                        </div>
+                    </div>
+                    <div class="tier-row">
+                        <div class="tier-badge a">A</div>
+                        <div class="tier-items">
+                            <div class="tier-entry">Di Fara Pizza</div>
+                            <div class="tier-entry">Tatiana</div>
+                        </div>
+                    </div>
+                    <div class="tier-row">
+                        <div class="tier-badge b">B</div>
+                        <div class="tier-items">
+                            <div class="tier-entry">Joe's Shanghai</div>
+                            <div class="tier-entry">L'Artusi</div>
+                        </div>
+                    </div>
+                    <div class="tier-row">
+                        <div class="tier-badge c">C</div>
+                        <div class="tier-items">
+                            <div class="tier-entry">Applebee's Times Sq</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="compare-card reveal-right stagger">
+                    <div class="compare-box glass-card">
+                        <h4>Pairwise Comparison</h4>
+                        <div class="vs-row">
+                            <div class="vs-option pick">Tatiana</div>
+                            <span class="vs-label">VS</span>
+                            <div class="vs-option">L'Artusi</div>
+                        </div>
+                        <div style="font-size:var(--tag-size);color:var(--tb-muted);margin-top:clamp(4px,0.5vw,6px)">S-tier uses merge sort for objective rankings</div>
+                    </div>
+                    <div class="visit-card card">
+                        <h4>Log a Visit</h4>
+                        <div style="display:flex;gap:4px;margin-bottom:clamp(4px,0.5vw,6px)">
+                            <span style="padding:2px 8px;border-radius:6px;background:linear-gradient(135deg,#ffd700,#ffec8b);font-family:var(--font-display);font-weight:800;font-size:var(--tag-size);color:#333;border:2px solid #ffc107">S</span>
+                            <span style="padding:2px 8px;border-radius:6px;background:var(--tb-bg);font-family:var(--font-display);font-weight:800;font-size:var(--tag-size);color:var(--tb-muted);border:1px solid var(--tb-light-border)">A</span>
+                            <span style="padding:2px 8px;border-radius:6px;background:var(--tb-bg);font-family:var(--font-display);font-weight:800;font-size:var(--tag-size);color:var(--tb-muted);border:1px solid var(--tb-light-border)">B</span>
+                            <span style="padding:2px 8px;border-radius:6px;background:var(--tb-bg);font-family:var(--font-display);font-weight:800;font-size:var(--tag-size);color:var(--tb-muted);border:1px solid var(--tb-light-border)">C</span>
+                        </div>
+                        <div class="occasion-tags">
+                            <span class="occasion-tag active">Date Night</span>
+                            <span class="occasion-tag">Business</span>
+                            <span class="occasion-tag active">Birthday</span>
+                            <span class="occasion-tag">Solo</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         SLIDE 5: LOG EVERY VISIT
+         ========================================== -->
+    <section class="slide slide-visit-log" data-slide="4">
+        <div class="slide-content stagger">
+            <h2 class="reveal">Log Every Visit</h2>
+            <p class="slide-subtitle reveal">Rich visit data powers smarter recommendations and personal dining insights</p>
+
+            <div class="visit-layout">
+                <div class="form-mockup card reveal-left">
+                    <h4>Visit Form</h4>
+                    <div class="form-field">
+                        <label>Tier Rating</label>
+                        <div style="display:flex;gap:clamp(4px,0.5vw,6px)">
+                            <span style="padding:clamp(4px,0.5vw,7px) clamp(8px,1vw,14px);border-radius:8px;background:linear-gradient(135deg,#ffd700,#ffec8b);font-family:var(--font-display);font-weight:800;font-size:var(--body-size);color:#333;border:2px solid #ffc107">S</span>
+                            <span style="padding:clamp(4px,0.5vw,7px) clamp(8px,1vw,14px);border-radius:8px;background:var(--tb-bg);font-family:var(--font-display);font-weight:800;font-size:var(--body-size);color:var(--tb-muted);border:2px solid var(--tb-light-border)">A</span>
+                            <span style="padding:clamp(4px,0.5vw,7px) clamp(8px,1vw,14px);border-radius:8px;background:var(--tb-bg);font-family:var(--font-display);font-weight:800;font-size:var(--body-size);color:var(--tb-muted);border:2px solid var(--tb-light-border)">B</span>
+                            <span style="padding:clamp(4px,0.5vw,7px) clamp(8px,1vw,14px);border-radius:8px;background:var(--tb-bg);font-family:var(--font-display);font-weight:800;font-size:var(--body-size);color:var(--tb-muted);border:2px solid var(--tb-light-border)">C</span>
+                        </div>
+                    </div>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:clamp(4px,0.5vw,6px)">
+                        <div class="form-field"><label>Occasion</label><div class="form-input">Date Night</div></div>
+                        <div class="form-field"><label>Total Spent</label><div class="form-input">$285.00</div></div>
+                    </div>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:clamp(4px,0.5vw,6px)">
+                        <div class="form-field"><label>Party Size</label><div class="form-input">2</div></div>
+                        <div class="form-field"><label>Notes</label><div class="form-input" style="color:var(--tb-muted);font-style:italic">The lobster was...</div></div>
+                    </div>
+                    <div class="form-field">
+                        <label>Photos</label>
+                        <div style="display:flex;align-items:center;gap:6px;padding:clamp(6px,0.8vw,10px);border-radius:8px;border:2px dashed var(--tb-light-border);background:var(--tb-bg)">
+                            <span style="font-size:clamp(1rem,1.5vw,1.3rem)">&#128247;</span>
+                            <span style="font-size:var(--tag-size);color:var(--tb-muted)">Click to add photos &middot; JPG, PNG, WebP</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="visit-example card reveal-right">
+                    <h4>Le Bernardin</h4>
+                    <div class="visit-example-rating">
+                        <span style="padding:clamp(4px,0.6vw,8px) clamp(10px,1.2vw,16px);border-radius:8px;background:linear-gradient(135deg,#ffd700,#ffec8b);font-family:var(--font-display);font-weight:800;font-size:clamp(1rem,2vw,1.4rem);color:#333">S-Tier</span>
+                    </div>
+                    <div style="display:flex;gap:clamp(8px,1vw,12px);flex-wrap:wrap">
+                        <span class="occasion-tag active">Date Night</span>
+                        <span class="occasion-tag">$285</span>
+                        <span class="occasion-tag">Party of 2</span>
+                    </div>
+                    <div class="visit-example-detail">
+                        <em>"The tasting menu was incredible. Butter-poached lobster was the standout. Impeccable service."</em>
+                    </div>
+                    <div class="visit-example-photos">
+                        <div class="photo-thumb" style="border:1px solid var(--tb-light-border)">&#128247;</div>
+                        <div class="photo-thumb" style="border:1px solid var(--tb-light-border)">&#128247;</div>
+                        <div class="photo-thumb" style="border:1px solid var(--tb-light-border)">&#128247;</div>
+                    </div>
+                    <div style="font-size:var(--tag-size);color:var(--tb-muted);text-align:center">3 photos uploaded</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         SLIDE 6: AI CONCIERGE
+         ========================================== -->
+    <section class="slide slide-ai" data-slide="5">
+        <div class="slide-content stagger">
+            <h2 class="reveal">Your AI Food Concierge</h2>
+            <p class="slide-subtitle reveal">Like Zesty from DoorDash, but it actually knows your dining history and personal taste</p>
+
+            <div class="ai-layout">
+                <div class="chat-mockup card reveal-left">
+                    <div class="chat-header">
+                        <div class="chat-avatar" style="background:linear-gradient(135deg,var(--tb-amber),var(--tb-burgundy));color:#fff">&#129302;</div>
+                        <span class="chat-header-text">TasteBuddy AI</span>
+                    </div>
+                    <div class="chat-bubble chat-user">Anniversary dinner? She loves Italian.</div>
+                    <div class="chat-bubble chat-ai">Based on your rankings, <strong>L'Artusi</strong> is your top Italian (A-tier). For a special upgrade, <strong>Torrisi</strong> is on your HP wishlist — want me to check availability?</div>
+                    <div class="chat-bubble chat-user">Yes, check Torrisi for Saturday</div>
+                    <div class="chat-bubble chat-ai">Searching Resy... <strong>Torrisi has 8:30 PM open this Saturday!</strong> Want me to add it to your planner with a reminder?</div>
+                    <div class="chat-input">&#128172; Ask about your restaurants...</div>
+                </div>
+
+                <div class="ai-caps reveal-right stagger">
+                    <div class="ai-cap-card card reveal">
+                        <div class="ai-cap-icon" style="background:rgba(184,134,11,0.08)">&#127919;</div>
+                        <div class="ai-cap-text">
+                            <h4>Personalized Recommendations</h4>
+                            <p>Analyzes your S-tier favorites, visit patterns, and cuisine preferences — not generic reviews</p>
+                        </div>
+                    </div>
+                    <div class="ai-cap-card card reveal">
+                        <div class="ai-cap-icon" style="background:rgba(13,110,253,0.08)">&#128269;</div>
+                        <div class="ai-cap-text">
+                            <h4>Live Reservation Search</h4>
+                            <p>Checks Resy, OpenTable, and Tock in real time for availability and booking windows</p>
+                        </div>
+                    </div>
+                    <div class="ai-cap-card card reveal">
+                        <div class="ai-cap-icon" style="background:rgba(45,138,78,0.08)">&#127758;</div>
+                        <div class="ai-cap-text">
+                            <h4>New Place Discovery</h4>
+                            <p>Finds restaurants via Google Places and web search, cross-referenced with your taste profile</p>
+                        </div>
+                    </div>
+                    <div class="ai-cap-card card reveal">
+                        <div class="ai-cap-icon" style="background:rgba(163,65,91,0.08)">&#128200;</div>
+                        <div class="ai-cap-text">
+                            <h4>Ask Anything About Your Data</h4>
+                            <p>"What's my most-visited cuisine?" or "Plan a food tour of my S-tier spots in Manhattan"</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p class="ai-powered-by reveal">Powered by <strong>Claude AI</strong> with live web search &amp; Google Places</p>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         SLIDE 7: TASTEBOARD
+         ========================================== -->
+    <section class="slide slide-dashboard" data-slide="6">
+        <div class="slide-content stagger">
+            <h2 class="reveal">TasteBoard</h2>
+            <div class="dash-top reveal stagger">
+                <div class="stat-tile card"><div class="stat-value" data-count="47">0</div><div class="stat-label">Listings</div></div>
+                <div class="stat-tile card"><div class="stat-value" style="font-size:clamp(0.9rem,2vw,1.3rem)">Japanese</div><div class="stat-label">Top Category</div></div>
+                <div class="stat-tile card"><div class="stat-value" style="font-size:clamp(0.9rem,2vw,1.3rem)">Italian</div><div class="stat-label">Top Cuisine</div></div>
+            </div>
+            <div class="dash-mid reveal">
+                <div class="chart-card card"><h4>Visits Over Time</h4><div class="chart-wrap"><canvas id="lineChart"></canvas></div></div>
+                <div class="chart-card card"><h4>Categories</h4><div class="chart-wrap"><canvas id="pieChart"></canvas></div></div>
+            </div>
+            <div class="crown-row reveal stagger">
+                <div class="crown-tile glass-card"><div class="crown-icon">&#128081;</div><div class="crown-label">Greatness</div><div class="crown-desc">Most S-Tier picks</div></div>
+                <div class="crown-tile glass-card"><div class="crown-icon">&#128293;</div><div class="crown-label">Dependency</div><div class="crown-desc">Most revisited spot</div></div>
+                <div class="crown-tile glass-card"><div class="crown-icon">&#127775;</div><div class="crown-label">Versatility</div><div class="crown-desc">Widest cuisine range</div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         SLIDE 8: TECH STACK
+         ========================================== -->
+    <section class="slide slide-tech" data-slide="7">
+        <div class="slide-content stagger">
+            <h2 class="reveal">Built With</h2>
+            <div class="tech-grid reveal stagger">
+                <div class="tech-badge card">
+                    <div class="tech-icon" style="background:rgba(45,138,78,0.08)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="#2d8a4e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                    <span class="tech-name">Flask</span><span class="tech-desc">Backend</span>
+                </div>
+                <div class="tech-badge card">
+                    <div class="tech-icon" style="background:rgba(13,110,253,0.08)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h16M4 18h10" stroke="#0d6efd" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="12" r="9" stroke="#0d6efd" stroke-width="2" fill="none"/></svg></div>
+                    <span class="tech-name">MySQL</span><span class="tech-desc">Database</span>
+                </div>
+                <div class="tech-badge card">
+                    <div class="tech-icon" style="background:rgba(163,65,91,0.08)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#a3415b" stroke-width="2" fill="none"/><path d="M8 12h8M12 8v8" stroke="#a3415b" stroke-width="2" stroke-linecap="round"/></svg></div>
+                    <span class="tech-name">Claude AI</span><span class="tech-desc">Concierge</span>
+                </div>
+                <div class="tech-badge card">
+                    <div class="tech-icon" style="background:rgba(184,134,11,0.08)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" stroke="#b8860b" stroke-width="2" fill="none"/><circle cx="12" cy="9" r="2.5" fill="#b8860b"/></svg></div>
+                    <span class="tech-name">Google Places</span><span class="tech-desc">Search API</span>
+                </div>
+                <div class="tech-badge card">
+                    <div class="tech-icon" style="background:rgba(45,138,78,0.08)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z" stroke="#2d8a4e" stroke-width="2" fill="none"/></svg></div>
+                    <span class="tech-name">Leaflet</span><span class="tech-desc">Maps</span>
+                </div>
+                <div class="tech-badge card">
+                    <div class="tech-icon" style="background:rgba(163,65,91,0.08)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="3" stroke="#a3415b" stroke-width="2" fill="none"/><path d="M3 9h18M9 3v18" stroke="#a3415b" stroke-width="2"/></svg></div>
+                    <span class="tech-name">Bootstrap 5</span><span class="tech-desc">UI Framework</span>
+                </div>
+                <div class="tech-badge card">
+                    <div class="tech-icon" style="background:rgba(13,110,253,0.08)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><polyline points="22,6 13.5,15.5 8.5,10.5 2,17" stroke="#0d6efd" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                    <span class="tech-name">Chart.js</span><span class="tech-desc">Visualizations</span>
+                </div>
+                <div class="tech-badge card">
+                    <div class="tech-icon" style="background:rgba(184,134,11,0.08)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.66 0 3-4.03 3-9s-1.34-9-3-9m0 18c-1.66 0-3-4.03-3-9s1.34-9 3-9" stroke="#b8860b" stroke-width="2" fill="none"/></svg></div>
+                    <span class="tech-name">Web Search</span><span class="tech-desc">Live Availability</span>
+                </div>
+            </div>
+            <div class="slide-footer reveal">
+                <a href="https://tastebuddy-colinchia2.pythonanywhere.com" target="_blank">tastebuddy-colinchia2.pythonanywhere.com</a>
+                <div class="built-by">Built by Colin</div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        class SlidePresentation {
+            constructor() {
+                this.slides = document.querySelectorAll('.slide');
+                this.currentSlide = 0;
+                this.totalSlides = this.slides.length;
+                this.isScrolling = false;
+                this.chartsInit = false;
+                this.buildNavDots();
+                this.bindEvents();
+                this.observeSlides();
+                this.goToSlide(0);
+                setTimeout(() => { const h = document.getElementById('keyHint'); if (h) h.style.opacity = '0'; }, 4000);
+            }
+            buildNavDots() {
+                const nav = document.getElementById('navDots');
+                for (let i = 0; i < this.totalSlides; i++) {
+                    const d = document.createElement('button');
+                    d.className = 'nav-dot' + (i === 0 ? ' active' : '');
+                    d.setAttribute('aria-label', `Slide ${i + 1}`);
+                    d.addEventListener('click', () => this.goToSlide(i));
+                    nav.appendChild(d);
+                }
+            }
+            bindEvents() {
+                document.addEventListener('keydown', (e) => {
+                    if (['ArrowDown','ArrowRight',' '].includes(e.key)) { e.preventDefault(); this.next(); }
+                    else if (['ArrowUp','ArrowLeft'].includes(e.key)) { e.preventDefault(); this.prev(); }
+                });
+                let wt;
+                document.addEventListener('wheel', (e) => { if (this.isScrolling) return; this.isScrolling = true; clearTimeout(wt); wt = setTimeout(() => this.isScrolling = false, 800); if (e.deltaY > 30) this.next(); else if (e.deltaY < -30) this.prev(); }, { passive: true });
+                let ty = 0;
+                document.addEventListener('touchstart', (e) => { ty = e.touches[0].clientY; }, { passive: true });
+                document.addEventListener('touchend', (e) => { const d = ty - e.changedTouches[0].clientY; if (Math.abs(d) > 50) { d > 0 ? this.next() : this.prev(); } }, { passive: true });
+            }
+            observeSlides() {
+                const obs = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                            const idx = parseInt(entry.target.dataset.slide);
+                            this.currentSlide = idx;
+                            this.updateNav();
+                            if (idx === 6 && !this.chartsInit) { this.chartsInit = true; setTimeout(() => this.initCharts(), 400); }
+                            if (idx === 6) this.animateCounters();
+                        }
+                    });
+                }, { threshold: 0.5 });
+                this.slides.forEach(s => obs.observe(s));
+            }
+            goToSlide(i) { if (i < 0 || i >= this.totalSlides) return; this.currentSlide = i; this.slides[i].scrollIntoView({ behavior: 'smooth' }); this.updateNav(); }
+            next() { this.goToSlide(this.currentSlide + 1); }
+            prev() { this.goToSlide(this.currentSlide - 1); }
+            updateNav() {
+                document.getElementById('progressBar').style.width = (this.currentSlide / (this.totalSlides - 1)) * 100 + '%';
+                document.querySelectorAll('.nav-dot').forEach((d, i) => d.classList.toggle('active', i === this.currentSlide));
+            }
+            animateCounters() {
+                document.querySelectorAll('[data-count]').forEach(el => {
+                    if (el.dataset.animated) return;
+                    const s = el.closest('.slide');
+                    if (!s || !s.classList.contains('visible')) return;
+                    el.dataset.animated = 'true';
+                    const t = parseInt(el.dataset.count); let c = 0; const step = Math.ceil(t / 40);
+                    const iv = setInterval(() => { c += step; if (c >= t) { c = t; clearInterval(iv); } el.textContent = c; }, 30);
+                });
+            }
+            initCharts() {
+                Chart.defaults.font.family = "'DM Sans', sans-serif"; Chart.defaults.font.size = 11; Chart.defaults.color = '#6c757d';
+                const lc = document.getElementById('lineChart');
+                if (lc) new Chart(lc, { type: 'line', data: { labels: ['Jan','Feb','Mar','Apr','May','Jun'], datasets: [{ data: [3,5,4,8,6,10], borderColor: '#b8860b', backgroundColor: 'rgba(184,134,11,0.08)', borderWidth: 2.5, fill: true, tension: 0.4, pointRadius: 3, pointBackgroundColor: '#b8860b', pointBorderColor: '#fff', pointBorderWidth: 2 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { grid: { display: false }, ticks: { font: { size: 9 } } }, y: { grid: { color: 'rgba(0,0,0,0.04)' }, ticks: { font: { size: 9 }, stepSize: 3 }, beginAtZero: true } }, animation: { duration: 1200 } } });
+                const pc = document.getElementById('pieChart');
+                if (pc) new Chart(pc, { type: 'doughnut', data: { labels: ['Japanese','Italian','American','Korean','Mexican'], datasets: [{ data: [28,22,18,16,16], backgroundColor: ['#b8860b','#a3415b','#0d6efd','#2d8a4e','#6b7b8d'], borderWidth: 2, borderColor: '#fff' }] }, options: { responsive: true, maintainAspectRatio: false, cutout: '55%', plugins: { legend: { position: 'bottom', labels: { boxWidth: 8, padding: 6, font: { size: 9 } } } }, animation: { duration: 1200 } } });
+            }
+        }
+        document.addEventListener('DOMContentLoaded', () => new SlidePresentation());
+    </script>
+</body>
+</html>
