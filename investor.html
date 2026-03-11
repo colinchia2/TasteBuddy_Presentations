@@ -270,12 +270,44 @@
         .built-by { font-size: var(--tag-size); color: var(--tb-muted); margin-top: 4px; }
 
         /* ===========================================
+           SLIDE 7 — PERSONA ECOSYSTEM
+           =========================================== */
+        .slide-persona { background: var(--tb-bg); }
+        .slide-persona .slide-content { gap: clamp(0.5rem, 1.2vw, 1rem); align-items: center; }
+        .slide-persona h2 { font-size: var(--h2-size); text-align: center; }
+        .persona-layout { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(10px, 1.5vw, 18px); width: min(95%, 820px); }
+        .persona-card { padding: clamp(10px, 1.5vw, 16px); }
+        .persona-card h4 { font-size: var(--body-size); font-weight: 600; margin-bottom: clamp(5px, 0.6vw, 8px); display: flex; align-items: center; gap: 6px; }
+        .persona-item { display: flex; align-items: flex-start; gap: clamp(6px, 0.8vw, 10px); padding: clamp(4px, 0.5vw, 7px) 0; border-bottom: 1px solid var(--tb-light-border); font-size: var(--small-size); line-height: 1.4; }
+        .persona-item:last-child { border-bottom: none; }
+        .persona-num { width: clamp(20px, 2.5vw, 26px); height: clamp(20px, 2.5vw, 26px); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; font-size: var(--tag-size); flex-shrink: 0; color: var(--tb-white); }
+        .persona-avatars { display: flex; gap: clamp(8px, 1.2vw, 16px); justify-content: center; flex-wrap: wrap; width: min(95%, 820px); }
+        .persona-avatar { display: flex; align-items: center; gap: clamp(4px, 0.5vw, 6px); padding: clamp(5px, 0.7vw, 9px) clamp(10px, 1.3vw, 16px); border-radius: 24px; background: var(--tb-white); border: 1px solid var(--tb-light-border); font-size: var(--tag-size); font-weight: 500; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+        .persona-avatar-icon { font-size: clamp(0.9rem, 1.4vw, 1.2rem); }
+        .investor-icon { font-size: clamp(0.8rem, 1.2vw, 1rem); flex-shrink: 0; margin-top: 1px; }
+
+        /* ===========================================
+           SLIDE 11 — DEVELOPMENT ROADMAP
+           =========================================== */
+        .slide-dev-roadmap { background: var(--tb-bg); }
+        .slide-dev-roadmap .slide-content { gap: clamp(0.5rem, 1.2vw, 1rem); align-items: center; }
+        .slide-dev-roadmap h2 { font-size: var(--h2-size); text-align: center; }
+        .dev-timeline { display: flex; flex-direction: column; gap: clamp(6px, 0.8vw, 10px); width: min(95%, 720px); }
+        .dev-item { display: flex; align-items: stretch; gap: clamp(8px, 1vw, 14px); }
+        .dev-bar { width: clamp(4px, 0.5vw, 6px); border-radius: 3px; flex-shrink: 0; }
+        .dev-card { flex: 1; padding: clamp(10px, 1.3vw, 16px); display: flex; align-items: center; gap: clamp(8px, 1vw, 14px); }
+        .dev-card h5 { font-family: var(--font-display); font-size: var(--body-size); font-weight: 600; }
+        .dev-card p { font-size: var(--tag-size); color: var(--tb-muted); line-height: 1.3; }
+        .dev-duration { font-family: var(--font-display); font-size: var(--tag-size); font-weight: 700; color: var(--tb-amber); white-space: nowrap; flex-shrink: 0; min-width: clamp(55px, 7vw, 75px); text-align: center; padding: clamp(4px, 0.5vw, 6px) clamp(6px, 0.8vw, 10px); background: rgba(184,134,11,0.06); border-radius: 8px; }
+        .dev-footer { font-size: var(--small-size); color: var(--tb-muted); text-align: center; font-style: italic; }
+
+        /* ===========================================
            RESPONSIVE
            =========================================== */
         @media (max-height: 700px) { :root { --slide-padding: clamp(0.75rem, 3vw, 2rem); --content-gap: clamp(0.4rem, 1.5vw, 1rem); --title-size: clamp(1.5rem, 5vw, 3rem); --h2-size: clamp(1.1rem, 3vw, 1.8rem); } }
         @media (max-height: 600px) { :root { --slide-padding: clamp(0.5rem, 2.5vw, 1.5rem); --content-gap: clamp(0.3rem, 1vw, 0.75rem); } .nav-dots, .keyboard-hint, .bg-dots { display: none; } }
         @media (max-height: 500px) { :root { --slide-padding: clamp(0.4rem, 2vw, 1rem); --title-size: clamp(1rem, 3.5vw, 1.5rem); --h2-size: clamp(0.9rem, 2.5vw, 1.25rem); --body-size: clamp(0.65rem, 1vw, 0.85rem); } }
-        @media (max-width: 700px) { .problem-grid, .demo-row { grid-template-columns: 1fr; } .solution-layout, .edge-layout, .visit-layout, .traction-grid, .biz-layout { grid-template-columns: 1fr; } .metric-row, .use-of-funds { grid-template-columns: repeat(2, 1fr); } .frag-row { gap: 4px; } }
+        @media (max-width: 700px) { .problem-grid, .demo-row { grid-template-columns: 1fr; } .solution-layout, .edge-layout, .visit-layout, .traction-grid, .biz-layout, .persona-layout { grid-template-columns: 1fr; } .metric-row, .use-of-funds { grid-template-columns: repeat(2, 1fr); } .frag-row { gap: 4px; } .persona-avatars { gap: 6px; } }
         @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.2s !important; } html { scroll-behavior: auto; } }
     </style>
 </head>
@@ -603,9 +635,68 @@
     </section>
 
     <!-- ==========================================
-         SLIDE 7: TRACTION
+         SLIDE 7: PERSONA ECOSYSTEM
          ========================================== -->
-    <section class="slide slide-traction" data-slide="6">
+    <section class="slide slide-persona" data-slide="6">
+        <div class="slide-content stagger">
+            <h2 class="reveal">Persona Ecosystem: The Social Moat</h2>
+            <p class="slide-subtitle reveal">Network effects + engagement loops that deepen with every user</p>
+
+            <div class="persona-layout">
+                <div class="persona-card card reveal-left">
+                    <h4>&#9881;&#65039; How It Works</h4>
+                    <div class="persona-item">
+                        <div class="persona-num" style="background:var(--tb-amber)">1</div>
+                        <div>Curated persona profiles (The Sushi Snob, Date Night Expert, etc.)</div>
+                    </div>
+                    <div class="persona-item">
+                        <div class="persona-num" style="background:var(--tb-blue)">2</div>
+                        <div>Users browse &amp; follow personas for trusted recommendations</div>
+                    </div>
+                    <div class="persona-item">
+                        <div class="persona-num" style="background:var(--tb-sage)">3</div>
+                        <div>AI mode: &#8220;Eat like [Persona] in the East Village tonight&#8221;</div>
+                    </div>
+                    <div class="persona-item">
+                        <div class="persona-num" style="background:var(--tb-burgundy)">4</div>
+                        <div>Every user auto-generates their own browseable persona</div>
+                    </div>
+                </div>
+
+                <div class="persona-card card reveal-right">
+                    <h4>&#128161; Why Investors Care</h4>
+                    <div class="persona-item">
+                        <span class="investor-icon">&#128200;</span>
+                        <div><strong>Network effects</strong> &#8212; each persona adds value for all users</div>
+                    </div>
+                    <div class="persona-item">
+                        <span class="investor-icon">&#128274;</span>
+                        <div><strong>Data moat</strong> &#8212; persona rankings are proprietary taste data</div>
+                    </div>
+                    <div class="persona-item">
+                        <span class="investor-icon">&#128260;</span>
+                        <div><strong>Engagement loops</strong> &#8212; follow &#8594; discover &#8594; visit &#8594; rank &#8594; share</div>
+                    </div>
+                    <div class="persona-item">
+                        <span class="investor-icon">&#128176;</span>
+                        <div><strong>Monetization</strong> &#8212; premium personas, sponsored celebrity lists</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="persona-avatars reveal">
+                <div class="persona-avatar"><span class="persona-avatar-icon">&#127843;</span> The Sushi Snob</div>
+                <div class="persona-avatar"><span class="persona-avatar-icon">&#129374;</span> The Brooklyn Bruncher</div>
+                <div class="persona-avatar"><span class="persona-avatar-icon">&#127769;</span> The Late Night Connoisseur</div>
+                <div class="persona-avatar"><span class="persona-avatar-icon">&#128145;</span> The Date Night Expert</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         SLIDE 8: TRACTION
+         ========================================== -->
+    <section class="slide slide-traction" data-slide="7">
         <div class="slide-content stagger">
             <h2 class="reveal">Traction &amp; Engagement</h2>
             <div class="metric-row reveal stagger">
@@ -628,9 +719,9 @@
     </section>
 
     <!-- ==========================================
-         SLIDE 8: BUSINESS MODEL + ROADMAP
+         SLIDE 9: BUSINESS MODEL + ROADMAP
          ========================================== -->
-    <section class="slide slide-business" data-slide="7">
+    <section class="slide slide-business" data-slide="8">
         <div class="slide-content stagger">
             <h2 class="reveal">Business Model &amp; Roadmap</h2>
             <div class="biz-layout">
@@ -652,7 +743,7 @@
                 <div class="roadmap-card card reveal-right">
                     <h4>&#128640; Product Roadmap</h4>
                     <div class="roadmap-item"><div class="rm-timeline"><div class="rm-dot done"></div><div class="rm-line"></div></div><div class="rm-content"><div class="rm-date">Launched</div><h5>Core MVP</h5><p>Rankings, visits, map, TasteBoard, AI chat, reservation planning</p></div></div>
-                    <div class="roadmap-item"><div class="rm-timeline"><div class="rm-dot current"></div><div class="rm-line"></div></div><div class="rm-content"><div class="rm-date">Q2 2026</div><h5>Social + Mobile</h5><p>Share lists, friend comparisons, native iOS/Android app</p></div></div>
+                    <div class="roadmap-item"><div class="rm-timeline"><div class="rm-dot current"></div><div class="rm-line"></div></div><div class="rm-content"><div class="rm-date">Q2 2026</div><h5>Persona Ecosystem + Social Discovery</h5><p>Curated persona profiles, follow/browse UX, AI persona-aware recommendations</p></div></div>
                     <div class="roadmap-item"><div class="rm-timeline"><div class="rm-dot future"></div><div class="rm-line"></div></div><div class="rm-content"><div class="rm-date">Q4 2026</div><h5>Pro Tier + Partnerships</h5><p>Monetization launch, restaurant partner portal, affiliate bookings</p></div></div>
                     <div class="roadmap-item"><div class="rm-timeline"><div class="rm-dot future"></div></div><div class="rm-content"><div class="rm-date">2027</div><h5>AI Taste Graph</h5><p>ML-powered taste profiling, predictive recommendations, group dining AI</p></div></div>
                 </div>
@@ -661,9 +752,9 @@
     </section>
 
     <!-- ==========================================
-         SLIDE 9: THE ASK
+         SLIDE 10: THE ASK
          ========================================== -->
-    <section class="slide slide-ask" data-slide="8">
+    <section class="slide slide-ask" data-slide="9">
         <div class="slide-content stagger">
             <h2 class="ask-title reveal">The Ask</h2>
             <div class="ask-amount reveal">$250K Seed</div>
@@ -677,6 +768,61 @@
                 <a href="https://tastebuddy-colinchia2.pythonanywhere.com" target="_blank">tastebuddy-colinchia2.pythonanywhere.com</a>
                 <div class="built-by">Built by Colin</div>
             </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         SLIDE 11: DEVELOPMENT ROADMAP
+         ========================================== -->
+    <section class="slide slide-dev-roadmap" data-slide="10">
+        <div class="slide-content stagger">
+            <h2 class="reveal">Development Roadmap</h2>
+            <p class="slide-subtitle reveal">What the funding enables</p>
+
+            <div class="dev-timeline reveal stagger">
+                <div class="dev-item">
+                    <div class="dev-bar" style="background:var(--tb-amber)"></div>
+                    <div class="dev-card card">
+                        <div><h5>&#128100; Develop Personas</h5><p>Build persona profiles, ranking system, follow/browse UX</p></div>
+                        <div class="dev-duration">1 month</div>
+                    </div>
+                </div>
+                <div class="dev-item">
+                    <div class="dev-bar" style="background:var(--tb-blue)"></div>
+                    <div class="dev-card card">
+                        <div><h5>&#129302; Build Unique AI</h5><p>Persona-aware recommendations, neighborhood optimizer, taste graph</p></div>
+                        <div class="dev-duration">3 months</div>
+                    </div>
+                </div>
+                <div class="dev-item">
+                    <div class="dev-bar" style="background:var(--tb-sage)"></div>
+                    <div class="dev-card card">
+                        <div><h5>&#128221; Improve Log Visit / UX</h5><p>Complete visit logging, cuisine selector, social feed</p></div>
+                        <div class="dev-duration">2 months</div>
+                    </div>
+                </div>
+                <div class="dev-item">
+                    <div class="dev-bar" style="background:var(--tb-burgundy)"></div>
+                    <div class="dev-card card">
+                        <div><h5>&#128227; Marketing</h5><p>NYC food community outreach, influencer partnerships</p></div>
+                        <div class="dev-duration">Ongoing</div>
+                    </div>
+                </div>
+                <div class="dev-item">
+                    <div class="dev-bar" style="background:var(--tb-dark)"></div>
+                    <div class="dev-card card">
+                        <div><h5>&#9881;&#65039; Tech Stack Development</h5><p>Currently using Claude only, need full engineering team</p></div>
+                        <div class="dev-duration">3 months</div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="display:flex;gap:clamp(10px,2vw,24px);justify-content:center;flex-wrap:wrap;" class="reveal">
+                <span style="font-size:var(--tag-size);font-weight:600;color:var(--tb-amber);background:rgba(184,134,11,0.08);padding:clamp(3px,0.4vw,5px) clamp(8px,1vw,12px);border-radius:16px;">Q2 2026 &#8212; Personas + AI</span>
+                <span style="font-size:var(--tag-size);font-weight:600;color:var(--tb-sage);background:rgba(45,138,78,0.08);padding:clamp(3px,0.4vw,5px) clamp(8px,1vw,12px);border-radius:16px;">Q3 2026 &#8212; UX + Marketing + Scale</span>
+            </div>
+
+            <p class="dev-footer reveal">Parallel workstreams &#8212; total timeline: 6 months to full platform</p>
         </div>
     </section>
 
@@ -724,8 +870,8 @@
                             this.currentSlide = idx;
                             this.updateNav();
                             if (idx === 5 && !this.chartsInit.mini) { this.chartsInit.mini = true; setTimeout(() => this.initMiniChart(), 400); }
-                            if (idx === 6 && !this.chartsInit.growth) { this.chartsInit.growth = true; setTimeout(() => this.initGrowthChart(), 400); }
-                            if (idx === 5 || idx === 6) this.animateCounters();
+                            if (idx === 7 && !this.chartsInit.growth) { this.chartsInit.growth = true; setTimeout(() => this.initGrowthChart(), 400); }
+                            if (idx === 5 || idx === 7) this.animateCounters();
                         }
                     });
                 }, { threshold: 0.5 });

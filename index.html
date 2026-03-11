@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TasteBuddy — Your Personal Restaurant Tracker</title>
+    <title>TasteBuddy — General Overview</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -76,22 +76,36 @@
         .slide-subtitle { font-size: var(--body-size); color: var(--tb-muted); text-align: center; max-width: 600px; line-height: 1.5; }
 
         /* ===========================================
-           SLIDE 1 — TITLE
+           SLIDE 0 — TITLE
            =========================================== */
         .slide-title { background: var(--tb-white); text-align: center; }
         .slide-title .slide-content { gap: var(--content-gap); }
-        .title-deco { font-size: clamp(2rem, 4vw, 3.5rem); letter-spacing: 0.3em; opacity: 0.18; }
+        .title-eyebrow { font-size: var(--small-size); font-weight: 600; text-transform: uppercase; letter-spacing: 0.15em; color: var(--tb-amber); }
         .title-main { font-size: var(--title-size); font-weight: 800; background: linear-gradient(135deg, var(--tb-amber), var(--tb-burgundy)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; letter-spacing: -0.02em; }
-        .title-tagline { font-size: clamp(1rem, 2.5vw, 1.6rem); font-weight: 300; color: var(--tb-muted); }
+        .title-tagline { font-size: clamp(1rem, 2.2vw, 1.5rem); font-weight: 300; color: var(--tb-muted); max-width: 550px; }
         .title-divider { width: clamp(40px, 8vw, 80px); height: 3px; border-radius: 2px; background: var(--tb-amber); margin: 0 auto; }
-        .food-float { position: absolute; font-size: clamp(1.2rem, 2.5vw, 2rem); opacity: 0.12; animation: floatSoft 6s ease-in-out infinite; }
-        .food-float:nth-child(1) { top: 12%; left: 10%; } .food-float:nth-child(2) { top: 18%; right: 12%; animation-delay: 1s; }
-        .food-float:nth-child(3) { bottom: 18%; left: 14%; animation-delay: 2s; } .food-float:nth-child(4) { bottom: 14%; right: 10%; animation-delay: 3s; }
-        .food-float:nth-child(5) { top: 45%; left: 5%; animation-delay: 1.5s; } .food-float:nth-child(6) { top: 40%; right: 6%; animation-delay: 2.5s; }
-        @keyframes floatSoft { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-10px) rotate(5deg); } }
+        .title-date { font-size: var(--tag-size); color: var(--tb-muted); }
+        .bg-dots { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+        .bg-dot { position: absolute; width: 6px; height: 6px; border-radius: 50%; background: var(--tb-amber); opacity: 0.06; animation: floatDot 8s ease-in-out infinite; }
+        @keyframes floatDot { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
 
         /* ===========================================
-           SLIDE 2 — ONE APP, NOT FIVE
+           SLIDE 1 — ORIGIN STORY
+           =========================================== */
+        .slide-origin { background: var(--tb-white); }
+        .slide-origin .slide-content { gap: var(--content-gap); align-items: center; }
+        .slide-origin h2 { font-size: var(--h2-size); text-align: center; }
+        .origin-timeline { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(8px, 1.5vw, 16px); width: min(95%, 900px); }
+        .origin-step { padding: clamp(12px, 1.5vw, 20px); text-align: center; display: flex; flex-direction: column; align-items: center; gap: clamp(6px, 0.8vw, 10px); position: relative; }
+        .origin-step::after { content: ''; position: absolute; top: clamp(28px, 3.5vw, 40px); right: -clamp(4px, 0.75vw, 8px); width: clamp(8px, 1.5vw, 16px); height: 2px; background: var(--tb-amber); opacity: 0.4; }
+        .origin-step:last-child::after { display: none; }
+        .origin-icon { font-size: clamp(1.5rem, 3vw, 2.2rem); }
+        .origin-step h4 { font-size: var(--small-size); font-weight: 700; color: var(--tb-dark); }
+        .origin-step p { font-size: var(--tag-size); color: var(--tb-muted); line-height: 1.4; }
+        .origin-num { font-family: var(--font-display); font-weight: 800; font-size: var(--tag-size); color: var(--tb-amber); opacity: 0.6; }
+
+        /* ===========================================
+           SLIDE 1 — ONE APP, NOT FIVE (existing)
            =========================================== */
         .slide-replace { background: var(--tb-bg); }
         .slide-replace .slide-content { gap: clamp(0.6rem, 1.5vw, 1.2rem); align-items: center; }
@@ -112,7 +126,37 @@
         .check { color: var(--tb-sage); font-weight: 700; }
 
         /* ===========================================
-           SLIDE 3 — FLEXIBLE CATEGORIES
+           SLIDE 2 — HERO
+           =========================================== */
+        .slide-hero { background: linear-gradient(160deg, var(--tb-white) 0%, #fdf8f0 40%, #f5f0fa 100%); text-align: center; }
+        .slide-hero .slide-content { gap: var(--content-gap); align-items: center; }
+        .hero-tagline { font-size: clamp(1.8rem, 4.5vw, 3.5rem); font-weight: 800; background: linear-gradient(135deg, var(--tb-amber), var(--tb-burgundy)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; letter-spacing: -0.02em; max-width: 700px; }
+        .hero-sub { font-size: clamp(0.85rem, 1.5vw, 1.15rem); color: var(--tb-muted); max-width: 580px; line-height: 1.6; font-weight: 300; }
+        .hero-badges { display: flex; gap: clamp(6px, 1vw, 12px); flex-wrap: wrap; justify-content: center; }
+        .hero-badge { padding: clamp(4px, 0.5vw, 7px) clamp(12px, 1.5vw, 20px); border-radius: 20px; font-size: var(--small-size); font-weight: 600; font-family: var(--font-display); background: var(--tb-white); border: 1.5px solid var(--tb-light-border); box-shadow: 0 2px 8px rgba(0,0,0,0.04); color: var(--tb-dark); }
+
+        /* ===========================================
+           SLIDE 3 — INPUT & RESERVATION FLOW
+           =========================================== */
+        .slide-input-flow { background: var(--tb-bg); }
+        .slide-input-flow .slide-content { gap: clamp(0.6rem, 1.5vw, 1.2rem); align-items: center; }
+        .slide-input-flow h2 { font-size: var(--h2-size); text-align: center; }
+        .input-flow-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(8px, 1.5vw, 16px); width: min(95%, 900px); }
+        .flow-card { padding: clamp(12px, 1.5vw, 20px); display: flex; flex-direction: column; gap: clamp(6px, 0.8vw, 10px); }
+        .flow-card h4 { font-size: var(--small-size); font-weight: 700; display: flex; align-items: center; gap: 6px; }
+        .flow-card-icon { font-size: clamp(0.9rem, 1.3vw, 1.1rem); }
+        .flow-mockup { display: flex; flex-direction: column; gap: clamp(4px, 0.5vw, 6px); }
+        .flow-label { font-size: var(--tag-size); font-weight: 600; color: var(--tb-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+        .flow-chips { display: flex; gap: clamp(3px, 0.4vw, 5px); flex-wrap: wrap; }
+        .flow-chip { padding: clamp(2px, 0.3vw, 4px) clamp(7px, 0.9vw, 11px); border-radius: 14px; font-size: var(--tag-size); font-weight: 500; border: 1.5px solid var(--tb-light-border); background: var(--tb-white); }
+        .flow-chip.active { background: rgba(184,134,11,0.1); border-color: rgba(184,134,11,0.35); color: var(--tb-amber); font-weight: 600; }
+        .flow-pill { display: flex; align-items: center; justify-content: space-between; padding: clamp(4px, 0.5vw, 7px) clamp(8px, 1vw, 12px); border-radius: 8px; background: var(--tb-white); border: 1px solid var(--tb-light-border); font-size: var(--tag-size); }
+        .flow-pill-stars { color: var(--tb-amber); font-size: var(--tag-size); letter-spacing: 1px; }
+        .flow-status { padding: clamp(6px, 0.8vw, 10px); border-radius: 8px; background: rgba(45,138,78,0.06); border: 1px solid rgba(45,138,78,0.15); font-size: var(--tag-size); color: var(--tb-sage); }
+        .flow-action { display: inline-block; padding: clamp(4px, 0.5vw, 6px) clamp(10px, 1.2vw, 16px); border-radius: 8px; background: var(--tb-sage); color: var(--tb-white); font-size: var(--tag-size); font-weight: 600; text-align: center; margin-top: auto; }
+
+        /* ===========================================
+           SLIDE 4 — FLEXIBLE CATEGORIES (existing)
            =========================================== */
         .slide-categories { background: var(--tb-white); }
         .slide-categories .slide-content { gap: clamp(0.6rem, 1.5vw, 1.2rem); align-items: center; }
@@ -136,7 +180,33 @@
         .vs-check { color: var(--tb-sage); font-weight: 700; }
 
         /* ===========================================
-           SLIDE 4 — RANK & RATE
+           SLIDE 5 — TIERING SYSTEM
+           =========================================== */
+        .slide-tiering { background: var(--tb-white); }
+        .slide-tiering .slide-content { gap: clamp(0.6rem, 1.5vw, 1.2rem); align-items: center; }
+        .slide-tiering h2 { font-size: var(--h2-size); text-align: center; }
+        .tier-layout { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(10px, 1.5vw, 18px); width: min(95%, 850px); }
+        .tier-def-card { padding: clamp(12px, 1.5vw, 20px); display: flex; flex-direction: column; gap: clamp(6px, 0.8vw, 10px); }
+        .tier-def-card h4 { font-size: var(--body-size); font-weight: 700; margin-bottom: clamp(2px, 0.3vw, 4px); }
+        .tier-def-row { display: flex; align-items: center; gap: clamp(6px, 0.8vw, 10px); padding: clamp(4px, 0.5vw, 6px) 0; }
+        .tier-def-badge { width: clamp(28px, 3vw, 36px); height: clamp(28px, 3vw, 36px); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 800; font-size: var(--body-size); color: var(--tb-white); flex-shrink: 0; }
+        .tier-def-badge.s { background: var(--tier-s); color: #333; }
+        .tier-def-badge.a { background: var(--tier-a); }
+        .tier-def-badge.b { background: var(--tier-b); }
+        .tier-def-badge.c { background: var(--tier-c); color: #555; }
+        .tier-def-badge.tbe { background: var(--tier-tbe); }
+        .tier-def-info { display: flex; flex-direction: column; }
+        .tier-def-name { font-family: var(--font-display); font-weight: 700; font-size: var(--small-size); }
+        .tier-def-desc { font-size: var(--tag-size); color: var(--tb-muted); line-height: 1.3; }
+        .stier-card { padding: clamp(12px, 1.5vw, 20px); display: flex; flex-direction: column; gap: clamp(8px, 1vw, 12px); }
+        .stier-card h4 { font-size: var(--body-size); font-weight: 700; color: var(--tb-amber); }
+        .stier-card p { font-size: var(--small-size); color: var(--tb-muted); line-height: 1.5; }
+        .stier-visual { display: flex; align-items: center; justify-content: center; gap: clamp(6px, 1vw, 12px); padding: clamp(8px, 1vw, 14px); border-radius: 10px; background: var(--tb-bg); }
+        .stier-item { padding: clamp(4px, 0.5vw, 7px) clamp(8px, 1vw, 14px); border-radius: 8px; background: var(--tb-white); border: 1.5px solid var(--tb-light-border); font-size: var(--small-size); font-weight: 600; text-align: center; }
+        .stier-vs { font-family: var(--font-display); font-weight: 800; color: var(--tb-amber); font-size: var(--small-size); }
+
+        /* ===========================================
+           SLIDE 6 — RANK & RATE (existing)
            =========================================== */
         .slide-rank { background: var(--tb-bg); }
         .slide-rank .slide-content { gap: clamp(0.75rem, 2vw, 1.5rem); align-items: center; }
@@ -163,11 +233,17 @@
         .occasion-tag.active { background: rgba(184,134,11,0.1); color: var(--tb-amber); }
 
         /* ===========================================
-           SLIDE 5 — LOG EVERY VISIT
+           SLIDE 7 — LOG EVERY VISIT (updated)
            =========================================== */
         .slide-visit-log { background: var(--tb-white); }
         .slide-visit-log .slide-content { gap: clamp(0.6rem, 1.5vw, 1.2rem); align-items: center; }
         .slide-visit-log h2 { font-size: var(--h2-size); text-align: center; }
+        .visit-flow-steps { display: flex; align-items: center; gap: clamp(4px, 0.6vw, 8px); width: min(95%, 820px); justify-content: center; margin-bottom: clamp(4px, 0.5vw, 8px); }
+        .visit-flow-step { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: clamp(6px, 0.8vw, 10px) clamp(10px, 1.2vw, 16px); border-radius: 10px; background: var(--tb-bg); border: 1.5px solid var(--tb-light-border); text-align: center; }
+        .visit-flow-step.active { background: rgba(184,134,11,0.08); border-color: rgba(184,134,11,0.3); }
+        .visit-flow-step-icon { font-size: clamp(0.9rem, 1.3vw, 1.1rem); }
+        .visit-flow-step-label { font-size: var(--tag-size); font-weight: 600; font-family: var(--font-display); }
+        .visit-flow-arrow { font-size: clamp(0.7rem, 1vw, 0.9rem); color: var(--tb-amber); }
         .visit-layout { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(10px, 1.5vw, 18px); width: min(95%, 820px); }
         .form-mockup { padding: clamp(10px, 1.5vw, 16px); display: flex; flex-direction: column; gap: clamp(6px, 0.8vw, 10px); }
         .form-mockup h4 { font-size: var(--small-size); color: var(--tb-muted); font-weight: 500; margin-bottom: clamp(2px, 0.3vw, 4px); }
@@ -181,9 +257,11 @@
         .visit-example-detail { font-size: var(--tag-size); color: var(--tb-muted); line-height: 1.5; }
         .visit-example-photos { display: flex; gap: clamp(4px, 0.5vw, 6px); }
         .visit-example-photos .photo-thumb { width: clamp(40px, 5vw, 60px); height: clamp(40px, 5vw, 60px); border-radius: 8px; background: var(--tb-bg); display: flex; align-items: center; justify-content: center; font-size: clamp(1rem, 1.5vw, 1.3rem); }
+        .visit-rule { font-size: var(--tag-size); color: var(--tb-muted); text-align: center; padding: clamp(4px, 0.5vw, 6px) clamp(8px, 1vw, 12px); border-radius: 8px; background: rgba(163,65,91,0.05); border: 1px solid rgba(163,65,91,0.12); }
+        .visit-rule strong { color: var(--tb-burgundy); }
 
         /* ===========================================
-           SLIDE 6 — AI CONCIERGE
+           SLIDE 8 — AI CONCIERGE (existing)
            =========================================== */
         .slide-ai { background: var(--tb-white); }
         .slide-ai .slide-content { gap: clamp(0.6rem, 1.5vw, 1.2rem); align-items: center; }
@@ -207,7 +285,24 @@
         .ai-powered-by strong { color: var(--tb-dark); }
 
         /* ===========================================
-           SLIDE 7 — TASTEBOARD
+           SLIDE 9 — PERSONA ECOSYSTEM
+           =========================================== */
+        .slide-personas { background: var(--tb-bg); }
+        .slide-personas .slide-content { gap: clamp(0.6rem, 1.5vw, 1.2rem); align-items: center; }
+        .slide-personas h2 { font-size: var(--h2-size); text-align: center; }
+        .persona-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(6px, 1vw, 12px); width: min(95%, 820px); }
+        .persona-card { padding: clamp(10px, 1.2vw, 16px); text-align: center; display: flex; flex-direction: column; align-items: center; gap: clamp(4px, 0.5vw, 6px); }
+        .persona-avatar { font-size: clamp(1.5rem, 2.8vw, 2.2rem); width: clamp(40px, 5vw, 56px); height: clamp(40px, 5vw, 56px); border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--tb-white); border: 2px solid var(--tb-light-border); }
+        .persona-card h4 { font-size: var(--small-size); font-weight: 700; }
+        .persona-card p { font-size: var(--tag-size); color: var(--tb-muted); line-height: 1.3; }
+        .persona-features { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(6px, 1vw, 12px); width: min(95%, 820px); }
+        .persona-feat { padding: clamp(10px, 1.2vw, 16px); text-align: center; display: flex; flex-direction: column; align-items: center; gap: clamp(4px, 0.5vw, 6px); }
+        .persona-feat-icon { font-size: clamp(1.2rem, 2vw, 1.6rem); }
+        .persona-feat h4 { font-size: var(--small-size); font-weight: 700; }
+        .persona-feat p { font-size: var(--tag-size); color: var(--tb-muted); line-height: 1.3; }
+
+        /* ===========================================
+           SLIDE 10 — TASTEBOARD (existing)
            =========================================== */
         .slide-dashboard { background: var(--tb-bg); }
         .slide-dashboard .slide-content { gap: clamp(0.4rem, 1.2vw, 1rem); align-items: center; }
@@ -227,7 +322,7 @@
         .crown-desc { font-size: var(--tag-size); color: var(--tb-muted); }
 
         /* ===========================================
-           SLIDE 8 — TECH STACK
+           SLIDE 11 — TECH STACK (existing)
            =========================================== */
         .slide-tech { background: var(--tb-white); }
         .slide-tech .slide-content { gap: clamp(1rem, 2.5vw, 2rem); align-items: center; }
@@ -247,9 +342,9 @@
            RESPONSIVE
            =========================================== */
         @media (max-height: 700px) { :root { --slide-padding: clamp(0.75rem, 3vw, 2rem); --content-gap: clamp(0.4rem, 1.5vw, 1rem); --title-size: clamp(1.5rem, 5vw, 3rem); --h2-size: clamp(1.1rem, 3vw, 1.8rem); } }
-        @media (max-height: 600px) { :root { --slide-padding: clamp(0.5rem, 2.5vw, 1.5rem); --content-gap: clamp(0.3rem, 1vw, 0.75rem); } .nav-dots, .keyboard-hint, .food-float { display: none; } }
+        @media (max-height: 600px) { :root { --slide-padding: clamp(0.5rem, 2.5vw, 1.5rem); --content-gap: clamp(0.3rem, 1vw, 0.75rem); } .nav-dots, .keyboard-hint, .food-float, .bg-dots { display: none; } }
         @media (max-height: 500px) { :root { --slide-padding: clamp(0.4rem, 2vw, 1rem); --title-size: clamp(1rem, 3.5vw, 1.5rem); --h2-size: clamp(0.9rem, 2.5vw, 1.25rem); --body-size: clamp(0.65rem, 1vw, 0.85rem); } }
-        @media (max-width: 700px) { .replace-grid { grid-template-columns: 1fr; } .arrow-merge { transform: rotate(90deg); } .cat-layout, .ai-layout, .visit-layout, .dash-mid { grid-template-columns: 1fr; } .rank-layout { flex-direction: column; } .tech-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 700px) { .replace-grid { grid-template-columns: 1fr; } .arrow-merge { transform: rotate(90deg); } .cat-layout, .ai-layout, .visit-layout, .dash-mid, .tier-layout { grid-template-columns: 1fr; } .rank-layout { flex-direction: column; } .tech-grid { grid-template-columns: repeat(2, 1fr); } .origin-timeline { grid-template-columns: repeat(2, 1fr); } .origin-step::after { display: none; } .input-flow-grid, .persona-grid { grid-template-columns: repeat(2, 1fr); } .persona-features { grid-template-columns: 1fr; } .visit-flow-steps { flex-wrap: wrap; } }
         @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.2s !important; } html { scroll-behavior: auto; } }
     </style>
 </head>
@@ -260,23 +355,64 @@
     <div class="keyboard-hint" id="keyHint">Use arrow keys or scroll to navigate</div>
 
     <!-- ==========================================
-         SLIDE 1: TITLE
+         SLIDE 0: TITLE
          ========================================== -->
     <section class="slide slide-title" data-slide="0">
-        <div class="food-float">&#127835;</div><div class="food-float">&#127858;</div><div class="food-float">&#127843;</div>
-        <div class="food-float">&#127836;</div><div class="food-float">&#127834;</div><div class="food-float">&#127856;</div>
+        <div class="bg-dots">
+            <div class="bg-dot" style="top:10%;left:15%"></div><div class="bg-dot" style="top:25%;right:20%;animation-delay:1s"></div>
+            <div class="bg-dot" style="bottom:20%;left:25%;animation-delay:2s"></div><div class="bg-dot" style="bottom:30%;right:15%;animation-delay:3s"></div>
+            <div class="bg-dot" style="top:50%;left:8%;animation-delay:1.5s"></div><div class="bg-dot" style="top:45%;right:10%;animation-delay:2.5s"></div>
+        </div>
         <div class="slide-content stagger">
-            <div class="title-deco reveal">&#127860; &#127863; &#127869;</div>
+            <div class="title-eyebrow reveal">Overview Deck 2026</div>
             <h1 class="title-main reveal">TasteBuddy</h1>
             <div class="title-divider reveal"></div>
-            <p class="title-tagline reveal">Your personal restaurant tracker</p>
+            <p class="title-tagline reveal">The all-in-one restaurant tracker with AI-powered dining intelligence</p>
+            <div class="title-date reveal">March 2026</div>
         </div>
     </section>
 
     <!-- ==========================================
-         SLIDE 2: ONE APP, NOT FIVE
+         SLIDE 1: ORIGIN STORY
          ========================================== -->
-    <section class="slide slide-replace" data-slide="1">
+    <section class="slide slide-origin" data-slide="1">
+        <div class="slide-content stagger">
+            <h2 class="reveal">How It Started</h2>
+            <p class="slide-subtitle reveal">From spreadsheets and group texts to a fully automated dining workflow</p>
+
+            <div class="origin-timeline reveal stagger">
+                <div class="origin-step card reveal">
+                    <div class="origin-num">01</div>
+                    <div class="origin-icon">&#129298;</div>
+                    <h4>Got sick, couldn't eat out</h4>
+                    <p>Recovering from illness, I realized I needed to be intentional about every restaurant visit</p>
+                </div>
+                <div class="origin-step card reveal">
+                    <div class="origin-num">02</div>
+                    <div class="origin-icon">&#128202;</div>
+                    <h4>Tried Excel tracking</h4>
+                    <p>Spreadsheets were clunky &mdash; no ranking, no AI, no reservation planning</p>
+                </div>
+                <div class="origin-step card reveal">
+                    <div class="origin-num">03</div>
+                    <div class="origin-icon">&#128107;</div>
+                    <h4>Friends as food concierge</h4>
+                    <p>Texting friends "where should I eat?" every weekend wasn't scalable</p>
+                </div>
+                <div class="origin-step card reveal">
+                    <div class="origin-num">04</div>
+                    <div class="origin-icon">&#129302;</div>
+                    <h4>Built TasteBuddy</h4>
+                    <p>Automated the entire workflow: discover &#8594; rank &#8594; plan &#8594; book &#8594; log</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         SLIDE 1: ONE APP, NOT FIVE (existing)
+         ========================================== -->
+    <section class="slide slide-replace" data-slide="2">
         <div class="slide-content stagger">
             <h2 class="reveal">One App, Not Five</h2>
             <p class="slide-subtitle reveal">Stop juggling multiple apps to manage your dining life</p>
@@ -331,9 +467,85 @@
     </section>
 
     <!-- ==========================================
-         SLIDE 3: FLEXIBLE CATEGORIES
+         SLIDE 2: HERO (NEW)
          ========================================== -->
-    <section class="slide slide-categories" data-slide="2">
+    <section class="slide slide-hero" data-slide="3">
+        <div class="slide-content stagger">
+            <div class="reveal" style="font-size:clamp(2rem,4vw,3rem);opacity:0.15;letter-spacing:0.3em">&#127860; &#127863; &#127869;</div>
+            <h1 class="hero-tagline reveal">The AI-Powered Culinary Architect</h1>
+            <div style="width:clamp(40px,8vw,80px);height:3px;border-radius:2px;background:var(--tb-amber)" class="reveal"></div>
+            <p class="hero-sub reveal">Remembers every meal. Ranks your favorites. Plans your next reservation. Your personal S-Tier dining experience.</p>
+            <div class="hero-badges reveal">
+                <span class="hero-badge">&#127919; Smart Ranking</span>
+                <span class="hero-badge">&#129302; AI Concierge</span>
+                <span class="hero-badge">&#128197; Reservation Intel</span>
+                <span class="hero-badge">&#128200; Dining Analytics</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         SLIDE 3: INPUT & RESERVATION FLOW (NEW)
+         ========================================== -->
+    <section class="slide slide-input-flow" data-slide="4">
+        <div class="slide-content stagger">
+            <h2 class="reveal">Smart Input &amp; Reservation Flow</h2>
+            <p class="slide-subtitle reveal">From choosing what to eat to booking your table &mdash; all in one place</p>
+
+            <div class="input-flow-grid reveal stagger">
+                <div class="flow-card card reveal">
+                    <h4><span class="flow-card-icon">&#127860;</span> Category Selector</h4>
+                    <div class="flow-mockup">
+                        <div class="flow-label">Meal Type</div>
+                        <div class="flow-chips">
+                            <span class="flow-chip">Breakfast</span>
+                            <span class="flow-chip">Lunch</span>
+                            <span class="flow-chip active">Dinner</span>
+                            <span class="flow-chip">Dessert</span>
+                        </div>
+                        <div class="flow-label">Cuisine</div>
+                        <div class="flow-chips">
+                            <span class="flow-chip active">Japanese</span>
+                            <span class="flow-chip active">Italian</span>
+                            <span class="flow-chip">Thai</span>
+                            <span class="flow-chip">Mexican</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flow-card card reveal">
+                    <h4><span class="flow-card-icon">&#128205;</span> Neighborhood Priority</h4>
+                    <div class="flow-mockup">
+                        <div class="flow-label">Priority Neighborhoods</div>
+                        <div style="display:flex;flex-direction:column;gap:clamp(3px,0.4vw,5px)">
+                            <div class="flow-pill"><span>East Village</span><span class="flow-pill-stars">&#9733;&#9733;&#9733;</span></div>
+                            <div class="flow-pill"><span>West Village</span><span class="flow-pill-stars">&#9733;&#9733;</span></div>
+                            <div class="flow-pill"><span>SoHo</span><span class="flow-pill-stars">&#9733;&#9733;</span></div>
+                            <div class="flow-pill"><span>Lower East Side</span><span class="flow-pill-stars">&#9733;</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flow-card card reveal">
+                    <h4><span class="flow-card-icon">&#128197;</span> Reservation Intel</h4>
+                    <div class="flow-mockup">
+                        <div class="flow-status">&#128269; Checking Resy...</div>
+                        <div style="padding:clamp(6px,0.8vw,10px);border-radius:8px;background:var(--tb-white);border:1px solid var(--tb-light-border)">
+                            <div style="font-size:var(--small-size);font-weight:600">Torrisi</div>
+                            <div style="font-size:var(--tag-size);color:var(--tb-sage);font-weight:600">&#9989; 8:30 PM available — Saturday</div>
+                            <div style="font-size:var(--tag-size);color:var(--tb-muted)">Party of 2 &middot; Italian &middot; SoHo</div>
+                        </div>
+                        <div class="flow-action">&#128197; Book on Resy</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         SLIDE 4: FLEXIBLE CATEGORIES (existing)
+         ========================================== -->
+    <section class="slide slide-categories" data-slide="5">
         <div class="slide-content stagger">
             <h2 class="reveal">Categories Your Way</h2>
             <p class="slide-subtitle reveal">Unlike Beli's fixed system, create custom categories and rank the same restaurant multiple ways</p>
@@ -408,9 +620,71 @@
     </section>
 
     <!-- ==========================================
-         SLIDE 4: RANK & RATE
+         SLIDE 5: TIERING SYSTEM (NEW)
          ========================================== -->
-    <section class="slide slide-rank" data-slide="3">
+    <section class="slide slide-tiering" data-slide="6">
+        <div class="slide-content stagger">
+            <h2 class="reveal">The Tiering System</h2>
+            <p class="slide-subtitle reveal">A structured hierarchy for every restaurant you visit</p>
+
+            <div class="tier-layout">
+                <div class="tier-def-card card reveal-left">
+                    <h4>Tier Definitions</h4>
+                    <div class="tier-def-row">
+                        <div class="tier-def-badge s">S</div>
+                        <div class="tier-def-info">
+                            <span class="tier-def-name">The Best of the Best</span>
+                            <span class="tier-def-desc">Ranked 1 through N via pairwise comparison</span>
+                        </div>
+                    </div>
+                    <div class="tier-def-row">
+                        <div class="tier-def-badge a">A</div>
+                        <div class="tier-def-info">
+                            <span class="tier-def-name">Great</span>
+                            <span class="tier-def-desc">Worth revisiting &mdash; a reliable go-to</span>
+                        </div>
+                    </div>
+                    <div class="tier-def-row">
+                        <div class="tier-def-badge b">B</div>
+                        <div class="tier-def-info">
+                            <span class="tier-def-name">Good</span>
+                            <span class="tier-def-desc">Solid choice, nothing extraordinary</span>
+                        </div>
+                    </div>
+                    <div class="tier-def-row">
+                        <div class="tier-def-badge c">C</div>
+                        <div class="tier-def-info">
+                            <span class="tier-def-name">Below Average</span>
+                            <span class="tier-def-desc">Overrated or disappointing</span>
+                        </div>
+                    </div>
+                    <div class="tier-def-row">
+                        <div class="tier-def-badge tbe">TBE</div>
+                        <div class="tier-def-info">
+                            <span class="tier-def-name">To Be Eaten</span>
+                            <span class="tier-def-desc">Unranked wishlist &mdash; haven't visited yet</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stier-card card reveal-right">
+                    <h4>&#127942; Why S-Tier Matters</h4>
+                    <p>S-Tier uses <strong>pairwise comparison</strong> (merge sort) for objective ranking. No guessing, no vibes &mdash; every position is earned through head-to-head matchups.</p>
+                    <div class="stier-visual">
+                        <div class="stier-item">&#127843; #1 Sushi Spot</div>
+                        <div class="stier-vs">VS</div>
+                        <div class="stier-item">&#127837; #1 Italian Spot</div>
+                    </div>
+                    <p>Your #1 sushi spot vs your #1 Italian &mdash; every S-Tier pick is battle-tested. The result is a definitive, personal ranking you can trust.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         SLIDE 6: RANK & RATE (existing)
+         ========================================== -->
+    <section class="slide slide-rank" data-slide="7">
         <div class="slide-content stagger">
             <h2 class="reveal">Rank &amp; Rate</h2>
             <div class="rank-layout">
@@ -475,12 +749,33 @@
     </section>
 
     <!-- ==========================================
-         SLIDE 5: LOG EVERY VISIT
+         SLIDE 7: LOG EVERY VISIT (updated)
          ========================================== -->
-    <section class="slide slide-visit-log" data-slide="4">
+    <section class="slide slide-visit-log" data-slide="8">
         <div class="slide-content stagger">
             <h2 class="reveal">Log Every Visit</h2>
-            <p class="slide-subtitle reveal">Rich visit data powers smarter recommendations and personal dining insights</p>
+
+            <div class="visit-flow-steps reveal">
+                <div class="visit-flow-step">
+                    <div class="visit-flow-step-icon">&#128269;</div>
+                    <div class="visit-flow-step-label">Add Restaurant</div>
+                </div>
+                <div class="visit-flow-arrow">&#10132;</div>
+                <div class="visit-flow-step">
+                    <div class="visit-flow-step-icon">&#128197;</div>
+                    <div class="visit-flow-step-label">Book Reservation</div>
+                </div>
+                <div class="visit-flow-arrow">&#10132;</div>
+                <div class="visit-flow-step active">
+                    <div class="visit-flow-step-icon">&#128221;</div>
+                    <div class="visit-flow-step-label">Log Visit</div>
+                </div>
+                <div class="visit-flow-arrow">&#10132;</div>
+                <div class="visit-flow-step">
+                    <div class="visit-flow-step-icon">&#127942;</div>
+                    <div class="visit-flow-step-label">Rank</div>
+                </div>
+            </div>
 
             <div class="visit-layout">
                 <div class="form-mockup card reveal-left">
@@ -494,20 +789,19 @@
                             <span style="padding:clamp(4px,0.5vw,7px) clamp(8px,1vw,14px);border-radius:8px;background:var(--tb-bg);font-family:var(--font-display);font-weight:800;font-size:var(--body-size);color:var(--tb-muted);border:2px solid var(--tb-light-border)">C</span>
                         </div>
                     </div>
+                    <div class="form-field">
+                        <label>Cuisine</label>
+                        <div style="display:flex;gap:clamp(3px,0.4vw,5px);flex-wrap:wrap">
+                            <span class="flow-chip active">Japanese</span>
+                            <span class="flow-chip">Italian</span>
+                            <span class="flow-chip">Thai</span>
+                            <span class="flow-chip">Korean</span>
+                            <span class="flow-chip">Mexican</span>
+                        </div>
+                    </div>
                     <div style="display:grid;grid-template-columns:1fr 1fr;gap:clamp(4px,0.5vw,6px)">
                         <div class="form-field"><label>Occasion</label><div class="form-input">Date Night</div></div>
                         <div class="form-field"><label>Total Spent</label><div class="form-input">$285.00</div></div>
-                    </div>
-                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:clamp(4px,0.5vw,6px)">
-                        <div class="form-field"><label>Party Size</label><div class="form-input">2</div></div>
-                        <div class="form-field"><label>Notes</label><div class="form-input" style="color:var(--tb-muted);font-style:italic">The lobster was...</div></div>
-                    </div>
-                    <div class="form-field">
-                        <label>Photos</label>
-                        <div style="display:flex;align-items:center;gap:6px;padding:clamp(6px,0.8vw,10px);border-radius:8px;border:2px dashed var(--tb-light-border);background:var(--tb-bg)">
-                            <span style="font-size:clamp(1rem,1.5vw,1.3rem)">&#128247;</span>
-                            <span style="font-size:var(--tag-size);color:var(--tb-muted)">Click to add photos &middot; JPG, PNG, WebP</span>
-                        </div>
                     </div>
                 </div>
 
@@ -529,16 +823,16 @@
                         <div class="photo-thumb" style="border:1px solid var(--tb-light-border)">&#128247;</div>
                         <div class="photo-thumb" style="border:1px solid var(--tb-light-border)">&#128247;</div>
                     </div>
-                    <div style="font-size:var(--tag-size);color:var(--tb-muted);text-align:center">3 photos uploaded</div>
+                    <div class="visit-rule reveal">&#128221; <strong>1 visit per day</strong> per restaurant &mdash; keeps your log clean and intentional</div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- ==========================================
-         SLIDE 6: AI CONCIERGE
+         SLIDE 8: AI CONCIERGE (existing)
          ========================================== -->
-    <section class="slide slide-ai" data-slide="5">
+    <section class="slide slide-ai" data-slide="9">
         <div class="slide-content stagger">
             <h2 class="reveal">Your AI Food Concierge</h2>
             <p class="slide-subtitle reveal">Like Zesty from DoorDash, but it actually knows your dining history and personal taste</p>
@@ -592,9 +886,60 @@
     </section>
 
     <!-- ==========================================
-         SLIDE 7: TASTEBOARD
+         SLIDE 9: PERSONA ECOSYSTEM (NEW)
          ========================================== -->
-    <section class="slide slide-dashboard" data-slide="6">
+    <section class="slide slide-personas" data-slide="10">
+        <div class="slide-content stagger">
+            <h2 class="reveal">Persona Ecosystem</h2>
+            <p class="slide-subtitle reveal">Eat like your favorite food personality &mdash; or become one yourself</p>
+
+            <div class="persona-grid reveal stagger">
+                <div class="persona-card card reveal">
+                    <div class="persona-avatar">&#127843;</div>
+                    <h4>The Sushi Snob</h4>
+                    <p>Only omakase. Only Edomae. Judges rice temperature.</p>
+                </div>
+                <div class="persona-card card reveal">
+                    <div class="persona-avatar">&#129374;</div>
+                    <h4>The Brooklyn Bruncher</h4>
+                    <p>Knows every avocado toast and bottomless mimosa deal in Williamsburg.</p>
+                </div>
+                <div class="persona-card card reveal">
+                    <div class="persona-avatar">&#127769;</div>
+                    <h4>The Late Night Connoisseur</h4>
+                    <p>Best eats after midnight. Ramen, tacos, pizza by the slice.</p>
+                </div>
+                <div class="persona-card card reveal">
+                    <div class="persona-avatar">&#127863;</div>
+                    <h4>The Date Night Expert</h4>
+                    <p>Ambiance-first picks. Candlelit corners and tasting menus.</p>
+                </div>
+            </div>
+
+            <div class="persona-features reveal stagger">
+                <div class="persona-feat card reveal">
+                    <div class="persona-feat-icon">&#128218;</div>
+                    <h4>Browse Personas</h4>
+                    <p>Discover curated lists from NYC food archetypes</p>
+                </div>
+                <div class="persona-feat card reveal">
+                    <div class="persona-feat-icon">&#129302;</div>
+                    <h4>Eat Like [X]</h4>
+                    <p>Ask AI: "Dinner in Chelsea like The Sushi Snob would pick"</p>
+                </div>
+                <div class="persona-feat card reveal">
+                    <div class="persona-feat-icon">&#128100;</div>
+                    <h4>Build Your Own</h4>
+                    <p>Your rankings auto-generate your public persona profile</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         SLIDE 10: TASTEBOARD (existing)
+         ========================================== -->
+    <section class="slide slide-dashboard" data-slide="11">
         <div class="slide-content stagger">
             <h2 class="reveal">TasteBoard</h2>
             <div class="dash-top reveal stagger">
@@ -615,9 +960,9 @@
     </section>
 
     <!-- ==========================================
-         SLIDE 8: TECH STACK
+         SLIDE 11: TECH STACK (existing)
          ========================================== -->
-    <section class="slide slide-tech" data-slide="7">
+    <section class="slide slide-tech" data-slide="12">
         <div class="slide-content stagger">
             <h2 class="reveal">Built With</h2>
             <div class="tech-grid reveal stagger">
@@ -704,8 +1049,8 @@
                             const idx = parseInt(entry.target.dataset.slide);
                             this.currentSlide = idx;
                             this.updateNav();
-                            if (idx === 6 && !this.chartsInit) { this.chartsInit = true; setTimeout(() => this.initCharts(), 400); }
-                            if (idx === 6) this.animateCounters();
+                            if (idx === 11 && !this.chartsInit) { this.chartsInit = true; setTimeout(() => this.initCharts(), 400); }
+                            if (idx === 11) this.animateCounters();
                         }
                     });
                 }, { threshold: 0.5 });
