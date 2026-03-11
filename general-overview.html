@@ -385,13 +385,13 @@
                     <div class="origin-num">01</div>
                     <div class="origin-icon">&#129298;</div>
                     <h4>Got sick, couldn't eat out</h4>
-                    <p>Recovering from illness, I realized I needed to be intentional about every restaurant visit</p>
+                    <p>Recovering from critical illness and stripped away from eating, I realized I wanted to be intentional about every restaurant visit after I was discharged</p>
                 </div>
                 <div class="origin-step card reveal">
                     <div class="origin-num">02</div>
                     <div class="origin-icon">&#128202;</div>
                     <h4>Tried Excel tracking</h4>
-                    <p>Spreadsheets were clunky &mdash; no ranking, no AI, no reservation planning</p>
+                    <p>My spreadsheet was clunky &mdash; manual, no smart ranking, no AI, and no reservation planning</p>
                 </div>
                 <div class="origin-step card reveal">
                     <div class="origin-num">03</div>
@@ -472,14 +472,15 @@
     <section class="slide slide-hero" data-slide="3">
         <div class="slide-content stagger">
             <div class="reveal" style="font-size:clamp(2rem,4vw,3rem);opacity:0.15;letter-spacing:0.3em">&#127860; &#127863; &#127869;</div>
-            <h1 class="hero-tagline reveal">The AI-Powered Culinary Architect</h1>
+            <h1 class="hero-tagline reveal">TasteBuddy</h1>
+            <div style="font-size:clamp(0.9rem,1.8vw,1.25rem);font-weight:400;color:var(--tb-muted);max-width:580px;text-align:center" class="reveal">The AI-Powered Restaurant &ldquo;Buddy&rdquo; for your tastebuds</div>
             <div style="width:clamp(40px,8vw,80px);height:3px;border-radius:2px;background:var(--tb-amber)" class="reveal"></div>
-            <p class="hero-sub reveal">Remembers every meal. Ranks your favorites. Plans your next reservation. Your personal S-Tier dining experience.</p>
+            <p class="hero-sub reveal">Remembers every meal. Helps you rank your favorites. Plans your next reservation. Gives you suggestions. Connect with your friends. Dine like your favorite foodie influencer.</p>
             <div class="hero-badges reveal">
-                <span class="hero-badge">&#127919; Smart Ranking</span>
-                <span class="hero-badge">&#129302; AI Concierge</span>
+                <span class="hero-badge">&#127919; Ranking</span>
+                <span class="hero-badge">&#129302; Concierge</span>
                 <span class="hero-badge">&#128197; Reservation Intel</span>
-                <span class="hero-badge">&#128200; Dining Analytics</span>
+                <span class="hero-badge">&#128200; Analytics</span>
             </div>
         </div>
     </section>
@@ -492,6 +493,16 @@
             <h2 class="reveal">Smart Input &amp; Reservation Flow</h2>
             <p class="slide-subtitle reveal">From choosing what to eat to booking your table &mdash; all in one place</p>
 
+            <!-- AI Search Bar -->
+            <div class="reveal" style="width:min(95%,900px);padding:clamp(10px,1.2vw,16px);border-radius:14px;background:var(--tb-white);box-shadow:0 2px 12px rgba(0,0,0,0.06);border:1px solid var(--tb-light-border);display:flex;align-items:center;gap:clamp(6px,0.8vw,10px);margin-bottom:clamp(4px,0.6vw,8px)">
+                <span style="font-size:clamp(1rem,1.5vw,1.3rem)">&#128269;</span>
+                <div style="flex:1;display:flex;flex-direction:column;gap:2px">
+                    <div style="font-size:var(--small-size);font-weight:600;font-family:var(--font-display)">Search for a restaurant</div>
+                    <div style="font-size:var(--tag-size);color:var(--tb-muted)">Type a name to find it on Google Places and add it to your tracker</div>
+                </div>
+                <div style="padding:clamp(4px,0.5vw,6px) clamp(10px,1.2vw,16px);border-radius:8px;background:var(--tb-amber);color:var(--tb-white);font-size:var(--tag-size);font-weight:600">Search</div>
+            </div>
+
             <div class="input-flow-grid reveal stagger">
                 <div class="flow-card card reveal">
                     <h4><span class="flow-card-icon">&#127860;</span> Category Selector</h4>
@@ -501,42 +512,44 @@
                             <span class="flow-chip">Breakfast</span>
                             <span class="flow-chip">Lunch</span>
                             <span class="flow-chip active">Dinner</span>
-                            <span class="flow-chip">Dessert</span>
+                            <span class="flow-chip active">Dessert</span>
                         </div>
                         <div class="flow-label">Cuisine</div>
                         <div class="flow-chips">
-                            <span class="flow-chip active">Japanese</span>
+                            <span class="flow-chip">Japanese</span>
                             <span class="flow-chip active">Italian</span>
                             <span class="flow-chip">Thai</span>
                             <span class="flow-chip">Mexican</span>
                         </div>
                     </div>
+                    <div style="font-size:var(--tag-size);color:var(--tb-muted);margin-top:auto;line-height:1.4">Tag each restaurant with meal types and cuisines to organize and filter your rankings</div>
                 </div>
 
                 <div class="flow-card card reveal">
-                    <h4><span class="flow-card-icon">&#128205;</span> Neighborhood Priority</h4>
+                    <h4><span class="flow-card-icon">&#128205;</span> Neighborhood Selection</h4>
                     <div class="flow-mockup">
-                        <div class="flow-label">Priority Neighborhoods</div>
+                        <div class="flow-label">Select Neighborhoods</div>
                         <div style="display:flex;flex-direction:column;gap:clamp(3px,0.4vw,5px)">
-                            <div class="flow-pill"><span>East Village</span><span class="flow-pill-stars">&#9733;&#9733;&#9733;</span></div>
-                            <div class="flow-pill"><span>West Village</span><span class="flow-pill-stars">&#9733;&#9733;</span></div>
-                            <div class="flow-pill"><span>SoHo</span><span class="flow-pill-stars">&#9733;&#9733;</span></div>
-                            <div class="flow-pill"><span>Lower East Side</span><span class="flow-pill-stars">&#9733;</span></div>
+                            <div class="flow-pill"><span>East Village</span></div>
+                            <div class="flow-pill"><span>West Village</span></div>
+                            <div class="flow-pill"><span>SoHo</span></div>
+                            <div class="flow-pill"><span>Lower East Side</span></div>
                         </div>
                     </div>
+                    <div style="font-size:var(--tag-size);color:var(--tb-muted);margin-top:auto;line-height:1.4">Choose which neighborhoods you want to explore or filter your restaurants by location</div>
                 </div>
 
                 <div class="flow-card card reveal">
                     <h4><span class="flow-card-icon">&#128197;</span> Reservation Intel</h4>
                     <div class="flow-mockup">
-                        <div class="flow-status">&#128269; Checking Resy...</div>
                         <div style="padding:clamp(6px,0.8vw,10px);border-radius:8px;background:var(--tb-white);border:1px solid var(--tb-light-border)">
                             <div style="font-size:var(--small-size);font-weight:600">Torrisi</div>
-                            <div style="font-size:var(--tag-size);color:var(--tb-sage);font-weight:600">&#9989; 8:30 PM available — Saturday</div>
-                            <div style="font-size:var(--tag-size);color:var(--tb-muted)">Party of 2 &middot; Italian &middot; SoHo</div>
+                            <div style="font-size:var(--tag-size);color:var(--tb-muted);margin-top:2px">&#128197; Reservations release: <strong style="color:var(--tb-dark)">Mondays at 10:00 AM</strong></div>
+                            <div style="font-size:var(--tag-size);color:var(--tb-muted)">&#127860; Want to eat: <strong style="color:var(--tb-dark)">Saturday, March 15</strong></div>
                         </div>
-                        <div class="flow-action">&#128197; Book on Resy</div>
+                        <div class="flow-status">&#128276; Reminder set &mdash; check Resy on Monday at 10 AM</div>
                     </div>
+                    <div style="font-size:var(--tag-size);color:var(--tb-muted);margin-top:auto;line-height:1.4">Save reservation release dates and times so you know exactly when to book &mdash; all your dining intel in one place</div>
                 </div>
             </div>
         </div>
@@ -682,100 +695,11 @@
     </section>
 
     <!-- ==========================================
-         SLIDE 6: RANK & RATE (existing)
-         ========================================== -->
-    <section class="slide slide-rank" data-slide="7">
-        <div class="slide-content stagger">
-            <h2 class="reveal">Rank &amp; Rate</h2>
-            <div class="rank-layout">
-                <div class="tier-column reveal-left stagger">
-                    <div class="tier-row">
-                        <div class="tier-badge s">S</div>
-                        <div class="tier-items">
-                            <div class="tier-entry"><span class="rank-num">#1</span> Sukiyabashi Jiro</div>
-                            <div class="tier-entry"><span class="rank-num">#2</span> Le Bernardin</div>
-                            <div class="tier-entry"><span class="rank-num">#3</span> Peter Luger</div>
-                        </div>
-                    </div>
-                    <div class="tier-row">
-                        <div class="tier-badge a">A</div>
-                        <div class="tier-items">
-                            <div class="tier-entry">Di Fara Pizza</div>
-                            <div class="tier-entry">Tatiana</div>
-                        </div>
-                    </div>
-                    <div class="tier-row">
-                        <div class="tier-badge b">B</div>
-                        <div class="tier-items">
-                            <div class="tier-entry">Joe's Shanghai</div>
-                            <div class="tier-entry">L'Artusi</div>
-                        </div>
-                    </div>
-                    <div class="tier-row">
-                        <div class="tier-badge c">C</div>
-                        <div class="tier-items">
-                            <div class="tier-entry">Applebee's Times Sq</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="compare-card reveal-right stagger">
-                    <div class="compare-box glass-card">
-                        <h4>Pairwise Comparison</h4>
-                        <div class="vs-row">
-                            <div class="vs-option pick">Tatiana</div>
-                            <span class="vs-label">VS</span>
-                            <div class="vs-option">L'Artusi</div>
-                        </div>
-                        <div style="font-size:var(--tag-size);color:var(--tb-muted);margin-top:clamp(4px,0.5vw,6px)">S-tier uses merge sort for objective rankings</div>
-                    </div>
-                    <div class="visit-card card">
-                        <h4>Log a Visit</h4>
-                        <div style="display:flex;gap:4px;margin-bottom:clamp(4px,0.5vw,6px)">
-                            <span style="padding:2px 8px;border-radius:6px;background:linear-gradient(135deg,#ffd700,#ffec8b);font-family:var(--font-display);font-weight:800;font-size:var(--tag-size);color:#333;border:2px solid #ffc107">S</span>
-                            <span style="padding:2px 8px;border-radius:6px;background:var(--tb-bg);font-family:var(--font-display);font-weight:800;font-size:var(--tag-size);color:var(--tb-muted);border:1px solid var(--tb-light-border)">A</span>
-                            <span style="padding:2px 8px;border-radius:6px;background:var(--tb-bg);font-family:var(--font-display);font-weight:800;font-size:var(--tag-size);color:var(--tb-muted);border:1px solid var(--tb-light-border)">B</span>
-                            <span style="padding:2px 8px;border-radius:6px;background:var(--tb-bg);font-family:var(--font-display);font-weight:800;font-size:var(--tag-size);color:var(--tb-muted);border:1px solid var(--tb-light-border)">C</span>
-                        </div>
-                        <div class="occasion-tags">
-                            <span class="occasion-tag active">Date Night</span>
-                            <span class="occasion-tag">Business</span>
-                            <span class="occasion-tag active">Birthday</span>
-                            <span class="occasion-tag">Solo</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ==========================================
          SLIDE 7: LOG EVERY VISIT (updated)
          ========================================== -->
-    <section class="slide slide-visit-log" data-slide="8">
+    <section class="slide slide-visit-log" data-slide="7">
         <div class="slide-content stagger">
             <h2 class="reveal">Log Every Visit</h2>
-
-            <div class="visit-flow-steps reveal">
-                <div class="visit-flow-step">
-                    <div class="visit-flow-step-icon">&#128269;</div>
-                    <div class="visit-flow-step-label">Add Restaurant</div>
-                </div>
-                <div class="visit-flow-arrow">&#10132;</div>
-                <div class="visit-flow-step">
-                    <div class="visit-flow-step-icon">&#128197;</div>
-                    <div class="visit-flow-step-label">Book Reservation</div>
-                </div>
-                <div class="visit-flow-arrow">&#10132;</div>
-                <div class="visit-flow-step active">
-                    <div class="visit-flow-step-icon">&#128221;</div>
-                    <div class="visit-flow-step-label">Log Visit</div>
-                </div>
-                <div class="visit-flow-arrow">&#10132;</div>
-                <div class="visit-flow-step">
-                    <div class="visit-flow-step-icon">&#127942;</div>
-                    <div class="visit-flow-step-label">Rank</div>
-                </div>
-            </div>
 
             <div class="visit-layout">
                 <div class="form-mockup card reveal-left">
@@ -832,7 +756,7 @@
     <!-- ==========================================
          SLIDE 8: AI CONCIERGE (existing)
          ========================================== -->
-    <section class="slide slide-ai" data-slide="9">
+    <section class="slide slide-ai" data-slide="8">
         <div class="slide-content stagger">
             <h2 class="reveal">Your AI Food Concierge</h2>
             <p class="slide-subtitle reveal">Like Zesty from DoorDash, but it actually knows your dining history and personal taste</p>
@@ -844,9 +768,9 @@
                         <span class="chat-header-text">TasteBuddy AI</span>
                     </div>
                     <div class="chat-bubble chat-user">Anniversary dinner? She loves Italian.</div>
-                    <div class="chat-bubble chat-ai">Based on your rankings, <strong>L'Artusi</strong> is your top Italian (A-tier). For a special upgrade, <strong>Torrisi</strong> is on your HP wishlist — want me to check availability?</div>
-                    <div class="chat-bubble chat-user">Yes, check Torrisi for Saturday</div>
-                    <div class="chat-bubble chat-ai">Searching Resy... <strong>Torrisi has 8:30 PM open this Saturday!</strong> Want me to add it to your planner with a reminder?</div>
+                    <div class="chat-bubble chat-ai">Based on your rankings, <strong>L'Artusi</strong> is your top Italian (A-tier). For a special upgrade, <strong>Torrisi</strong> is on your HP wishlist &mdash; reservations open Mondays at 10 AM. Want me to set a reminder?</div>
+                    <div class="chat-bubble chat-user">Yes, remind me for Saturday</div>
+                    <div class="chat-bubble chat-ai"><strong>Done!</strong> I'll remind you Monday at 10 AM to grab a Torrisi reservation for Saturday. Added to your planner.</div>
                     <div class="chat-input">&#128172; Ask about your restaurants...</div>
                 </div>
 
@@ -859,10 +783,10 @@
                         </div>
                     </div>
                     <div class="ai-cap-card card reveal">
-                        <div class="ai-cap-icon" style="background:rgba(13,110,253,0.08)">&#128269;</div>
+                        <div class="ai-cap-icon" style="background:rgba(13,110,253,0.08)">&#128197;</div>
                         <div class="ai-cap-text">
-                            <h4>Live Reservation Search</h4>
-                            <p>Checks Resy, OpenTable, and Tock in real time for availability and booking windows</p>
+                            <h4>Reservation Planning &amp; Reminders</h4>
+                            <p>Save when reservations open and when you want to eat &mdash; get reminded so you never miss a booking window</p>
                         </div>
                     </div>
                     <div class="ai-cap-card card reveal">
@@ -888,7 +812,7 @@
     <!-- ==========================================
          SLIDE 9: PERSONA ECOSYSTEM (NEW)
          ========================================== -->
-    <section class="slide slide-personas" data-slide="10">
+    <section class="slide slide-personas" data-slide="9">
         <div class="slide-content stagger">
             <h2 class="reveal">Persona Ecosystem</h2>
             <p class="slide-subtitle reveal">Eat like your favorite food personality &mdash; or become one yourself</p>
@@ -897,22 +821,22 @@
                 <div class="persona-card card reveal">
                     <div class="persona-avatar">&#127843;</div>
                     <h4>The Sushi Snob</h4>
-                    <p>Only omakase. Only Edomae. Judges rice temperature.</p>
+                    <p>Only eats fish flown in this morning and knows exactly how much wasabi is too much.</p>
                 </div>
                 <div class="persona-card card reveal">
-                    <div class="persona-avatar">&#129374;</div>
-                    <h4>The Brooklyn Bruncher</h4>
-                    <p>Knows every avocado toast and bottomless mimosa deal in Williamsburg.</p>
+                    <div class="persona-avatar">&#127798;</div>
+                    <h4>The Spice Seeker</h4>
+                    <p>On a relentless quest to find the dish that finally makes them sweat.</p>
                 </div>
                 <div class="persona-card card reveal">
                     <div class="persona-avatar">&#127769;</div>
-                    <h4>The Late Night Connoisseur</h4>
-                    <p>Best eats after midnight. Ramen, tacos, pizza by the slice.</p>
+                    <h4>The Midnight Muncher</h4>
+                    <p>The ultimate authority on which greasy spoons and food trucks are open at 3:00 AM.</p>
                 </div>
                 <div class="persona-card card reveal">
                     <div class="persona-avatar">&#127863;</div>
-                    <h4>The Date Night Expert</h4>
-                    <p>Ambiance-first picks. Candlelit corners and tasting menus.</p>
+                    <h4>The Sophisticated Sommelier</h4>
+                    <p>Pairing high-end plates with the perfect pour and impeccable service.</p>
                 </div>
             </div>
 
@@ -939,9 +863,9 @@
     <!-- ==========================================
          SLIDE 10: TASTEBOARD (existing)
          ========================================== -->
-    <section class="slide slide-dashboard" data-slide="11">
+    <section class="slide slide-dashboard" data-slide="10">
         <div class="slide-content stagger">
-            <h2 class="reveal">TasteBoard</h2>
+            <h2 class="reveal">Meet the TasteBoard &mdash; Your TasteBuddy Analytics Dashboard</h2>
             <div class="dash-top reveal stagger">
                 <div class="stat-tile card"><div class="stat-value" data-count="47">0</div><div class="stat-label">Listings</div></div>
                 <div class="stat-tile card"><div class="stat-value" style="font-size:clamp(0.9rem,2vw,1.3rem)">Japanese</div><div class="stat-label">Top Category</div></div>
@@ -962,7 +886,7 @@
     <!-- ==========================================
          SLIDE 11: TECH STACK (existing)
          ========================================== -->
-    <section class="slide slide-tech" data-slide="12">
+    <section class="slide slide-tech" data-slide="11">
         <div class="slide-content stagger">
             <h2 class="reveal">Built With</h2>
             <div class="tech-grid reveal stagger">
@@ -1001,7 +925,7 @@
             </div>
             <div class="slide-footer reveal">
                 <a href="https://tastebuddy-colinchia2.pythonanywhere.com" target="_blank">tastebuddy-colinchia2.pythonanywhere.com</a>
-                <div class="built-by">Built by Colin</div>
+                <div class="built-by">Built by Colin and Claude Code</div>
             </div>
         </div>
     </section>
@@ -1049,8 +973,8 @@
                             const idx = parseInt(entry.target.dataset.slide);
                             this.currentSlide = idx;
                             this.updateNav();
-                            if (idx === 11 && !this.chartsInit) { this.chartsInit = true; setTimeout(() => this.initCharts(), 400); }
-                            if (idx === 11) this.animateCounters();
+                            if (idx === 10 && !this.chartsInit) { this.chartsInit = true; setTimeout(() => this.initCharts(), 400); }
+                            if (idx === 10) this.animateCounters();
                         }
                     });
                 }, { threshold: 0.5 });
