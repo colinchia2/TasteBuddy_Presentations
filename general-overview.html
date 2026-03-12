@@ -285,7 +285,16 @@
         .ai-powered-by strong { color: var(--tb-dark); }
 
         /* ===========================================
-           SLIDE 9 — PERSONA ECOSYSTEM
+           SLIDE 9 — RESEARCH AGENT PIPELINE
+           =========================================== */
+        .slide-research { background: #f0f1f3; }
+        .slide-research .slide-content { gap: clamp(0.5rem, 1.2vw, 1rem); align-items: center; }
+        .slide-research h2 { font-size: var(--h2-size); text-align: center; }
+        .research-pipeline { display: flex; flex-direction: column; gap: 0; }
+        .research-stage { border-left: 3px solid var(--tb-amber); }
+
+        /* ===========================================
+           SLIDE 10 — PERSONA ECOSYSTEM
            =========================================== */
         .slide-personas { background: var(--tb-bg); }
         .slide-personas .slide-content { gap: clamp(0.6rem, 1.5vw, 1.2rem); align-items: center; }
@@ -805,14 +814,66 @@
                     </div>
                 </div>
             </div>
-            <p class="ai-powered-by reveal">Powered by <strong>Claude AI</strong> with live web search &amp; Google Places</p>
+            <p class="ai-powered-by reveal">Powered by <strong>Perplexity Research Agent</strong> + <strong>Claude AI</strong></p>
         </div>
     </section>
 
     <!-- ==========================================
-         SLIDE 9: PERSONA ECOSYSTEM (NEW)
+         SLIDE 9: RESEARCH AGENT PIPELINE (NEW)
          ========================================== -->
-    <section class="slide slide-personas" data-slide="9">
+    <section class="slide slide-research" data-slide="9">
+        <div class="slide-content stagger">
+            <h2 class="reveal">Research Agent Pipeline</h2>
+            <p class="slide-subtitle reveal">Two-stage AI: live web research + expert synthesis with your data</p>
+
+            <div class="research-pipeline reveal stagger" style="width: min(95%, 780px);">
+                <!-- Stage 1 -->
+                <div class="research-stage card reveal" style="display: grid; grid-template-columns: auto 1fr; gap: clamp(10px, 1.5vw, 16px); padding: clamp(12px, 1.5vw, 18px); align-items: center;">
+                    <div style="width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, var(--tb-amber), #d4a017); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 1.1rem;">1</div>
+                    <div>
+                        <h4 style="margin: 0 0 4px; font-size: clamp(0.85rem, 1.3vw, 1rem); color: var(--tb-amber);">Perplexity Research Agent</h4>
+                        <p style="margin: 0; font-size: clamp(0.7rem, 1vw, 0.85rem); color: var(--tb-muted); line-height: 1.5;">Scrapes <strong>TikTok, Reddit, Eater, The Infatuation, TimeOut, Serious Eats</strong>, and food blogs for real, current restaurant intel from the past 3 months</p>
+                    </div>
+                </div>
+
+                <!-- Arrow -->
+                <div class="reveal" style="text-align: center; font-size: 1.5rem; color: var(--tb-muted); margin: 0.25rem 0;">&#8595;</div>
+
+                <!-- Stage 2 -->
+                <div class="research-stage card reveal" style="display: grid; grid-template-columns: auto 1fr; gap: clamp(10px, 1.5vw, 16px); padding: clamp(12px, 1.5vw, 18px); align-items: center;">
+                    <div style="width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, #2d8a4e, #198754); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 1.1rem;">2</div>
+                    <div>
+                        <h4 style="margin: 0 0 4px; font-size: clamp(0.85rem, 1.3vw, 1rem); color: #2d8a4e;">Your Database</h4>
+                        <p style="margin: 0; font-size: clamp(0.7rem, 1vw, 0.85rem); color: var(--tb-muted); line-height: 1.5;">Cross-references against your <strong>tier rankings, visit history, wishlist, and category preferences</strong></p>
+                    </div>
+                </div>
+
+                <!-- Arrow -->
+                <div class="reveal" style="text-align: center; font-size: 1.5rem; color: var(--tb-muted); margin: 0.25rem 0;">&#8595;</div>
+
+                <!-- Stage 3 -->
+                <div class="research-stage card reveal" style="display: grid; grid-template-columns: auto 1fr; gap: clamp(10px, 1.5vw, 16px); padding: clamp(12px, 1.5vw, 18px); align-items: center;">
+                    <div style="width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, #0d6efd, #0dcaf0); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 1.1rem;">3</div>
+                    <div>
+                        <h4 style="margin: 0 0 4px; font-size: clamp(0.85rem, 1.3vw, 1rem); color: #0d6efd;">Claude AI Synthesizer</h4>
+                        <p style="margin: 0; font-size: clamp(0.7rem, 1vw, 0.85rem); color: var(--tb-muted); line-height: 1.5;">Expert synthesis: <strong>personalized recommendations with source links</strong>, not generic AI advice</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="reveal" style="display: flex; gap: clamp(8px, 1.2vw, 14px); justify-content: center; flex-wrap: wrap; margin-top: 0.5rem;">
+                <span style="background: rgba(184,134,11,0.1); color: var(--tb-amber); padding: 0.3rem 0.7rem; border-radius: 1rem; font-size: clamp(0.65rem, 0.9vw, 0.78rem); font-weight: 600;">Smart Question Classifier</span>
+                <span style="background: rgba(45,138,78,0.1); color: #2d8a4e; padding: 0.3rem 0.7rem; border-radius: 1rem; font-size: clamp(0.65rem, 0.9vw, 0.78rem); font-weight: 600;">Database-Only = Skip Research (Fast)</span>
+                <span style="background: rgba(13,110,253,0.1); color: #0d6efd; padding: 0.3rem 0.7rem; border-radius: 1rem; font-size: clamp(0.65rem, 0.9vw, 0.78rem); font-weight: 600;">Graceful Fallback</span>
+                <span style="background: rgba(163,65,91,0.1); color: var(--tb-burgundy); padding: 0.3rem 0.7rem; border-radius: 1rem; font-size: clamp(0.65rem, 0.9vw, 0.78rem); font-weight: 600;">Source Citations</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         SLIDE 10: PERSONA ECOSYSTEM (NEW)
+         ========================================== -->
+    <section class="slide slide-personas" data-slide="10">
         <div class="slide-content stagger">
             <h2 class="reveal">Persona Ecosystem</h2>
             <p class="slide-subtitle reveal">Eat like your favorite food personality &mdash; or become one yourself</p>
@@ -861,9 +922,9 @@
     </section>
 
     <!-- ==========================================
-         SLIDE 10: TASTEBOARD (existing)
+         SLIDE 11: TASTEBOARD (existing)
          ========================================== -->
-    <section class="slide slide-dashboard" data-slide="10">
+    <section class="slide slide-dashboard" data-slide="11">
         <div class="slide-content stagger">
             <h2 class="reveal">Meet the TasteBoard &mdash; Your TasteBuddy Analytics Dashboard</h2>
             <div class="dash-top reveal stagger">
@@ -884,9 +945,9 @@
     </section>
 
     <!-- ==========================================
-         SLIDE 11: TECH STACK (existing)
+         SLIDE 12: TECH STACK (existing)
          ========================================== -->
-    <section class="slide slide-tech" data-slide="11">
+    <section class="slide slide-tech" data-slide="12">
         <div class="slide-content stagger">
             <h2 class="reveal">Built With</h2>
             <div class="tech-grid reveal stagger">

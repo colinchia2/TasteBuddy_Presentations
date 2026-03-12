@@ -165,7 +165,14 @@
         .ai-cap-item span:first-child { font-size: clamp(0.65rem, 1vw, 0.8rem); }
 
         /* ===========================================
-           SLIDE 5 — LOG EVERY VISIT
+           SLIDE 5 — RESEARCH AGENT PIPELINE
+           =========================================== */
+        .slide-research { background: #f0f1f3; }
+        .slide-research .slide-content { gap: clamp(0.5rem, 1.2vw, 1rem); align-items: center; }
+        .slide-research h2 { font-size: var(--h2-size); text-align: center; }
+
+        /* ===========================================
+           SLIDE 6 — LOG EVERY VISIT
            =========================================== */
         .slide-visit-log { background: var(--tb-white); }
         .slide-visit-log .slide-content { gap: clamp(0.6rem, 1.5vw, 1.2rem); align-items: center; }
@@ -528,16 +535,59 @@
                         <div class="ai-cap-item"><span>&#128200;</span> Query your own data: "My top 5 cuisines?"</div>
                     </div>
 
-                    <div style="font-size:var(--tag-size);color:var(--tb-muted);margin-top:clamp(3px,0.4vw,5px);"><strong style="color:var(--tb-dark)">Powered by Claude AI</strong> with live web search</div>
+                    <div style="font-size:var(--tag-size);color:var(--tb-muted);margin-top:clamp(3px,0.4vw,5px);"><strong style="color:var(--tb-dark)">Powered by Perplexity Research Agent</strong> + Claude AI</div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- ==========================================
-         SLIDE 5: LOG EVERY VISIT
+         SLIDE 5: RESEARCH AGENT PIPELINE
          ========================================== -->
-    <section class="slide slide-visit-log" data-slide="4">
+    <section class="slide slide-research" data-slide="4">
+        <div class="slide-content stagger">
+            <h2 class="reveal">Two-Stage AI Pipeline</h2>
+            <p class="slide-subtitle reveal">Not hallucinated suggestions &mdash; real, sourced intel from live web research</p>
+
+            <div class="research-pipeline reveal stagger" style="width: min(95%, 780px);">
+                <div class="card reveal" style="display: grid; grid-template-columns: auto 1fr; gap: clamp(10px, 1.5vw, 16px); padding: clamp(12px, 1.5vw, 18px); align-items: center; border-left: 3px solid var(--tb-amber);">
+                    <div style="width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, var(--tb-amber), #d4a017); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 1rem;">1</div>
+                    <div>
+                        <h4 style="margin: 0 0 3px; font-size: clamp(0.8rem, 1.2vw, 0.95rem); color: var(--tb-amber);">Perplexity Research Agent (sonar-pro)</h4>
+                        <p style="margin: 0; font-size: clamp(0.65rem, 0.9vw, 0.8rem); color: var(--tb-muted); line-height: 1.4;">Scrapes TikTok, Reddit, Eater, The Infatuation, TimeOut &mdash; returns real restaurants with source citations</p>
+                    </div>
+                </div>
+                <div class="reveal" style="text-align: center; font-size: 1.3rem; color: var(--tb-muted); margin: 0.15rem 0;">&#8595;</div>
+                <div class="card reveal" style="display: grid; grid-template-columns: auto 1fr; gap: clamp(10px, 1.5vw, 16px); padding: clamp(12px, 1.5vw, 18px); align-items: center; border-left: 3px solid #2d8a4e;">
+                    <div style="width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, #2d8a4e, #198754); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 1rem;">2</div>
+                    <div>
+                        <h4 style="margin: 0 0 3px; font-size: clamp(0.8rem, 1.2vw, 0.95rem); color: #2d8a4e;">User Database Cross-Reference</h4>
+                        <p style="margin: 0; font-size: clamp(0.65rem, 0.9vw, 0.8rem); color: var(--tb-muted); line-height: 1.4;">Matches research against tier rankings, visit history, and taste profile &mdash; no duplicate suggestions</p>
+                    </div>
+                </div>
+                <div class="reveal" style="text-align: center; font-size: 1.3rem; color: var(--tb-muted); margin: 0.15rem 0;">&#8595;</div>
+                <div class="card reveal" style="display: grid; grid-template-columns: auto 1fr; gap: clamp(10px, 1.5vw, 16px); padding: clamp(12px, 1.5vw, 18px); align-items: center; border-left: 3px solid #0d6efd;">
+                    <div style="width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, #0d6efd, #0dcaf0); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 1rem;">3</div>
+                    <div>
+                        <h4 style="margin: 0 0 3px; font-size: clamp(0.8rem, 1.2vw, 0.95rem); color: #0d6efd;">Claude AI Synthesis</h4>
+                        <p style="margin: 0; font-size: clamp(0.65rem, 0.9vw, 0.8rem); color: var(--tb-muted); line-height: 1.4;">Expert personalized recommendations with source links &mdash; database-first, then research-backed new suggestions</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="reveal" style="display: flex; gap: clamp(6px, 1vw, 12px); justify-content: center; flex-wrap: wrap; margin-top: 0.4rem;">
+                <span style="background: rgba(184,134,11,0.1); color: var(--tb-amber); padding: 0.25rem 0.6rem; border-radius: 1rem; font-size: clamp(0.6rem, 0.8vw, 0.72rem); font-weight: 600;">Smart Classifier</span>
+                <span style="background: rgba(45,138,78,0.1); color: #2d8a4e; padding: 0.25rem 0.6rem; border-radius: 1rem; font-size: clamp(0.6rem, 0.8vw, 0.72rem); font-weight: 600;">DB-Only = No API Cost</span>
+                <span style="background: rgba(13,110,253,0.1); color: #0d6efd; padding: 0.25rem 0.6rem; border-radius: 1rem; font-size: clamp(0.6rem, 0.8vw, 0.72rem); font-weight: 600;">Graceful Fallback</span>
+                <span style="background: rgba(163,65,91,0.1); color: var(--tb-burgundy); padding: 0.25rem 0.6rem; border-radius: 1rem; font-size: clamp(0.6rem, 0.8vw, 0.72rem); font-weight: 600;">$10 = Months of Queries</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         SLIDE 6: LOG EVERY VISIT
+         ========================================== -->
+    <section class="slide slide-visit-log" data-slide="5">
         <div class="slide-content stagger">
             <h2 class="reveal">Log Every Visit</h2>
             <p class="slide-subtitle reveal">Every visit generates structured data for AI recommendations and dining intelligence</p>
@@ -595,9 +645,9 @@
     </section>
 
     <!-- ==========================================
-         SLIDE 6: PRODUCT IN ACTION
+         SLIDE 7: PRODUCT IN ACTION
          ========================================== -->
-    <section class="slide slide-demo" data-slide="5">
+    <section class="slide slide-demo" data-slide="6">
         <div class="slide-content stagger">
             <h2 class="reveal">Product in Action</h2>
             <div class="demo-row reveal stagger">
@@ -635,9 +685,9 @@
     </section>
 
     <!-- ==========================================
-         SLIDE 7: PERSONA ECOSYSTEM
+         SLIDE 8: PERSONA ECOSYSTEM
          ========================================== -->
-    <section class="slide slide-persona" data-slide="6">
+    <section class="slide slide-persona" data-slide="7">
         <div class="slide-content stagger">
             <h2 class="reveal">Persona Ecosystem: The Social Moat</h2>
             <p class="slide-subtitle reveal">Network effects + engagement loops that deepen with every user</p>
@@ -694,9 +744,9 @@
     </section>
 
     <!-- ==========================================
-         SLIDE 8: TRACTION
+         SLIDE 9: TRACTION
          ========================================== -->
-    <section class="slide slide-traction" data-slide="7">
+    <section class="slide slide-traction" data-slide="8">
         <div class="slide-content stagger">
             <h2 class="reveal">Traction &amp; Engagement</h2>
             <div class="metric-row reveal stagger">
@@ -719,9 +769,9 @@
     </section>
 
     <!-- ==========================================
-         SLIDE 9: BUSINESS MODEL + ROADMAP
+         SLIDE 10: BUSINESS MODEL + ROADMAP
          ========================================== -->
-    <section class="slide slide-business" data-slide="8">
+    <section class="slide slide-business" data-slide="9">
         <div class="slide-content stagger">
             <h2 class="reveal">Business Model &amp; Roadmap</h2>
             <div class="biz-layout">
@@ -752,9 +802,9 @@
     </section>
 
     <!-- ==========================================
-         SLIDE 10: THE ASK
+         SLIDE 11: THE ASK
          ========================================== -->
-    <section class="slide slide-ask" data-slide="9">
+    <section class="slide slide-ask" data-slide="10">
         <div class="slide-content stagger">
             <h2 class="ask-title reveal">The Ask</h2>
             <div class="ask-amount reveal">$250K Seed</div>
@@ -772,9 +822,9 @@
     </section>
 
     <!-- ==========================================
-         SLIDE 11: DEVELOPMENT ROADMAP
+         SLIDE 12: DEVELOPMENT ROADMAP
          ========================================== -->
-    <section class="slide slide-dev-roadmap" data-slide="10">
+    <section class="slide slide-dev-roadmap" data-slide="11">
         <div class="slide-content stagger">
             <h2 class="reveal">Development Roadmap</h2>
             <p class="slide-subtitle reveal">What the funding enables</p>
