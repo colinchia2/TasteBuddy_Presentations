@@ -12,7 +12,7 @@ HTML slide decks for TasteBuddy — the AI-powered restaurant tracker.
 | File | Slides | Description |
 |------|--------|-------------|
 | `general-overview.html` | 13 | Origin story, features, personas, AI concierge, TasteBoard |
-| `investor.html` | 11 | Problem, solution, traction, business model, the ask, dev roadmap |
+| `investor.html` | 11 | Problem, solution, traction, business model, the ask, dev  roadmap |
 
 ## App
 
