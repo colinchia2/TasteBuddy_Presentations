@@ -338,7 +338,18 @@
             <h1 class="title-main reveal">TasteBuddy</h1>
             <div class="title-divider reveal"></div>
             <p class="title-tagline reveal">The all-in-one restaurant tracker with AI-powered dining intelligence</p>
-            <div class="title-date reveal">March 2026</div>
+            <div class="title-date reveal">April 2026</div>
+            <div class="reveal" style="margin-top: clamp(0.5rem, 1.5vw, 1rem);">
+                <a href="https://tastebuddy-colinchia2.pythonanywhere.com/" target="_blank" rel="noopener"
+                   style="display: inline-block; padding: 0.6rem 1.5rem; background: var(--tb-sage); color: white; border-radius: 2rem; font-family: var(--font-display); font-weight: 600; font-size: var(--body-size); text-decoration: none; transition: transform 0.2s, box-shadow 0.2s;"
+                   onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(45,138,78,0.3)'"
+                   onmouseout="this.style.transform=''; this.style.boxShadow=''">
+                    Explore the Live Site &rarr;
+                </a>
+                <div style="font-size: var(--small-size); color: var(--tb-muted); margin-top: 0.4rem;">
+                    See 1,000+ live rankings and try the AI concierge &mdash; or keep scrolling for the full story
+                </div>
+            </div>
         </div>
     </section>
 
@@ -535,7 +546,7 @@
                         <div class="ai-cap-item"><span>&#128200;</span> Query your own data: "My top 5 cuisines?"</div>
                     </div>
 
-                    <div style="font-size:var(--tag-size);color:var(--tb-muted);margin-top:clamp(3px,0.4vw,5px);"><strong style="color:var(--tb-dark)">Powered by Perplexity Research Agent</strong> + Claude AI</div>
+                    <div style="font-size:var(--tag-size);color:var(--tb-muted);margin-top:clamp(3px,0.4vw,5px);"><strong style="color:var(--tb-dark)">Powered by Perplexity Research Agent</strong> + Claude Sonnet 4</div>
                 </div>
             </div>
         </div>
@@ -554,7 +565,7 @@
                     <div style="width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, var(--tb-amber), #d4a017); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 1rem;">1</div>
                     <div>
                         <h4 style="margin: 0 0 3px; font-size: clamp(0.8rem, 1.2vw, 0.95rem); color: var(--tb-amber);">Perplexity Research Agent (sonar-pro)</h4>
-                        <p style="margin: 0; font-size: clamp(0.65rem, 0.9vw, 0.8rem); color: var(--tb-muted); line-height: 1.4;">Scrapes TikTok, Reddit, Eater, The Infatuation, TimeOut &mdash; returns real restaurants with source citations</p>
+                        <p style="margin: 0; font-size: clamp(0.65rem, 0.9vw, 0.8rem); color: var(--tb-muted); line-height: 1.4;">Searches Eater, The Infatuation, Reddit, TikTok, TimeOut, Serious Eats with <strong>domain filtering</strong> and <strong>recency filtering</strong> (last 30 days) &mdash; returns real restaurants with source citations</p>
                     </div>
                 </div>
                 <div class="reveal" style="text-align: center; font-size: 1.3rem; color: var(--tb-muted); margin: 0.15rem 0;">&#8595;</div>
@@ -569,8 +580,8 @@
                 <div class="card reveal" style="display: grid; grid-template-columns: auto 1fr; gap: clamp(10px, 1.5vw, 16px); padding: clamp(12px, 1.5vw, 18px); align-items: center; border-left: 3px solid #0d6efd;">
                     <div style="width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, #0d6efd, #0dcaf0); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 1rem;">3</div>
                     <div>
-                        <h4 style="margin: 0 0 3px; font-size: clamp(0.8rem, 1.2vw, 0.95rem); color: #0d6efd;">Claude AI Synthesis</h4>
-                        <p style="margin: 0; font-size: clamp(0.65rem, 0.9vw, 0.8rem); color: var(--tb-muted); line-height: 1.4;">Expert personalized recommendations with source links &mdash; database-first, then research-backed new suggestions</p>
+                        <h4 style="margin: 0 0 3px; font-size: clamp(0.8rem, 1.2vw, 0.95rem); color: #0d6efd;">Claude Sonnet 4</h4>
+                        <p style="margin: 0; font-size: clamp(0.65rem, 0.9vw, 0.8rem); color: var(--tb-muted); line-height: 1.4;">Personalizes research with your taste profile using smart context. Two modes: <strong>Discover</strong> (research-first) and <strong>Search</strong> (database-first). Includes Resy &amp; OpenTable booking links</p>
                     </div>
                 </div>
             </div>
@@ -579,7 +590,7 @@
                 <span style="background: rgba(184,134,11,0.1); color: var(--tb-amber); padding: 0.25rem 0.6rem; border-radius: 1rem; font-size: clamp(0.6rem, 0.8vw, 0.72rem); font-weight: 600;">Smart Classifier</span>
                 <span style="background: rgba(45,138,78,0.1); color: #2d8a4e; padding: 0.25rem 0.6rem; border-radius: 1rem; font-size: clamp(0.6rem, 0.8vw, 0.72rem); font-weight: 600;">DB-Only = No API Cost</span>
                 <span style="background: rgba(13,110,253,0.1); color: #0d6efd; padding: 0.25rem 0.6rem; border-radius: 1rem; font-size: clamp(0.6rem, 0.8vw, 0.72rem); font-weight: 600;">Graceful Fallback</span>
-                <span style="background: rgba(163,65,91,0.1); color: var(--tb-burgundy); padding: 0.25rem 0.6rem; border-radius: 1rem; font-size: clamp(0.6rem, 0.8vw, 0.72rem); font-weight: 600;">$10 = Months of Queries</span>
+                <span style="background: rgba(163,65,91,0.1); color: var(--tb-burgundy); padding: 0.25rem 0.6rem; border-radius: 1rem; font-size: clamp(0.6rem, 0.8vw, 0.72rem); font-weight: 600;">~$0.03/query</span>
             </div>
         </div>
     </section>
@@ -794,8 +805,8 @@
                 </div>
                 <div class="roadmap-card card reveal-right">
                     <h4>&#128640; Product Roadmap</h4>
-                    <div class="roadmap-item"><div class="rm-timeline"><div class="rm-dot done"></div><div class="rm-line"></div></div><div class="rm-content"><div class="rm-date">Launched</div><h5>Core MVP</h5><p>Rankings, visits, map, TasteBoard, AI chat, reservation planning</p></div></div>
-                    <div class="roadmap-item"><div class="rm-timeline"><div class="rm-dot current"></div><div class="rm-line"></div></div><div class="rm-content"><div class="rm-date">Q2 2026</div><h5>Persona Ecosystem + Social Discovery</h5><p>Curated persona profiles, follow/browse UX, AI persona-aware recommendations</p></div></div>
+                    <div class="roadmap-item"><div class="rm-timeline"><div class="rm-dot done"></div><div class="rm-line"></div></div><div class="rm-content"><div class="rm-date">Launched</div><h5>Core MVP + Personas</h5><p>Rankings, visits, map, TasteBoard, AI concierge, reservation planning, persona ecosystem, guest view mode</p></div></div>
+                    <div class="roadmap-item"><div class="rm-timeline"><div class="rm-dot current"></div><div class="rm-line"></div></div><div class="rm-content"><div class="rm-date">Q2 2026</div><h5>AI Pipeline v2 + Discovery Mode</h5><p>Perplexity domain/recency filtering, Claude Sonnet 4, smart context, pipeline trace, Resy/OpenTable booking links</p></div></div>
                     <div class="roadmap-item"><div class="rm-timeline"><div class="rm-dot future"></div><div class="rm-line"></div></div><div class="rm-content"><div class="rm-date">Q4 2026</div><h5>Pro Tier + Partnerships</h5><p>Monetization launch, restaurant partner portal, affiliate bookings</p></div></div>
                     <div class="roadmap-item"><div class="rm-timeline"><div class="rm-dot future"></div></div><div class="rm-content"><div class="rm-date">2027</div><h5>AI Taste Graph</h5><p>ML-powered taste profiling, predictive recommendations, group dining AI</p></div></div>
                 </div>
