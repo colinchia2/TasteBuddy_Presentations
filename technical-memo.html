@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TasteBuddy — Technical Memo</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --tb-amber: #b8860b;
+            --tb-burgundy: #a3415b;
+            --tb-sage: #2d8a4e;
+            --tb-blue: #0d6efd;
+            --tb-dark: #212529;
+            --tb-muted: #6c757d;
+            --tb-white: #ffffff;
+            --tb-bg: #f8f9fa;
+            --tb-border: rgba(0,0,0,0.08);
+            --font-display: 'Outfit', sans-serif;
+            --font-body: 'DM Sans', sans-serif;
+        }
+
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-body);
+            background: #e9ecef;
+            color: var(--tb-dark);
+            -webkit-font-smoothing: antialiased;
+            padding: 40px 20px;
+        }
+
+        h1, h2, h3, h4 { font-family: var(--font-display); }
+
+        /* ── PAGE SHELL ── */
+        .page {
+            background: var(--tb-white);
+            width: 780px;
+            margin: 0 auto;
+            border-radius: 16px;
+            box-shadow: 0 8px 40px rgba(0,0,0,0.12);
+            overflow: hidden;
+        }
+
+        /* ── HEADER ── */
+        .header {
+            background: linear-gradient(135deg, var(--tb-amber) 0%, var(--tb-burgundy) 100%);
+            padding: 36px 44px 28px;
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 24px;
+        }
+        .header-left { flex: 1; }
+        .header-eyebrow {
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 6px;
+        }
+        .header-title {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--tb-white);
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+        }
+        .header-tagline {
+            font-size: 13px;
+            color: rgba(255,255,255,0.75);
+            margin-top: 8px;
+            font-weight: 300;
+        }
+        .header-meta {
+            text-align: right;
+            font-size: 11px;
+            color: rgba(255,255,255,0.6);
+            line-height: 1.8;
+            font-family: var(--font-body);
+            white-space: nowrap;
+        }
+        .header-meta strong { color: rgba(255,255,255,0.9); font-weight: 600; }
+
+        /* ── BODY ── */
+        .body { padding: 36px 44px 40px; display: flex; flex-direction: column; gap: 28px; }
+
+        /* ── TWO-COL LAYOUT ── */
+        .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+        /* ── SECTION ── */
+        .section {}
+        .section-label {
+            font-size: 9px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            color: var(--tb-amber);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+        .section-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--tb-border);
+        }
+        .section p {
+            font-size: 13px;
+            line-height: 1.65;
+            color: #3a3f44;
+        }
+        .section p + p { margin-top: 8px; }
+
+        /* ── STACK LIST ── */
+        .stack-list { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+        .stack-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 12.5px;
+            line-height: 1.45;
+        }
+        .stack-badge {
+            flex-shrink: 0;
+            font-size: 10px;
+            font-weight: 700;
+            font-family: var(--font-display);
+            padding: 2px 8px;
+            border-radius: 5px;
+            letter-spacing: 0.02em;
+            margin-top: 1px;
+        }
+        .badge-python   { background: #d4edda; color: #155724; }
+        .badge-data     { background: #cce5ff; color: #004085; }
+        .badge-ai       { background: #fff3cd; color: #856404; }
+        .badge-infra    { background: #f8d7da; color: #721c24; }
+
+        .stack-item-body { flex: 1; }
+        .stack-item-name { font-weight: 600; color: var(--tb-dark); }
+        .stack-item-desc { color: var(--tb-muted); font-size: 11.5px; }
+
+        /* ── PIPELINE BLOCK ── */
+        .pipeline {
+            background: var(--tb-bg);
+            border-radius: 10px;
+            padding: 16px 18px;
+            border: 1px solid var(--tb-border);
+        }
+        .pipeline-flow {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            margin-top: 12px;
+            flex-wrap: nowrap;
+        }
+        .pipeline-step {
+            flex: 1;
+            text-align: center;
+        }
+        .pipeline-node {
+            border-radius: 8px;
+            padding: 8px 6px;
+            font-size: 11px;
+            font-weight: 600;
+            font-family: var(--font-display);
+            line-height: 1.3;
+        }
+        .pipeline-node-sub {
+            font-size: 9.5px;
+            font-weight: 400;
+            color: var(--tb-muted);
+            margin-top: 3px;
+            font-family: var(--font-body);
+        }
+        .node-user   { background: #e8f4fd; color: #0b4ea8; border: 1px solid #b8d9f5; }
+        .node-gate   { background: #f0f0f0; color: #555; border: 1px solid #ddd; }
+        .node-pplx   { background: #fff3cd; color: #7a5700; border: 1px solid #f5d568; }
+        .node-claude { background: #fde8ef; color: #7a1034; border: 1px solid #f5b8cb; }
+        .node-out    { background: #d4edda; color: #155724; border: 1px solid #a3d3ae; }
+        .pipe-arrow  { font-size: 14px; color: #adb5bd; padding: 0 2px; flex-shrink: 0; }
+
+        /* ── LINKS / URL ROW ── */
+        .url-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 12px 16px;
+            background: var(--tb-bg);
+            border-radius: 8px;
+            border: 1px solid var(--tb-border);
+            flex-wrap: wrap;
+        }
+        .url-item { font-size: 12px; display: flex; align-items: center; gap: 6px; }
+        .url-label { font-weight: 600; color: var(--tb-dark); font-size: 11px; font-family: var(--font-display); }
+        .url-link { color: var(--tb-blue); text-decoration: none; font-family: 'Courier New', monospace; font-size: 11.5px; }
+
+        /* ── FOOTER ── */
+        .footer {
+            border-top: 1px solid var(--tb-border);
+            padding: 14px 44px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .footer-left { font-size: 11px; color: var(--tb-muted); }
+        .footer-right { font-size: 10px; color: #adb5bd; font-style: italic; }
+
+        /* ── PRINT ── */
+        @media print {
+            body { background: white; padding: 0; }
+            .page {
+                width: 100%;
+                box-shadow: none;
+                border-radius: 0;
+            }
+            @page { margin: 0; size: letter portrait; }
+        }
+
+        /* ── PRINT BUTTON ── */
+        .print-btn {
+            display: block;
+            width: 780px;
+            margin: 20px auto 0;
+            text-align: center;
+        }
+        .print-btn button {
+            background: var(--tb-amber);
+            color: white;
+            border: none;
+            padding: 10px 28px;
+            border-radius: 8px;
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            letter-spacing: 0.02em;
+        }
+        .print-btn button:hover { background: #9a7009; }
+        @media print { .print-btn { display: none; } }
+    </style>
+</head>
+<body>
+
+<div class="page">
+
+    <!-- ── HEADER ── -->
+    <div class="header">
+        <div class="header-left">
+            <div class="header-eyebrow">Technical Memo · April 2026</div>
+            <div class="header-title">TasteBuddy</div>
+            <div class="header-tagline">A full-stack restaurant intelligence platform powered by AI research agents</div>
+        </div>
+        <div class="header-meta">
+            <div><strong>Author</strong> Colin Chiapello</div>
+            <div><strong>Live Web App</strong> tastebuddy-colinchia2.pythonanywhere.com</div>
+            <div><strong>Status</strong> Production · Multi-user</div>
+            <div><strong>AI Layer</strong> Perplexity sonar-pro + Claude Sonnet</div>
+        </div>
+    </div>
+
+    <!-- ── BODY ── -->
+    <div class="body">
+
+        <!-- OVERVIEW + STACK side by side -->
+        <div class="two-col">
+
+            <!-- OVERVIEW -->
+            <div class="section">
+                <div class="section-label">What It Is</div>
+                <p>TasteBuddy is a personal restaurant intelligence platform I built end-to-end. It lets users track every restaurant they visit, tier-rank them by cuisine category, manage a wishlist, and get AI-generated dining recommendations — all from one place.</p>
+                <p>The app solves a real fragmentation problem: most food-obsessed people scatter notes across Yelp, Google Maps, Beli, and saved Instagram posts. TasteBuddy consolidates everything into a structured, searchable record with social and AI layers on top.</p>
+                <p>Features include visit logging (with occasion, spend, party size), a tiered ranking system (S/A/B/C by cuisine), a Google Places–powered listing lookup, neighborhood maps, an AI concierge, and a persona ecosystem for browsing other users' taste profiles.</p>
+            </div>
+
+            <!-- STACK -->
+            <div class="section">
+                <div class="section-label">Tech Stack</div>
+                <ul class="stack-list">
+                    <li class="stack-item">
+                        <div>
+                            <span class="stack-badge badge-python">Backend</span>
+                        </div>
+                        <div class="stack-item-body">
+                            <div class="stack-item-name">Python · Flask</div>
+                            <div class="stack-item-desc">Blueprint architecture, Flask-Login auth, SQLAlchemy ORM. Hosted on PythonAnywhere.</div>
+                        </div>
+                    </li>
+                    <li class="stack-item">
+                        <div>
+                            <span class="stack-badge badge-data">Data</span>
+                        </div>
+                        <div class="stack-item-body">
+                            <div class="stack-item-name">MySQL · Google Places API</div>
+                            <div class="stack-item-desc">Relational DB for users, restaurants, visits, rankings. Places API for deduped listing lookup.</div>
+                        </div>
+                    </li>
+                    <li class="stack-item">
+                        <div>
+                            <span class="stack-badge badge-ai">AI</span>
+                        </div>
+                        <div class="stack-item-body">
+                            <div class="stack-item-name">Perplexity sonar-pro</div>
+                            <div class="stack-item-desc">Live web research agent — food media search with citation extraction and cost tracking.</div>
+                        </div>
+                    </li>
+                    <li class="stack-item">
+                        <div>
+                            <span class="stack-badge badge-ai">AI</span>
+                        </div>
+                        <div class="stack-item-body">
+                            <div class="stack-item-name">Claude Sonnet (Anthropic)</div>
+                            <div class="stack-item-desc">Synthesis layer — personalizes Perplexity findings against user's actual taste history.</div>
+                        </div>
+                    </li>
+                    <li class="stack-item">
+                        <div>
+                            <span class="stack-badge badge-infra">Frontend</span>
+                        </div>
+                        <div class="stack-item-body">
+                            <div class="stack-item-name">Jinja2 · Bootstrap · Leaflet.js</div>
+                            <div class="stack-item-desc">Server-rendered templates, interactive maps, HTMX for async updates.</div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+
+        <!-- AI PIPELINE -->
+        <div class="section">
+            <div class="section-label">AI Research Pipeline · How It Works</div>
+            <div class="pipeline">
+                <p style="font-size:12px; color:var(--tb-muted); line-height:1.5;">
+                    When a user asks the AI concierge a question (e.g. <em>"I'm in a new area, help me find a restaurant I would like based on my preferences back home"</em>), a two-stage agent pipeline fires. First, a question classifier decides whether the query needs live web data or can be answered from the local database alone — skipping Perplexity entirely for simple lookups (zero API cost). For richer queries, Perplexity <code>sonar-pro</code> runs a targeted search across food media sources (Eater, Infatuation, NYT Food, TikTok), returning citations and fresh restaurant intel. Claude Sonnet then receives both the research output <em>and</em> a structured snapshot of the user's actual taste history — their rankings, visit log, wishlist, and active persona — producing a recommendation personalized to that specific user, not a generic answer.
+                </p>
+                <div class="pipeline-flow">
+                    <div class="pipeline-step">
+                        <div class="pipeline-node node-user">User Query</div>
+                        <div class="pipeline-node-sub">natural language</div>
+                    </div>
+                    <div class="pipe-arrow">→</div>
+                    <div class="pipeline-step">
+                        <div class="pipeline-node node-gate">Classifier</div>
+                        <div class="pipeline-node-sub">DB-only vs. web?</div>
+                    </div>
+                    <div class="pipe-arrow">→</div>
+                    <div class="pipeline-step">
+                        <div class="pipeline-node node-pplx">Perplexity<br>sonar-pro</div>
+                        <div class="pipeline-node-sub">live food media search</div>
+                    </div>
+                    <div class="pipe-arrow">→</div>
+                    <div class="pipeline-step">
+                        <div class="pipeline-node node-claude">Claude Sonnet</div>
+                        <div class="pipeline-node-sub">synthesis + personalization</div>
+                    </div>
+                    <div class="pipe-arrow">→</div>
+                    <div class="pipeline-step">
+                        <div class="pipeline-node node-out">Response</div>
+                        <div class="pipeline-node-sub">cited + personalized</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- LINKS -->
+        <div class="url-row">
+            <div class="url-item">
+                <span class="url-label">Live Web App</span>
+                <a class="url-link" href="https://tastebuddy-colinchia2.pythonanywhere.com">tastebuddy-colinchia2.pythonanywhere.com</a>
+            </div>
+            <div class="url-item">
+                <span class="url-label">General Overview</span>
+                <a class="url-link" href="https://colinchia2.github.io/TasteBuddy_Presentations/">colinchia2.github.io/TasteBuddy_Presentations</a>
+            </div>
+        </div>
+
+    </div><!-- /body -->
+
+    <!-- ── FOOTER ── -->
+    <div class="footer">
+        <div class="footer-left">Built by Colin Chia · Flask · MySQL · Perplexity sonar-pro · Claude Sonnet</div>
+        <div class="footer-right">TasteBuddy · Technical Memo · April 2026</div>
+    </div>
+
+</div><!-- /page -->
+
+<div class="print-btn">
+    <button onclick="window.print()">⬇ Save as PDF (File → Print → Save as PDF)</button>
+</div>
+
+</body>
+</html>
