@@ -22,6 +22,6 @@ TasteBuddy is for people who care about where they eat and want to be intentiona
 
 - **[Technical Memo](https://colinchia2.github.io/TasteBuddy_Presentations/TasteBuddy-technical-memo.html)** — deep-dive on the architecture, tech stack, and implementation details
 
-## App
+## Web App
 
 Live app: [tastebuddy-colinchia2.pythonanywhere.com](https://tastebuddy-colinchia2.pythonanywhere.com)
