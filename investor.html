@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TasteBuddy — Investor Deck</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+    <style>
+        /* ===========================================
+           TASTEBUDDY THEME VARIABLES
+           =========================================== */
+        :root {
+            --tb-bg: #f8f9fa;
+            --tb-amber: #b8860b;
+            --tb-burgundy: #a3415b;
+            --tb-sage: #2d8a4e;
+            --tb-blue: #0d6efd;
+            --tb-dark: #212529;
+            --tb-muted: #6c757d;
+            --tb-white: #ffffff;
+            --tb-light-border: rgba(0,0,0,0.08);
+            --tier-s: #ffc107; --tier-a: #0d6efd; --tier-b: #6b7b8d; --tier-c: #adb5bd; --tier-tbe: #a3415b;
+            --font-display: 'Outfit', sans-serif;
+            --font-body: 'DM Sans', sans-serif;
+            --title-size: clamp(2rem, 5.5vw, 4.5rem);
+            --h2-size: clamp(1.4rem, 3.5vw, 2.5rem);
+            --h3-size: clamp(1rem, 2vw, 1.5rem);
+            --body-size: clamp(0.75rem, 1.3vw, 1.05rem);
+            --small-size: clamp(0.65rem, 1vw, 0.85rem);
+            --tag-size: clamp(0.6rem, 0.9vw, 0.78rem);
+            --slide-padding: clamp(1.5rem, 4vw, 4rem);
+            --content-gap: clamp(0.75rem, 2vw, 2rem);
+            --element-gap: clamp(0.3rem, 1vw, 0.75rem);
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+            --duration: 0.6s;
+        }
+
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-snap-type: y mandatory; scroll-behavior: smooth; height: 100%; overflow-x: hidden; }
+        body { font-family: var(--font-body); background: var(--tb-bg); color: var(--tb-dark); height: 100%; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+        h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 700; line-height: 1.15; }
+
+        .slide { width: 100vw; height: 100vh; height: 100dvh; overflow: hidden; scroll-snap-align: start; display: flex; flex-direction: column; position: relative; padding: var(--slide-padding); }
+        .slide-content { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; max-height: 100%; overflow: hidden; }
+
+        .progress-bar { position: fixed; top: 0; left: 0; height: 3px; background: linear-gradient(90deg, var(--tb-amber), var(--tb-burgundy)); z-index: 1000; transition: width 0.3s ease; width: 0%; }
+        .nav-dots { position: fixed; right: clamp(0.75rem, 2vw, 1.5rem); top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 10px; z-index: 100; }
+        .nav-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--tb-muted); opacity: 0.3; cursor: pointer; transition: all 0.3s ease; border: none; }
+        .nav-dot.active { opacity: 1; background: var(--tb-amber); transform: scale(1.3); }
+        .nav-dot:hover { opacity: 0.7; transform: scale(1.2); }
+        .keyboard-hint { position: fixed; bottom: clamp(0.75rem, 2vw, 1.5rem); left: 50%; transform: translateX(-50%); font-size: var(--small-size); color: var(--tb-muted); opacity: 0.5; z-index: 100; pointer-events: none; transition: opacity 0.5s; }
+        .slide-counter { position: fixed; bottom: clamp(0.75rem, 2vw, 1.5rem); left: clamp(0.75rem, 2vw, 1.5rem); font-size: var(--small-size); color: var(--tb-muted); opacity: 0.35; z-index: 100; font-family: var(--font-body); pointer-events: none; }
+
+        .reveal { opacity: 0; transform: translateY(24px); transition: opacity var(--duration) var(--ease-out-expo), transform var(--duration) var(--ease-out-expo); }
+        .reveal-left { opacity: 0; transform: translateX(-30px); transition: opacity var(--duration) var(--ease-out-expo), transform var(--duration) var(--ease-out-expo); }
+        .reveal-right { opacity: 0; transform: translateX(30px); transition: opacity var(--duration) var(--ease-out-expo), transform var(--duration) var(--ease-out-expo); }
+        .reveal-scale { opacity: 0; transform: scale(0.85); transition: opacity var(--duration) var(--ease-out-expo), transform var(--duration) var(--ease-out-expo); }
+        .slide.visible .reveal, .slide.visible .reveal-left, .slide.visible .reveal-right, .slide.visible .reveal-scale { opacity: 1; transform: translateY(0) translateX(0) scale(1); }
+        .slide.visible .stagger > *:nth-child(1) { transition-delay: 0.05s; }
+        .slide.visible .stagger > *:nth-child(2) { transition-delay: 0.12s; }
+        .slide.visible .stagger > *:nth-child(3) { transition-delay: 0.19s; }
+        .slide.visible .stagger > *:nth-child(4) { transition-delay: 0.26s; }
+        .slide.visible .stagger > *:nth-child(5) { transition-delay: 0.33s; }
+        .slide.visible .stagger > *:nth-child(6) { transition-delay: 0.40s; }
+        .slide.visible .stagger > *:nth-child(7) { transition-delay: 0.47s; }
+
+        .card { background: var(--tb-white); border-radius: 14px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); border: 1px solid var(--tb-light-border); }
+        .glass-card { background: rgba(255,255,255,0.75); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-radius: 14px; box-shadow: 0 4px 20px rgba(0,0,0,0.06); border: 1px solid rgba(255,255,255,0.6); }
+        .slide-subtitle { font-size: var(--body-size); color: var(--tb-muted); text-align: center; max-width: 600px; line-height: 1.5; }
+
+        /* ===========================================
+           SLIDE 1 — TITLE
+           =========================================== */
+        .slide-title { background: var(--tb-white); text-align: center; }
+        .slide-title .slide-content { gap: var(--content-gap); }
+        .title-eyebrow { font-size: var(--small-size); font-weight: 600; text-transform: uppercase; letter-spacing: 0.15em; color: var(--tb-amber); }
+        .title-main { font-size: var(--title-size); font-weight: 800; background: linear-gradient(135deg, var(--tb-amber), var(--tb-burgundy)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; letter-spacing: -0.02em; }
+        .title-tagline { font-size: clamp(1rem, 2.2vw, 1.5rem); font-weight: 300; color: var(--tb-muted); max-width: 550px; }
+        .title-divider { width: clamp(40px, 8vw, 80px); height: 3px; border-radius: 2px; background: var(--tb-amber); margin: 0 auto; }
+        .title-date { font-size: var(--tag-size); color: var(--tb-muted); }
+        .bg-dots { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+        .bg-dot { position: absolute; width: 6px; height: 6px; border-radius: 50%; background: var(--tb-amber); opacity: 0.06; animation: floatDot 8s ease-in-out infinite; }
+        @keyframes floatDot { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+
+        /* ===========================================
+           SLIDE 2 — PROBLEM + FRAGMENTATION
+           =========================================== */
+        .slide-problem { background: var(--tb-bg); }
+        .slide-problem .slide-content { gap: clamp(0.6rem, 1.5vw, 1.2rem); align-items: center; }
+        .slide-problem h2 { font-size: var(--h2-size); text-align: center; }
+        .problem-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(6px, 1vw, 12px); width: min(95%, 720px); }
+        .problem-card { padding: clamp(10px, 1.5vw, 18px); text-align: center; display: flex; flex-direction: column; align-items: center; gap: clamp(3px, 0.5vw, 6px); }
+        .problem-icon { font-size: clamp(1.3rem, 2.5vw, 1.8rem); }
+        .problem-card h4 { font-size: var(--body-size); font-weight: 600; }
+        .problem-card p { font-size: var(--small-size); color: var(--tb-muted); line-height: 1.4; }
+
+        /* App fragmentation row */
+        .frag-row { display: flex; gap: clamp(6px, 1vw, 12px); justify-content: center; flex-wrap: wrap; width: min(95%, 700px); }
+        .frag-chip { display: flex; align-items: center; gap: clamp(4px, 0.5vw, 6px); padding: clamp(4px, 0.6vw, 8px) clamp(8px, 1.2vw, 14px); border-radius: 10px; background: var(--tb-white); border: 1px solid var(--tb-light-border); font-size: var(--tag-size); }
+        .frag-icon { font-size: clamp(0.8rem, 1.2vw, 1rem); }
+        .frag-name { font-weight: 600; }
+        .frag-for { color: var(--tb-muted); }
+        .frag-plus { color: var(--tb-muted); font-weight: 300; font-size: var(--body-size); }
+        .problem-stat { font-size: var(--body-size); color: var(--tb-muted); text-align: center; max-width: 600px; line-height: 1.5; }
+        .problem-stat strong { color: var(--tb-burgundy); font-weight: 700; }
+
+        /* ===========================================
+           SLIDE 3 — SOLUTION + COMPETITIVE EDGE
+           =========================================== */
+        .slide-solution { background: var(--tb-white); }
+        .slide-solution .slide-content { gap: clamp(0.6rem, 1.5vw, 1.2rem); align-items: center; }
+        .slide-solution h2 { font-size: var(--h2-size); text-align: center; }
+        .solution-layout { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(10px, 1.5vw, 18px); width: min(95%, 820px); }
+        .sol-card { padding: clamp(10px, 1.5vw, 16px); }
+        .sol-card h4 { font-size: var(--body-size); font-weight: 600; margin-bottom: clamp(4px, 0.6vw, 8px); display: flex; align-items: center; gap: 6px; }
+        .sol-item { display: flex; align-items: flex-start; gap: clamp(6px, 0.8vw, 10px); padding: clamp(4px, 0.5vw, 7px) 0; border-bottom: 1px solid var(--tb-light-border); font-size: var(--small-size); line-height: 1.4; }
+        .sol-item:last-child { border-bottom: none; }
+        .sol-icon { font-size: clamp(0.8rem, 1.2vw, 1rem); flex-shrink: 0; margin-top: 1px; }
+        .sol-item strong { font-weight: 600; }
+
+        /* Competitive table */
+        .comp-table { width: min(95%, 820px); border-collapse: separate; border-spacing: 0; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+        .comp-table th, .comp-table td { padding: clamp(4px, 0.6vw, 8px) clamp(6px, 1vw, 12px); text-align: center; font-size: var(--tag-size); border-bottom: 1px solid var(--tb-light-border); }
+        .comp-table th { background: var(--tb-dark); color: var(--tb-white); font-family: var(--font-display); font-weight: 600; font-size: var(--tag-size); }
+        .comp-table th:first-child { text-align: left; }
+        .comp-table td:first-child { text-align: left; font-weight: 500; background: var(--tb-bg); }
+        .comp-table td { background: var(--tb-white); }
+        .comp-table tr:last-child td { border-bottom: none; }
+        .comp-yes { color: var(--tb-sage); font-weight: 700; font-size: 1.1em; }
+        .comp-no { color: #ccc; font-weight: 400; }
+        .comp-partial { color: var(--tb-amber); font-weight: 600; font-size: 0.95em; }
+        .comp-table .tb-col { background: rgba(184,134,11,0.04) !important; }
+
+        /* ===========================================
+           SLIDE 4 — CATEGORY FLEXIBILITY + AI
+           =========================================== */
+        .slide-edge { background: var(--tb-bg); }
+        .slide-edge .slide-content { gap: clamp(0.6rem, 1.5vw, 1.2rem); align-items: center; }
+        .slide-edge h2 { font-size: var(--h2-size); text-align: center; }
+        .edge-layout { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(10px, 1.5vw, 18px); width: min(95%, 820px); }
+        .edge-card { padding: clamp(10px, 1.5vw, 16px); }
+        .edge-card h4 { font-size: var(--body-size); font-weight: 600; margin-bottom: clamp(4px, 0.5vw, 8px); }
+        .cat-label { font-size: var(--tag-size); font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--tb-muted); margin-top: clamp(3px, 0.4vw, 5px); }
+        .cat-chips { display: flex; gap: clamp(3px, 0.4vw, 5px); flex-wrap: wrap; }
+        .cat-chip { padding: clamp(2px, 0.3vw, 3px) clamp(6px, 0.8vw, 10px); border-radius: 14px; font-size: var(--tag-size); font-weight: 500; border: 1.5px solid var(--tb-light-border); background: var(--tb-white); }
+        .cat-chip.core { background: rgba(45,138,78,0.06); border-color: rgba(45,138,78,0.25); color: var(--tb-sage); }
+        .cat-chip.custom { background: rgba(184,134,11,0.06); border-color: rgba(184,134,11,0.25); color: var(--tb-amber); }
+        .entry-row { display: flex; align-items: center; gap: clamp(5px, 0.7vw, 9px); padding: clamp(3px, 0.4vw, 6px) clamp(6px, 0.8vw, 10px); border-radius: 8px; background: var(--tb-white); font-size: var(--small-size); margin-bottom: 3px; }
+        .entry-name { font-weight: 600; flex-shrink: 0; }
+        .entry-cat { padding: 1px 5px; border-radius: 6px; font-size: var(--tag-size); font-weight: 500; }
+        .entry-tier { margin-left: auto; font-family: var(--font-display); font-weight: 800; font-size: var(--tag-size); padding: 1px 6px; border-radius: 5px; color: var(--tb-white); }
+
+        /* AI chat mockup */
+        .chat-mini { display: flex; flex-direction: column; gap: clamp(4px, 0.5vw, 7px); }
+        .chat-bubble { padding: clamp(4px, 0.6vw, 8px) clamp(6px, 0.8vw, 10px); border-radius: 10px; font-size: var(--tag-size); line-height: 1.4; max-width: 90%; }
+        .chat-user { background: var(--tb-blue); color: var(--tb-white); align-self: flex-end; border-bottom-right-radius: 3px; }
+        .chat-ai { background: var(--tb-white); color: var(--tb-dark); align-self: flex-start; border-bottom-left-radius: 3px; }
+        .chat-ai strong { color: var(--tb-amber); }
+        .ai-cap-list { display: flex; flex-direction: column; gap: clamp(2px, 0.3vw, 4px); margin-top: clamp(4px, 0.5vw, 6px); }
+        .ai-cap-item { display: flex; align-items: center; gap: 5px; font-size: var(--tag-size); color: var(--tb-muted); }
+        .ai-cap-item span:first-child { font-size: clamp(0.65rem, 1vw, 0.8rem); }
+
+        /* ===========================================
+           SLIDE 5 — RESEARCH AGENT PIPELINE
+           =========================================== */
+        .slide-research { background: #f0f1f3; }
+        .slide-research .slide-content { gap: clamp(0.5rem, 1.2vw, 1rem); align-items: center; }
+        .slide-research h2 { font-size: var(--h2-size); text-align: center; }
+
+        /* ===========================================
+           SLIDE 6 — LOG EVERY VISIT
+           =========================================== */
+        .slide-visit-log { background: var(--tb-white); }
+        .slide-visit-log .slide-content { gap: clamp(0.6rem, 1.5vw, 1.2rem); align-items: center; }
+        .slide-visit-log h2 { font-size: var(--h2-size); text-align: center; }
+        .visit-layout { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(10px, 1.5vw, 18px); width: min(95%, 820px); }
+        .form-mockup { padding: clamp(10px, 1.5vw, 16px); display: flex; flex-direction: column; gap: clamp(6px, 0.8vw, 10px); }
+        .form-mockup h4 { font-size: var(--small-size); color: var(--tb-muted); font-weight: 500; }
+        .form-field { display: flex; flex-direction: column; gap: 2px; }
+        .form-field label { font-size: var(--tag-size); font-weight: 600; color: var(--tb-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+        .form-input { padding: clamp(4px, 0.5vw, 7px) clamp(6px, 0.8vw, 10px); border-radius: 6px; background: var(--tb-bg); border: 1px solid var(--tb-light-border); font-size: var(--tag-size); color: var(--tb-dark); }
+        .data-flow-card { padding: clamp(10px, 1.5vw, 16px); display: flex; flex-direction: column; gap: clamp(6px, 0.8vw, 10px); }
+        .data-flow-card h4 { font-size: var(--body-size); font-weight: 600; }
+        .data-flow-item { display: flex; align-items: flex-start; gap: clamp(6px, 0.8vw, 10px); padding: clamp(4px, 0.5vw, 7px) 0; border-bottom: 1px solid var(--tb-light-border); }
+        .data-flow-item:last-child { border-bottom: none; }
+        .data-flow-icon { width: clamp(24px, 3vw, 32px); height: clamp(24px, 3vw, 32px); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: var(--body-size); flex-shrink: 0; }
+        .data-flow-text h5 { font-family: var(--font-display); font-size: var(--small-size); font-weight: 600; }
+        .data-flow-text p { font-size: var(--tag-size); color: var(--tb-muted); line-height: 1.3; }
+
+        /* ===========================================
+           SLIDE 6 — PRODUCT IN ACTION
+           =========================================== */
+        .slide-demo { background: var(--tb-white); }
+        .slide-demo .slide-content { gap: clamp(0.6rem, 1.5vw, 1.2rem); align-items: center; }
+        .slide-demo h2 { font-size: var(--h2-size); text-align: center; }
+        .demo-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(8px, 1.2vw, 14px); width: min(95%, 820px); }
+        .demo-screen { padding: clamp(10px, 1.5vw, 16px); display: flex; flex-direction: column; gap: var(--element-gap); }
+        .demo-screen h4 { font-size: var(--small-size); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--tb-muted); text-align: center; }
+        .mini-search { display: flex; align-items: center; gap: 6px; background: var(--tb-bg); border-radius: 20px; padding: clamp(4px, 0.6vw, 7px) clamp(8px, 1vw, 12px); font-size: var(--tag-size); color: var(--tb-muted); }
+        .mini-search .typing { border-right: 2px solid var(--tb-amber); animation: blink 0.6s step-end infinite alternate; padding-right: 2px; }
+        @keyframes blink { 50% { border-color: transparent; } }
+        .mini-tier { display: flex; align-items: center; gap: 5px; padding: clamp(2px, 0.3vw, 4px) 0; }
+        .mini-badge { width: clamp(18px, 2.2vw, 24px); height: clamp(18px, 2.2vw, 24px); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 800; font-size: var(--tag-size); color: var(--tb-white); flex-shrink: 0; }
+        .mini-badge.s { background: var(--tier-s); color: #333; } .mini-badge.a { background: var(--tier-a); } .mini-badge.b { background: var(--tier-b); }
+        .mini-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+        .mini-stat { background: var(--tb-bg); border-radius: 8px; padding: clamp(3px, 0.5vw, 7px); text-align: center; }
+        .mini-stat-val { font-family: var(--font-display); font-weight: 800; font-size: var(--body-size); }
+        .mini-stat-lbl { font-size: var(--tag-size); color: var(--tb-muted); }
+        .mini-chart-wrap { height: clamp(45px, 7vh, 75px); }
+
+        /* ===========================================
+           SLIDE 7 — TRACTION
+           =========================================== */
+        .slide-traction { background: var(--tb-bg); }
+        .slide-traction .slide-content { gap: clamp(0.6rem, 1.5vw, 1.2rem); align-items: center; }
+        .slide-traction h2 { font-size: var(--h2-size); text-align: center; }
+        .metric-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(6px, 1vw, 12px); width: min(95%, 780px); }
+        .metric-tile { padding: clamp(10px, 1.5vw, 18px); text-align: center; }
+        .metric-value { font-family: var(--font-display); font-weight: 800; font-size: clamp(1.4rem, 3vw, 2.2rem); line-height: 1; }
+        .metric-label { font-size: var(--tag-size); color: var(--tb-muted); font-weight: 500; margin-top: clamp(2px, 0.3vw, 5px); }
+        .metric-delta { font-size: var(--tag-size); font-weight: 600; margin-top: 2px; }
+        .delta-up { color: var(--tb-sage); }
+        .traction-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: clamp(6px, 1vw, 12px); width: min(95%, 780px); }
+        .traction-chart-card { padding: clamp(10px, 1.5vw, 14px); }
+        .traction-chart-card h4 { font-size: var(--tag-size); color: var(--tb-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: clamp(3px, 0.4vw, 6px); }
+        .traction-chart-wrap { height: clamp(80px, 14vh, 140px); }
+        .engagement-card { padding: clamp(10px, 1.5vw, 14px); display: flex; flex-direction: column; gap: clamp(5px, 0.7vw, 9px); }
+        .engagement-card h4 { font-size: var(--tag-size); color: var(--tb-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+        .engage-item { display: flex; justify-content: space-between; align-items: center; font-size: var(--small-size); }
+        .engage-bar-wrap { flex: 1; height: 6px; background: var(--tb-bg); border-radius: 3px; margin: 0 clamp(6px, 0.8vw, 10px); overflow: hidden; }
+        .engage-bar { height: 100%; border-radius: 3px; transition: width 1.2s var(--ease-out-expo); width: 0%; }
+        .slide.visible .engage-bar { width: var(--bar-w); }
+        .engage-val { font-weight: 600; font-size: var(--tag-size); min-width: 30px; text-align: right; }
+
+        /* ===========================================
+           SLIDE 8 — BUSINESS MODEL + ROADMAP
+           =========================================== */
+        .slide-business { background: var(--tb-white); }
+        .slide-business .slide-content { gap: clamp(0.6rem, 1.5vw, 1.2rem); align-items: center; }
+        .slide-business h2 { font-size: var(--h2-size); text-align: center; }
+        .biz-layout { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(10px, 1.5vw, 18px); width: min(95%, 780px); }
+        .monetize-card, .roadmap-card { padding: clamp(10px, 1.5vw, 16px); }
+        .monetize-card h4, .roadmap-card h4 { font-size: var(--body-size); font-weight: 600; margin-bottom: clamp(5px, 0.6vw, 8px); display: flex; align-items: center; gap: 6px; }
+        .revenue-item { display: flex; align-items: flex-start; gap: clamp(6px, 0.8vw, 10px); padding: clamp(5px, 0.6vw, 8px) 0; border-bottom: 1px solid var(--tb-light-border); }
+        .revenue-item:last-child { border-bottom: none; }
+        .rev-icon { width: clamp(24px, 3vw, 30px); height: clamp(24px, 3vw, 30px); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: var(--body-size); flex-shrink: 0; }
+        .rev-text h5 { font-family: var(--font-display); font-size: var(--small-size); font-weight: 600; }
+        .rev-text p { font-size: var(--tag-size); color: var(--tb-muted); line-height: 1.3; }
+        .roadmap-item { display: flex; gap: clamp(6px, 0.8vw, 10px); padding: clamp(4px, 0.5vw, 7px) 0; }
+        .rm-timeline { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; width: 18px; }
+        .rm-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+        .rm-line { width: 2px; flex: 1; background: var(--tb-light-border); }
+        .rm-dot.done { background: var(--tb-sage); } .rm-dot.current { background: var(--tb-amber); box-shadow: 0 0 0 3px rgba(184,134,11,0.2); } .rm-dot.future { background: var(--tb-light-border); }
+        .rm-content h5 { font-family: var(--font-display); font-size: var(--small-size); font-weight: 600; }
+        .rm-content p { font-size: var(--tag-size); color: var(--tb-muted); line-height: 1.3; }
+        .rm-date { font-size: var(--tag-size); font-weight: 600; color: var(--tb-amber); }
+
+        /* ===========================================
+           SLIDE 9 — THE ASK
+           =========================================== */
+        .slide-ask { background: var(--tb-bg); text-align: center; }
+        .slide-ask .slide-content { gap: var(--content-gap); }
+        .ask-title { font-size: var(--h2-size); }
+        .ask-amount { font-family: var(--font-display); font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 800; background: linear-gradient(135deg, var(--tb-amber), var(--tb-burgundy)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .ask-subtitle { font-size: var(--body-size); color: var(--tb-muted); }
+        .use-of-funds { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(8px, 1.2vw, 14px); width: min(90%, 550px); }
+        .fund-item { padding: clamp(10px, 1.5vw, 16px); text-align: center; }
+        .fund-pct { font-family: var(--font-display); font-weight: 800; font-size: clamp(1.2rem, 2.5vw, 1.8rem); }
+        .fund-label { font-size: var(--tag-size); color: var(--tb-muted); margin-top: 2px; }
+        .contact-footer { font-size: var(--small-size); color: var(--tb-muted); }
+        .contact-footer a { color: var(--tb-amber); text-decoration: none; font-weight: 600; }
+        .contact-footer a:hover { text-decoration: underline; }
+        .built-by { font-size: var(--tag-size); color: var(--tb-muted); margin-top: 4px; }
+
+        /* ===========================================
+           SLIDE 7 — PERSONA ECOSYSTEM
+           =========================================== */
+        .slide-persona { background: var(--tb-bg); }
+        .slide-persona .slide-content { gap: clamp(0.5rem, 1.2vw, 1rem); align-items: center; }
+        .slide-persona h2 { font-size: var(--h2-size); text-align: center; }
+        .persona-layout { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(10px, 1.5vw, 18px); width: min(95%, 820px); }
+        .persona-card { padding: clamp(10px, 1.5vw, 16px); }
+        .persona-card h4 { font-size: var(--body-size); font-weight: 600; margin-bottom: clamp(5px, 0.6vw, 8px); display: flex; align-items: center; gap: 6px; }
+        .persona-item { display: flex; align-items: flex-start; gap: clamp(6px, 0.8vw, 10px); padding: clamp(4px, 0.5vw, 7px) 0; border-bottom: 1px solid var(--tb-light-border); font-size: var(--small-size); line-height: 1.4; }
+        .persona-item:last-child { border-bottom: none; }
+        .persona-num { width: clamp(20px, 2.5vw, 26px); height: clamp(20px, 2.5vw, 26px); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; font-size: var(--tag-size); flex-shrink: 0; color: var(--tb-white); }
+        .persona-avatars { display: flex; gap: clamp(8px, 1.2vw, 16px); justify-content: center; flex-wrap: wrap; width: min(95%, 820px); }
+        .persona-avatar { display: flex; align-items: center; gap: clamp(4px, 0.5vw, 6px); padding: clamp(5px, 0.7vw, 9px) clamp(10px, 1.3vw, 16px); border-radius: 24px; background: var(--tb-white); border: 1px solid var(--tb-light-border); font-size: var(--tag-size); font-weight: 500; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+        .persona-avatar-icon { font-size: clamp(0.9rem, 1.4vw, 1.2rem); }
+        .investor-icon { font-size: clamp(0.8rem, 1.2vw, 1rem); flex-shrink: 0; margin-top: 1px; }
+
+        /* ===========================================
+           SLIDE 11 — DEVELOPMENT ROADMAP
+           =========================================== */
+        .slide-dev-roadmap { background: var(--tb-bg); }
+        .slide-dev-roadmap .slide-content { gap: clamp(0.5rem, 1.2vw, 1rem); align-items: center; }
+        .slide-dev-roadmap h2 { font-size: var(--h2-size); text-align: center; }
+        .dev-timeline { display: flex; flex-direction: column; gap: clamp(6px, 0.8vw, 10px); width: min(95%, 720px); }
+        .dev-item { display: flex; align-items: stretch; gap: clamp(8px, 1vw, 14px); }
+        .dev-bar { width: clamp(4px, 0.5vw, 6px); border-radius: 3px; flex-shrink: 0; }
+        .dev-card { flex: 1; padding: clamp(10px, 1.3vw, 16px); display: flex; align-items: center; gap: clamp(8px, 1vw, 14px); }
+        .dev-card h5 { font-family: var(--font-display); font-size: var(--body-size); font-weight: 600; }
+        .dev-card p { font-size: var(--tag-size); color: var(--tb-muted); line-height: 1.3; }
+        .dev-duration { font-family: var(--font-display); font-size: var(--tag-size); font-weight: 700; color: var(--tb-amber); white-space: nowrap; flex-shrink: 0; min-width: clamp(55px, 7vw, 75px); text-align: center; padding: clamp(4px, 0.5vw, 6px) clamp(6px, 0.8vw, 10px); background: rgba(184,134,11,0.06); border-radius: 8px; }
+        .dev-footer { font-size: var(--small-size); color: var(--tb-muted); text-align: center; font-style: italic; }
+
+        /* ===========================================
+           RESPONSIVE
+           =========================================== */
+        @media (max-height: 700px) { :root { --slide-padding: clamp(0.75rem, 3vw, 2rem); --content-gap: clamp(0.4rem, 1.5vw, 1rem); --title-size: clamp(1.5rem, 5vw, 3rem); --h2-size: clamp(1.1rem, 3vw, 1.8rem); } }
+        @media (max-height: 600px) { :root { --slide-padding: clamp(0.5rem, 2.5vw, 1.5rem); --content-gap: clamp(0.3rem, 1vw, 0.75rem); } .nav-dots, .keyboard-hint, .bg-dots { display: none; } }
+        @media (max-height: 500px) { :root { --slide-padding: clamp(0.4rem, 2vw, 1rem); --title-size: clamp(1rem, 3.5vw, 1.5rem); --h2-size: clamp(0.9rem, 2.5vw, 1.25rem); --body-size: clamp(0.65rem, 1vw, 0.85rem); } }
+        @media (max-width: 700px) { .problem-grid, .demo-row { grid-template-columns: 1fr; } .solution-layout, .edge-layout, .visit-layout, .traction-grid, .biz-layout, .persona-layout { grid-template-columns: 1fr; } .metric-row, .use-of-funds { grid-template-columns: repeat(2, 1fr); } .frag-row { gap: 4px; } .persona-avatars { gap: 6px; } }
+        @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.2s !important; } html { scroll-behavior: auto; } }
+    </style>
+</head>
+<body>
+
+    <div class="progress-bar" id="progressBar"></div>
+    <nav class="nav-dots" id="navDots"></nav>
+    <div class="keyboard-hint" id="keyHint">Use arrow keys or scroll to navigate</div>
+    <div class="slide-counter" id="slideCounter"></div>
+
+    <!-- ==========================================
+         SLIDE 1: TITLE
+         ========================================== -->
+    <section class="slide slide-title" data-slide="0">
+        <div class="bg-dots">
+            <div class="bg-dot" style="top:10%;left:15%"></div><div class="bg-dot" style="top:25%;right:20%;animation-delay:1s"></div>
+            <div class="bg-dot" style="bottom:20%;left:25%;animation-delay:2s"></div><div class="bg-dot" style="bottom:30%;right:15%;animation-delay:3s"></div>
+            <div class="bg-dot" style="top:50%;left:8%;animation-delay:1.5s"></div><div class="bg-dot" style="top:45%;right:10%;animation-delay:2.5s"></div>
+        </div>
+        <div class="slide-content stagger">
+            <div class="title-eyebrow reveal">Investor Deck 2026</div>
+            <h1 class="title-main reveal">TasteBuddy</h1>
+            <div class="title-divider reveal"></div>
+            <p class="title-tagline reveal">The all-in-one restaurant tracker with AI-powered dining intelligence</p>
+            <div class="title-date reveal">April 2026</div>
+            <div class="reveal" style="margin-top: clamp(0.5rem, 1.5vw, 1rem);">
+                <a href="https://tastebuddy-colinchia2.pythonanywhere.com/" target="_blank" rel="noopener"
+                   style="display: inline-block; padding: 0.6rem 1.5rem; background: var(--tb-sage); color: white; border-radius: 2rem; font-family: var(--font-display); font-weight: 600; font-size: var(--body-size); text-decoration: none; transition: transform 0.2s, box-shadow 0.2s;"
+                   onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(45,138,78,0.3)'"
+                   onmouseout="this.style.transform=''; this.style.boxShadow=''">
+                    Explore the Live Site &rarr;
+                </a>
+                <div style="font-size: var(--small-size); color: var(--tb-muted); margin-top: 0.4rem;">
+                    See 1,000+ live rankings and try the AI concierge &mdash; or keep scrolling for the full story
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         SLIDE 2: THE PROBLEM
+         ========================================== -->
+    <section class="slide slide-problem" data-slide="1">
+        <div class="slide-content stagger">
+            <h2 class="reveal">The Problem: Fragmented Dining Tools</h2>
+
+            <div class="problem-grid reveal stagger">
+                <div class="problem-card card">
+                    <div class="problem-icon">&#128221;</div>
+                    <h4>Scattered Data</h4>
+                    <p>Restaurant recs live across Notes, texts, Yelp saves, and spreadsheets</p>
+                </div>
+                <div class="problem-card card">
+                    <div class="problem-icon">&#128556;</div>
+                    <h4>Decision Fatigue</h4>
+                    <p>"Where should we eat?" leads to 30 min of scrolling generic reviews</p>
+                </div>
+                <div class="problem-card card">
+                    <div class="problem-icon">&#129513;</div>
+                    <h4>Too Many Apps</h4>
+                    <p>No single tool tracks, ranks, plans, AND recommends</p>
+                </div>
+            </div>
+
+            <div class="frag-row reveal">
+                <div class="frag-chip"><span class="frag-icon">&#127942;</span><span class="frag-name">Beli</span><span class="frag-for">tracking</span></div>
+                <span class="frag-plus">+</span>
+                <div class="frag-chip"><span class="frag-icon">&#128197;</span><span class="frag-name">Resy</span><span class="frag-for">booking</span></div>
+                <span class="frag-plus">+</span>
+                <div class="frag-chip"><span class="frag-icon">&#128205;</span><span class="frag-name">Maps</span><span class="frag-for">saves</span></div>
+                <span class="frag-plus">+</span>
+                <div class="frag-chip"><span class="frag-icon">&#129302;</span><span class="frag-name">Zesty</span><span class="frag-for">AI recs</span></div>
+                <span class="frag-plus">=</span>
+                <div class="frag-chip" style="border-color:var(--tb-burgundy);background:rgba(163,65,91,0.04)"><span class="frag-icon">&#128555;</span><span class="frag-name" style="color:var(--tb-burgundy)">Chaos</span></div>
+            </div>
+
+            <p class="problem-stat reveal">
+                Americans eat out <strong>5.9x per week</strong> — yet no single product owns the full personal dining workflow.
+            </p>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         SLIDE 3: SOLUTION + COMPETITIVE TABLE
+         ========================================== -->
+    <section class="slide slide-solution" data-slide="2">
+        <div class="slide-content stagger">
+            <h2 class="reveal">TasteBuddy Replaces Them All</h2>
+            <p class="slide-subtitle reveal">One platform for tracking, ranking, planning, and AI-powered discovery</p>
+
+            <table class="comp-table reveal">
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>Beli</th>
+                        <th>Resy / OT</th>
+                        <th>Google Maps</th>
+                        <th>Zesty</th>
+                        <th class="tb-col" style="color:var(--tier-s)">TasteBuddy</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Track &amp; rank restaurants</td>
+                        <td><span class="comp-yes">&#10003;</span></td>
+                        <td><span class="comp-no">&mdash;</span></td>
+                        <td><span class="comp-no">&mdash;</span></td>
+                        <td><span class="comp-no">&mdash;</span></td>
+                        <td class="tb-col"><span class="comp-yes">&#10003;</span></td>
+                    </tr>
+                    <tr>
+                        <td>Custom categories (not fixed)</td>
+                        <td><span class="comp-no">&mdash;</span></td>
+                        <td><span class="comp-no">&mdash;</span></td>
+                        <td><span class="comp-no">&mdash;</span></td>
+                        <td><span class="comp-no">&mdash;</span></td>
+                        <td class="tb-col"><span class="comp-yes">&#10003;</span></td>
+                    </tr>
+                    <tr>
+                        <td>Multi-ranking (breakfast vs dinner)</td>
+                        <td><span class="comp-no">&mdash;</span></td>
+                        <td><span class="comp-no">&mdash;</span></td>
+                        <td><span class="comp-no">&mdash;</span></td>
+                        <td><span class="comp-no">&mdash;</span></td>
+                        <td class="tb-col"><span class="comp-yes">&#10003;</span></td>
+                    </tr>
+                    <tr>
+                        <td>Reservation planning + reminders</td>
+                        <td><span class="comp-no">&mdash;</span></td>
+                        <td><span class="comp-yes">&#10003;</span></td>
+                        <td><span class="comp-no">&mdash;</span></td>
+                        <td><span class="comp-no">&mdash;</span></td>
+                        <td class="tb-col"><span class="comp-yes">&#10003;</span></td>
+                    </tr>
+                    <tr>
+                        <td>Smart wishlist with priorities</td>
+                        <td><span class="comp-partial">Limited</span></td>
+                        <td><span class="comp-no">&mdash;</span></td>
+                        <td><span class="comp-yes">&#10003;</span></td>
+                        <td><span class="comp-no">&mdash;</span></td>
+                        <td class="tb-col"><span class="comp-yes">&#10003;</span></td>
+                    </tr>
+                    <tr>
+                        <td>AI recs based on YOUR data</td>
+                        <td><span class="comp-no">&mdash;</span></td>
+                        <td><span class="comp-no">&mdash;</span></td>
+                        <td><span class="comp-no">&mdash;</span></td>
+                        <td><span class="comp-partial">Limited</span></td>
+                        <td class="tb-col"><span class="comp-yes">&#10003;</span></td>
+                    </tr>
+                    <tr>
+                        <td>Live availability search</td>
+                        <td><span class="comp-no">&mdash;</span></td>
+                        <td><span class="comp-yes">&#10003;</span></td>
+                        <td><span class="comp-no">&mdash;</span></td>
+                        <td><span class="comp-no">&mdash;</span></td>
+                        <td class="tb-col"><span class="comp-yes">&#10003;</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p style="font-size:var(--tag-size);color:var(--tb-muted);text-align:center;" class="reveal">
+                <span class="comp-yes">&#10003;</span> = Full support &nbsp; <span class="comp-partial">Limited</span> = Partial &nbsp; <span class="comp-no">&mdash;</span> = Not available
+            </p>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         SLIDE 4: COMPETITIVE EDGE — CATEGORIES + AI
+         ========================================== -->
+    <section class="slide slide-edge" data-slide="3">
+        <div class="slide-content stagger">
+            <h2 class="reveal">Two Key Differentiators</h2>
+
+            <div class="edge-layout">
+                <!-- Left: Category flexibility -->
+                <div class="edge-card card reveal-left">
+                    <h4>&#127942; Flexible Categories (vs Beli)</h4>
+
+                    <div class="cat-label">Custom Meal Types (user-created)</div>
+                    <div class="cat-chips">
+                        <span class="cat-chip core">Breakfast</span>
+                        <span class="cat-chip core">Lunch</span>
+                        <span class="cat-chip core">Dinner</span>
+                        <span class="cat-chip custom">Dessert</span>
+                        <span class="cat-chip custom">Ramen Night</span>
+                        <span class="cat-chip custom">Tasting Menus</span>
+                    </div>
+
+                    <div style="font-size:var(--tag-size);color:var(--tb-muted);margin:clamp(4px,0.5vw,6px) 0 2px;font-weight:600;">Same restaurant, different rankings:</div>
+                    <div class="entry-row">
+                        <span class="entry-name">Thai Diner</span>
+                        <span class="entry-cat" style="background:rgba(45,138,78,0.08);color:var(--tb-sage)">Breakfast</span>
+                        <span class="entry-tier" style="background:var(--tier-s);color:#333">S</span>
+                    </div>
+                    <div class="entry-row">
+                        <span class="entry-name">Thai Diner</span>
+                        <span class="entry-cat" style="background:rgba(163,65,91,0.08);color:var(--tb-burgundy)">Dinner</span>
+                        <span class="entry-tier" style="background:var(--tier-a)">A</span>
+                    </div>
+                    <div class="entry-row">
+                        <span class="entry-name">Thai Diner</span>
+                        <span class="entry-cat" style="background:rgba(107,123,141,0.1);color:var(--tb-muted)">Dessert</span>
+                        <span class="entry-tier" style="background:var(--tier-b)">B</span>
+                    </div>
+
+                    <div style="font-size:var(--tag-size);color:var(--tb-muted);margin-top:clamp(4px,0.5vw,6px);line-height:1.35;">
+                        Beli gives you one rating per restaurant. TasteBuddy lets you rank it for every meal type — each with its own tier, visit history, and S-tier position.
+                    </div>
+                </div>
+
+                <!-- Right: AI concierge -->
+                <div class="edge-card card reveal-right">
+                    <h4>&#129302; AI Concierge (vs Zesty)</h4>
+                    <div style="font-size:var(--tag-size);color:var(--tb-muted);margin-bottom:clamp(3px,0.4vw,5px);line-height:1.35;">
+                        Zesty gives generic recs from DoorDash data. TasteBuddy's AI analyzes <em>your</em> personal rankings, visit history, and taste patterns.
+                    </div>
+
+                    <div class="chat-mini">
+                        <div class="chat-bubble chat-user">Italian for our anniversary?</div>
+                        <div class="chat-bubble chat-ai">Your top Italian is <strong>L'Artusi</strong> (A-tier). For a splurge, <strong>Torrisi</strong> is on your HP wishlist &mdash; reservations open Mondays at 10 AM.</div>
+                        <div class="chat-bubble chat-user">Remind me for Saturday</div>
+                        <div class="chat-bubble chat-ai"><strong>Done!</strong> I'll remind you Monday at 10 AM to grab a Torrisi reservation for Saturday. Added to your planner.</div>
+                    </div>
+
+                    <div class="ai-cap-list">
+                        <div class="ai-cap-item"><span>&#127919;</span> Personalized recs from your S-tier favorites</div>
+                        <div class="ai-cap-item"><span>&#128197;</span> Reservation planning &amp; reminders for booking windows</div>
+                        <div class="ai-cap-item"><span>&#127758;</span> New place discovery via Google Places + web</div>
+                        <div class="ai-cap-item"><span>&#128200;</span> Query your own data: "My top 5 cuisines?"</div>
+                    </div>
+
+                    <div style="font-size:var(--tag-size);color:var(--tb-muted);margin-top:clamp(3px,0.4vw,5px);"><strong style="color:var(--tb-dark)">Powered by Perplexity Research Agent</strong> + Claude Sonnet 4.6</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         SLIDE 5: RESEARCH AGENT PIPELINE
+         ========================================== -->
+    <section class="slide slide-research" data-slide="4">
+        <div class="slide-content stagger">
+            <h2 class="reveal">Two-Stage AI Pipeline</h2>
+            <p class="slide-subtitle reveal">Parallel live web research + personalized AI synthesis anchored to your taste profile</p>
+
+            <div class="research-pipeline reveal stagger" style="width: min(95%, 780px);">
+                <div class="card reveal" style="display: grid; grid-template-columns: auto 1fr; gap: clamp(10px, 1.5vw, 16px); padding: clamp(12px, 1.5vw, 18px); align-items: center; border-left: 3px solid var(--tb-amber);">
+                    <div style="width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, var(--tb-amber), #d4a017); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 1rem;">1</div>
+                    <div>
+                        <h4 style="margin: 0 0 3px; font-size: clamp(0.8rem, 1.2vw, 0.95rem); color: var(--tb-amber);">Perplexity Research Agent (sonar-pro) &mdash; 2 Parallel Searches</h4>
+                        <p style="margin: 0; font-size: clamp(0.65rem, 0.9vw, 0.8rem); color: var(--tb-muted); line-height: 1.4;"><strong>Food media</strong> (Eater, Infatuation, Beli, Resy, Bon App&eacute;tit) + <strong>Reddit threads</strong> run simultaneously &mdash; both steered by your S/A-tier taste profile for relevance. Returns real restaurants with source citations</p>
+                    </div>
+                </div>
+                <div class="reveal" style="text-align: center; font-size: 1.3rem; color: var(--tb-muted); margin: 0.15rem 0;">&#8595;</div>
+                <div class="card reveal" style="display: grid; grid-template-columns: auto 1fr; gap: clamp(10px, 1.5vw, 16px); padding: clamp(12px, 1.5vw, 18px); align-items: center; border-left: 3px solid #2d8a4e;">
+                    <div style="width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, #2d8a4e, #198754); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 1rem;">2</div>
+                    <div>
+                        <h4 style="margin: 0 0 3px; font-size: clamp(0.8rem, 1.2vw, 0.95rem); color: #2d8a4e;">Your Database</h4>
+                        <p style="margin: 0; font-size: clamp(0.65rem, 0.9vw, 0.8rem); color: var(--tb-muted); line-height: 1.4;">Full tier rankings, visit history &amp; wishlist sent to Claude &mdash; S/A-tier cuisines steer research; C-tier spots flagged as explicit negative signals to avoid repeating misses</p>
+                    </div>
+                </div>
+                <div class="reveal" style="text-align: center; font-size: 1.3rem; color: var(--tb-muted); margin: 0.15rem 0;">&#8595;</div>
+                <div class="card reveal" style="display: grid; grid-template-columns: auto 1fr; gap: clamp(10px, 1.5vw, 16px); padding: clamp(12px, 1.5vw, 18px); align-items: center; border-left: 3px solid #0d6efd;">
+                    <div style="width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, #0d6efd, #0dcaf0); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 1rem;">3</div>
+                    <div>
+                        <h4 style="margin: 0 0 3px; font-size: clamp(0.8rem, 1.2vw, 0.95rem); color: #0d6efd;">Claude Sonnet 4.6</h4>
+                        <p style="margin: 0; font-size: clamp(0.65rem, 0.9vw, 0.8rem); color: var(--tb-muted); line-height: 1.4;">Synthesizes research with your data &mdash; every rec includes a <strong>TasteBuddy Connection</strong> to your S/A-tier favorites. Two modes: <strong>Discover</strong> (research-first) and <strong>Search</strong> (database-first)</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="reveal" style="display: flex; gap: clamp(6px, 1vw, 12px); justify-content: center; flex-wrap: wrap; margin-top: 0.4rem;">
+                <span style="background: rgba(184,134,11,0.1); color: var(--tb-amber); padding: 0.25rem 0.6rem; border-radius: 1rem; font-size: clamp(0.6rem, 0.8vw, 0.72rem); font-weight: 600;">Smart Classifier</span>
+                <span style="background: rgba(45,138,78,0.1); color: #2d8a4e; padding: 0.25rem 0.6rem; border-radius: 1rem; font-size: clamp(0.6rem, 0.8vw, 0.72rem); font-weight: 600;">DB-Only = No API Cost</span>
+                <span style="background: rgba(13,110,253,0.1); color: #0d6efd; padding: 0.25rem 0.6rem; border-radius: 1rem; font-size: clamp(0.6rem, 0.8vw, 0.72rem); font-weight: 600;">Graceful Fallback</span>
+                <span style="background: rgba(163,65,91,0.1); color: var(--tb-burgundy); padding: 0.25rem 0.6rem; border-radius: 1rem; font-size: clamp(0.6rem, 0.8vw, 0.72rem); font-weight: 600;">~$0.03/query</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         SLIDE 6: LOG EVERY VISIT
+         ========================================== -->
+    <section class="slide slide-visit-log" data-slide="5">
+        <div class="slide-content stagger">
+            <h2 class="reveal">Log Every Visit</h2>
+            <p class="slide-subtitle reveal">Every visit generates structured data for AI recommendations and dining intelligence</p>
+
+            <div class="visit-layout">
+                <div class="form-mockup card reveal-left">
+                    <h4>Rich Visit Capture</h4>
+                    <div class="form-field">
+                        <label>Tier Rating</label>
+                        <div style="display:flex;gap:clamp(4px,0.5vw,6px)">
+                            <span style="padding:clamp(4px,0.5vw,7px) clamp(8px,1vw,14px);border-radius:8px;background:linear-gradient(135deg,#ffd700,#ffec8b);font-family:var(--font-display);font-weight:800;font-size:var(--body-size);color:#333;border:2px solid #ffc107">S</span>
+                            <span style="padding:clamp(4px,0.5vw,7px) clamp(8px,1vw,14px);border-radius:8px;background:var(--tb-bg);font-family:var(--font-display);font-weight:800;font-size:var(--body-size);color:var(--tb-muted);border:2px solid var(--tb-light-border)">A</span>
+                            <span style="padding:clamp(4px,0.5vw,7px) clamp(8px,1vw,14px);border-radius:8px;background:var(--tb-bg);font-family:var(--font-display);font-weight:800;font-size:var(--body-size);color:var(--tb-muted);border:2px solid var(--tb-light-border)">B</span>
+                            <span style="padding:clamp(4px,0.5vw,7px) clamp(8px,1vw,14px);border-radius:8px;background:var(--tb-bg);font-family:var(--font-display);font-weight:800;font-size:var(--body-size);color:var(--tb-muted);border:2px solid var(--tb-light-border)">C</span>
+                        </div>
+                    </div>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:clamp(4px,0.5vw,6px)">
+                        <div class="form-field"><label>Occasion</label><div class="form-input">Date Night</div></div>
+                        <div class="form-field"><label>Total Spent</label><div class="form-input">$285.00</div></div>
+                    </div>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:clamp(4px,0.5vw,6px)">
+                        <div class="form-field"><label>Party Size</label><div class="form-input">2</div></div>
+                        <div class="form-field"><label>Notes</label><div class="form-input" style="color:var(--tb-muted);font-style:italic">The lobster was...</div></div>
+                    </div>
+                    <div class="form-field">
+                        <label>Photos</label>
+                        <div style="display:flex;align-items:center;gap:6px;padding:clamp(6px,0.8vw,10px);border-radius:8px;border:2px dashed var(--tb-light-border);background:var(--tb-bg)">
+                            <span style="font-size:clamp(1rem,1.5vw,1.3rem)">&#128247;</span>
+                            <span style="font-size:var(--tag-size);color:var(--tb-muted)">Click to add photos &middot; 3 attached</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="data-flow-card card reveal-right">
+                    <h4>&#128200; Visit Data Powers Everything</h4>
+                    <div class="data-flow-item">
+                        <div class="data-flow-icon" style="background:rgba(184,134,11,0.08)">&#11088;</div>
+                        <div class="data-flow-text"><h5>Tier-Based Ranking</h5><p>Set or update S/A/B/C tier directly from the visit form — rankings stay current with every visit</p></div>
+                    </div>
+                    <div class="data-flow-item">
+                        <div class="data-flow-icon" style="background:rgba(13,110,253,0.08)">&#129302;</div>
+                        <div class="data-flow-text"><h5>AI Recommendation Engine</h5><p>Visit history + ratings feed the AI concierge for hyper-personalized suggestions</p></div>
+                    </div>
+                    <div class="data-flow-item">
+                        <div class="data-flow-icon" style="background:rgba(45,138,78,0.08)">&#128200;</div>
+                        <div class="data-flow-text"><h5>TasteBoard Analytics</h5><p>Spending trends, cuisine preferences, visit frequency — all auto-generated from visit data</p></div>
+                    </div>
+                    <div class="data-flow-item">
+                        <div class="data-flow-icon" style="background:rgba(163,65,91,0.08)">&#128247;</div>
+                        <div class="data-flow-text"><h5>Photo Gallery</h5><p>Visual dining journal with auto-resized photos attached to visits and restaurants</p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         SLIDE 7: PRODUCT IN ACTION
+         ========================================== -->
+    <section class="slide slide-demo" data-slide="6">
+        <div class="slide-content stagger">
+            <h2 class="reveal">Product in Action</h2>
+            <div class="demo-row reveal stagger">
+                <div class="demo-screen card">
+                    <h4>Discover</h4>
+                    <div class="mini-search">&#128269; <span class="typing">Sukiyabashi Jiro</span></div>
+                    <div style="display:flex;gap:4px;flex-wrap:wrap;justify-content:center;">
+                        <span style="padding:2px 7px;border-radius:12px;font-size:var(--tag-size);background:rgba(45,138,78,0.08);color:var(--tb-sage)">Japanese</span>
+                        <span style="padding:2px 7px;border-radius:12px;font-size:var(--tag-size);background:rgba(184,134,11,0.08);color:var(--tb-amber)">Sushi</span>
+                        <span style="padding:2px 7px;border-radius:12px;font-size:var(--tag-size);background:rgba(163,65,91,0.08);color:var(--tb-burgundy)">Fine Dining</span>
+                    </div>
+                    <div style="text-align:center;padding:5px;border-radius:8px;background:var(--tb-sage);color:#fff;font-size:var(--tag-size);font-weight:600;">+ Add to TasteBuddy</div>
+                </div>
+                <div class="demo-screen card">
+                    <h4>Rank</h4>
+                    <div class="mini-tier"><div class="mini-badge s">S</div><span style="font-size:var(--tag-size);font-weight:600;color:var(--tb-amber)">#1</span><span style="font-size:var(--tag-size)">Sukiyabashi Jiro</span></div>
+                    <div class="mini-tier"><div class="mini-badge s">S</div><span style="font-size:var(--tag-size);font-weight:600;color:var(--tb-amber)">#2</span><span style="font-size:var(--tag-size)">Le Bernardin</span></div>
+                    <div class="mini-tier"><div class="mini-badge a">A</div><span style="font-size:var(--tag-size)">Di Fara Pizza</span></div>
+                    <div class="mini-tier"><div class="mini-badge b">B</div><span style="font-size:var(--tag-size)">Joe's Shanghai</span></div>
+                    <div style="text-align:center;font-size:var(--tag-size);color:var(--tb-muted);padding-top:2px;">Pairwise comparison engine (merge sort)</div>
+                </div>
+                <div class="demo-screen card">
+                    <h4>Analyze</h4>
+                    <div class="mini-stats">
+                        <div class="mini-stat"><div class="mini-stat-val" data-count="1001">0</div><div class="mini-stat-lbl">Listings</div></div>
+                        <div class="mini-stat"><div class="mini-stat-val" data-count="345">0</div><div class="mini-stat-lbl">Visits</div></div>
+                    </div>
+                    <div class="mini-chart-wrap"><canvas id="miniLine"></canvas></div>
+                </div>
+            </div>
+            <p class="reveal" style="font-size:var(--small-size);color:var(--tb-muted);text-align:center;">
+                Live at <strong style="color:var(--tb-amber)">tastebuddy-colinchia2.pythonanywhere.com</strong>
+            </p>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         SLIDE 8: PERSONA ECOSYSTEM
+         ========================================== -->
+    <section class="slide slide-persona" data-slide="7">
+        <div class="slide-content stagger">
+            <h2 class="reveal">Persona Ecosystem: The Social Moat</h2>
+            <p class="slide-subtitle reveal">Network effects + engagement loops that deepen with every user</p>
+
+            <div class="persona-layout">
+                <div class="persona-card card reveal-left">
+                    <h4>&#9881;&#65039; How It Works</h4>
+                    <div class="persona-item">
+                        <div class="persona-num" style="background:var(--tb-amber)">1</div>
+                        <div>Curated persona profiles (The Sushi Snob, The Spice Seeker, etc.)</div>
+                    </div>
+                    <div class="persona-item">
+                        <div class="persona-num" style="background:var(--tb-blue)">2</div>
+                        <div>Users browse &amp; follow personas for trusted recommendations</div>
+                    </div>
+                    <div class="persona-item">
+                        <div class="persona-num" style="background:var(--tb-sage)">3</div>
+                        <div>AI mode: &#8220;Eat like [Persona] in the East Village tonight&#8221;</div>
+                    </div>
+                    <div class="persona-item">
+                        <div class="persona-num" style="background:var(--tb-burgundy)">4</div>
+                        <div>Every user auto-generates their own browseable persona</div>
+                    </div>
+                </div>
+
+                <div class="persona-card card reveal-right">
+                    <h4>&#128161; Why Investors Care</h4>
+                    <div class="persona-item">
+                        <span class="investor-icon">&#128200;</span>
+                        <div><strong>Network effects</strong> &#8212; each persona adds value for all users</div>
+                    </div>
+                    <div class="persona-item">
+                        <span class="investor-icon">&#128274;</span>
+                        <div><strong>Data moat</strong> &#8212; persona rankings are proprietary taste data</div>
+                    </div>
+                    <div class="persona-item">
+                        <span class="investor-icon">&#128260;</span>
+                        <div><strong>Engagement loops</strong> &#8212; follow &#8594; discover &#8594; visit &#8594; rank &#8594; share</div>
+                    </div>
+                    <div class="persona-item">
+                        <span class="investor-icon">&#128176;</span>
+                        <div><strong>Monetization</strong> &#8212; premium personas, sponsored celebrity lists</div>
+                    </div>
+                </div>
+            </div>
+
+            <p class="reveal" style="text-align:center; color:var(--tb-text-muted); font-size:0.75rem; margin-top:0.75rem; margin-bottom:0.25rem; letter-spacing:0.5px; text-transform:uppercase; font-weight:600;">Example Personas</p>
+
+            <div class="persona-avatars reveal">
+                <div class="persona-avatar"><span class="persona-avatar-icon">&#127843;</span> The Sushi Snob</div>
+                <div class="persona-avatar"><span class="persona-avatar-icon">&#127798;</span> The Spice Seeker</div>
+                <div class="persona-avatar"><span class="persona-avatar-icon">&#127769;</span> The Midnight Muncher</div>
+                <div class="persona-avatar"><span class="persona-avatar-icon">&#127863;</span> The Sophisticated Sommelier</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         SLIDE 9: TRACTION
+         ========================================== -->
+    <section class="slide slide-traction" data-slide="8">
+        <div class="slide-content stagger">
+            <h2 class="reveal">Traction &amp; Engagement</h2>
+            <div class="metric-row reveal stagger">
+                <div class="metric-tile card"><div class="metric-value" style="color:var(--tb-amber)" data-count="1001">0</div><div class="metric-label">Restaurants Tracked</div><div class="metric-delta delta-up">+15 this month</div></div>
+                <div class="metric-tile card"><div class="metric-value" style="color:var(--tb-sage)" data-count="345">0</div><div class="metric-label">Visits Logged</div><div class="metric-delta delta-up">+12 this month</div></div>
+                <div class="metric-tile card"><div class="metric-value" style="color:var(--tb-blue)" data-count="40">0</div><div class="metric-label">Cuisines Explored</div></div>
+                <div class="metric-tile card"><div class="metric-value" style="color:var(--tb-burgundy)">4.2</div><div class="metric-label">Avg Session (min)</div><div class="metric-delta delta-up">+0.8 vs last mo</div></div>
+            </div>
+            <div class="traction-grid reveal">
+                <div class="traction-chart-card card"><h4>Restaurant Listings Growth</h4><div class="traction-chart-wrap"><canvas id="growthChart"></canvas></div></div>
+                <div class="engagement-card card">
+                    <h4>Feature Usage</h4>
+                    <div class="engage-item"><span>Rankings</span><div class="engage-bar-wrap"><div class="engage-bar" style="--bar-w:88%;background:var(--tb-amber)"></div></div><span class="engage-val">88%</span></div>
+                    <div class="engage-item"><span>AI Chat</span><div class="engage-bar-wrap"><div class="engage-bar" style="--bar-w:76%;background:var(--tb-burgundy)"></div></div><span class="engage-val">76%</span></div>
+                    <div class="engage-item"><span>Map</span><div class="engage-bar-wrap"><div class="engage-bar" style="--bar-w:68%;background:var(--tb-sage)"></div></div><span class="engage-val">68%</span></div>
+                    <div class="engage-item"><span>TasteBoard</span><div class="engage-bar-wrap"><div class="engage-bar" style="--bar-w:62%;background:var(--tb-blue)"></div></div><span class="engage-val">62%</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         SLIDE 10: BUSINESS MODEL + ROADMAP
+         ========================================== -->
+    <section class="slide slide-business" data-slide="9">
+        <div class="slide-content stagger">
+            <h2 class="reveal">Business Model &amp; Roadmap</h2>
+            <div class="biz-layout">
+                <div class="monetize-card card reveal-left">
+                    <h4>&#128176; Revenue Streams</h4>
+                    <div class="revenue-item">
+                        <div class="rev-icon" style="background:rgba(184,134,11,0.08)">&#11088;</div>
+                        <div class="rev-text"><h5>TasteBuddy Pro — $4.99/mo</h5><p>Advanced analytics, unlimited AI chats, data export, priority reservation alerts</p></div>
+                    </div>
+                    <div class="revenue-item">
+                        <div class="rev-icon" style="background:rgba(13,110,253,0.08)">&#127860;</div>
+                        <div class="rev-text"><h5>Restaurant Partnerships</h5><p>Promoted placements, "TasteBuddy Verified" badges, featured in AI recommendations</p></div>
+                    </div>
+                    <div class="revenue-item">
+                        <div class="rev-icon" style="background:rgba(45,138,78,0.08)">&#128279;</div>
+                        <div class="rev-text"><h5>Reservation Affiliate</h5><p>Commission on bookings made through Resy/OpenTable integration</p></div>
+                    </div>
+                </div>
+                <div class="roadmap-card card reveal-right">
+                    <h4>&#128640; Product Roadmap</h4>
+                    <div class="roadmap-item"><div class="rm-timeline"><div class="rm-dot done"></div><div class="rm-line"></div></div><div class="rm-content"><div class="rm-date">Launched</div><h5>Core MVP + Personas</h5><p>Rankings, visits, map, TasteBoard, AI concierge, reservation planning, persona ecosystem, guest view mode</p></div></div>
+                    <div class="roadmap-item"><div class="rm-timeline"><div class="rm-dot current"></div><div class="rm-line"></div></div><div class="rm-content"><div class="rm-date">Q2 2026</div><h5>AI Pipeline v2 + Discovery Mode</h5><p>Parallel Perplexity searches, taste profile steering, C-tier negative signals, TasteBuddy Connection, Claude Sonnet 4.6, pipeline trace</p></div></div>
+                    <div class="roadmap-item"><div class="rm-timeline"><div class="rm-dot future"></div><div class="rm-line"></div></div><div class="rm-content"><div class="rm-date">Q4 2026</div><h5>Pro Tier + Partnerships</h5><p>Monetization launch, restaurant partner portal, affiliate bookings</p></div></div>
+                    <div class="roadmap-item"><div class="rm-timeline"><div class="rm-dot future"></div></div><div class="rm-content"><div class="rm-date">2027</div><h5>AI Taste Graph</h5><p>ML-powered taste profiling, predictive recommendations, group dining AI</p></div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         SLIDE 11: THE ASK
+         ========================================== -->
+    <section class="slide slide-ask" data-slide="10">
+        <div class="slide-content stagger">
+            <h2 class="ask-title reveal">The Ask</h2>
+            <div class="ask-amount reveal">$250K Seed</div>
+            <p class="ask-subtitle reveal">Pre-seed round to fuel growth and build the team</p>
+            <div class="use-of-funds reveal stagger">
+                <div class="fund-item glass-card"><div class="fund-pct" style="color:var(--tb-blue)">50%</div><div class="fund-label">Engineering &amp; Product</div></div>
+                <div class="fund-item glass-card"><div class="fund-pct" style="color:var(--tb-sage)">30%</div><div class="fund-label">Growth &amp; Marketing</div></div>
+                <div class="fund-item glass-card"><div class="fund-pct" style="color:var(--tb-amber)">20%</div><div class="fund-label">Operations &amp; Infra</div></div>
+            </div>
+            <div class="contact-footer reveal">
+                <a href="https://tastebuddy-colinchia2.pythonanywhere.com" target="_blank">tastebuddy-colinchia2.pythonanywhere.com</a>
+                <div class="built-by">Built by Colin and Claude Code</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         SLIDE 12: DEVELOPMENT ROADMAP
+         ========================================== -->
+    <section class="slide slide-dev-roadmap" data-slide="11">
+        <div class="slide-content stagger">
+            <h2 class="reveal">Development Roadmap</h2>
+            <p class="slide-subtitle reveal">What the funding enables</p>
+
+            <div class="dev-timeline reveal stagger">
+                <div class="dev-item">
+                    <div class="dev-bar" style="background:var(--tb-amber)"></div>
+                    <div class="dev-card card">
+                        <div><h5>&#128100; Develop Personas</h5><p>Build persona profiles, ranking system, follow/browse UX</p></div>
+                        <div class="dev-duration">1 month</div>
+                    </div>
+                </div>
+                <div class="dev-item">
+                    <div class="dev-bar" style="background:var(--tb-blue)"></div>
+                    <div class="dev-card card">
+                        <div><h5>&#129302; Build Unique AI</h5><p>Persona-aware recommendations, neighborhood optimizer, taste graph</p></div>
+                        <div class="dev-duration">3 months</div>
+                    </div>
+                </div>
+                <div class="dev-item">
+                    <div class="dev-bar" style="background:var(--tb-sage)"></div>
+                    <div class="dev-card card">
+                        <div><h5>&#128221; Improve Log Visit / UX</h5><p>Complete visit logging, cuisine selector, social feed</p></div>
+                        <div class="dev-duration">2 months</div>
+                    </div>
+                </div>
+                <div class="dev-item">
+                    <div class="dev-bar" style="background:var(--tb-burgundy)"></div>
+                    <div class="dev-card card">
+                        <div><h5>&#128227; Marketing</h5><p>NYC food community outreach, influencer partnerships</p></div>
+                        <div class="dev-duration">Ongoing</div>
+                    </div>
+                </div>
+                <div class="dev-item">
+                    <div class="dev-bar" style="background:var(--tb-dark)"></div>
+                    <div class="dev-card card">
+                        <div><h5>&#9881;&#65039; Tech Stack Development</h5><p>Currently using Claude only, need full engineering team</p></div>
+                        <div class="dev-duration">3 months</div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="display:flex;gap:clamp(10px,2vw,24px);justify-content:center;flex-wrap:wrap;" class="reveal">
+                <span style="font-size:var(--tag-size);font-weight:600;color:var(--tb-amber);background:rgba(184,134,11,0.08);padding:clamp(3px,0.4vw,5px) clamp(8px,1vw,12px);border-radius:16px;">Q2 2026 &#8212; Personas + AI</span>
+                <span style="font-size:var(--tag-size);font-weight:600;color:var(--tb-sage);background:rgba(45,138,78,0.08);padding:clamp(3px,0.4vw,5px) clamp(8px,1vw,12px);border-radius:16px;">Q3 2026 &#8212; UX + Marketing + Scale</span>
+            </div>
+
+            <p class="dev-footer reveal">Parallel workstreams &#8212; total timeline: 6 months to full platform</p>
+        </div>
+    </section>
+
+    <script>
+        class SlidePresentation {
+            constructor() {
+                this.slides = document.querySelectorAll('.slide');
+                this.currentSlide = 0;
+                this.totalSlides = this.slides.length;
+                this.isScrolling = false;
+                this.chartsInit = {};
+                this.buildNavDots();
+                this.bindEvents();
+                this.observeSlides();
+                this.goToSlide(0);
+                setTimeout(() => { const h = document.getElementById('keyHint'); if (h) h.style.opacity = '0'; }, 4000);
+            }
+            buildNavDots() {
+                const nav = document.getElementById('navDots');
+                for (let i = 0; i < this.totalSlides; i++) {
+                    const d = document.createElement('button');
+                    d.className = 'nav-dot' + (i === 0 ? ' active' : '');
+                    d.setAttribute('aria-label', `Slide ${i + 1}`);
+                    d.addEventListener('click', () => this.goToSlide(i));
+                    nav.appendChild(d);
+                }
+            }
+            bindEvents() {
+                document.addEventListener('keydown', (e) => {
+                    if (['ArrowDown','ArrowRight',' '].includes(e.key)) { e.preventDefault(); this.next(); }
+                    else if (['ArrowUp','ArrowLeft'].includes(e.key)) { e.preventDefault(); this.prev(); }
+                });
+                let wt;
+                document.addEventListener('wheel', (e) => { if (this.isScrolling) return; this.isScrolling = true; clearTimeout(wt); wt = setTimeout(() => this.isScrolling = false, 800); if (e.deltaY > 30) this.next(); else if (e.deltaY < -30) this.prev(); }, { passive: true });
+                let ty = 0;
+                document.addEventListener('touchstart', (e) => { ty = e.touches[0].clientY; }, { passive: true });
+                document.addEventListener('touchend', (e) => { const d = ty - e.changedTouches[0].clientY; if (Math.abs(d) > 50) { d > 0 ? this.next() : this.prev(); } }, { passive: true });
+            }
+            observeSlides() {
+                const obs = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                            const idx = parseInt(entry.target.dataset.slide);
+                            this.currentSlide = idx;
+                            this.updateNav();
+                            if (idx === 5 && !this.chartsInit.mini) { this.chartsInit.mini = true; setTimeout(() => this.initMiniChart(), 400); }
+                            if (idx === 7 && !this.chartsInit.growth) { this.chartsInit.growth = true; setTimeout(() => this.initGrowthChart(), 400); }
+                            if (idx === 5 || idx === 7) this.animateCounters();
+                        }
+                    });
+                }, { threshold: 0.5 });
+                this.slides.forEach(s => obs.observe(s));
+            }
+            goToSlide(i) { if (i < 0 || i >= this.totalSlides) return; this.currentSlide = i; this.slides[i].scrollIntoView({ behavior: 'smooth' }); this.updateNav(); }
+            next() { this.goToSlide(this.currentSlide + 1); }
+            prev() { this.goToSlide(this.currentSlide - 1); }
+            updateNav() {
+                document.getElementById('progressBar').style.width = (this.currentSlide / (this.totalSlides - 1)) * 100 + '%';
+                document.querySelectorAll('.nav-dot').forEach((d, i) => d.classList.toggle('active', i === this.currentSlide));
+                document.getElementById('slideCounter').textContent = (this.currentSlide + 1) + ' / ' + this.totalSlides;
+            }
+            animateCounters() {
+                document.querySelectorAll('[data-count]').forEach(el => {
+                    if (el.dataset.animated) return;
+                    const s = el.closest('.slide'); if (!s || !s.classList.contains('visible')) return;
+                    el.dataset.animated = 'true';
+                    const t = parseInt(el.dataset.count); let c = 0; const step = Math.ceil(t / 40);
+                    const iv = setInterval(() => { c += step; if (c >= t) { c = t; clearInterval(iv); } el.textContent = c; }, 30);
+                });
+            }
+            initMiniChart() {
+                Chart.defaults.font.family = "'DM Sans', sans-serif"; Chart.defaults.font.size = 10; Chart.defaults.color = '#6c757d';
+                const ctx = document.getElementById('miniLine');
+                if (ctx) new Chart(ctx, { type: 'line', data: { labels: ['J','F','M','A','M','J'], datasets: [{ data: [3,5,4,8,6,10], borderColor: '#b8860b', backgroundColor: 'rgba(184,134,11,0.08)', borderWidth: 2, fill: true, tension: 0.4, pointRadius: 2, pointBackgroundColor: '#b8860b' }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { grid: { display: false }, ticks: { font: { size: 8 } } }, y: { display: false } }, animation: { duration: 1000 } } });
+            }
+            initGrowthChart() {
+                const ctx = document.getElementById('growthChart');
+                if (ctx) new Chart(ctx, { type: 'bar', data: { labels: ['Oct','Nov','Dec','Jan','Feb','Mar'], datasets: [{ data: [5,8,7,10,9,12], backgroundColor: ['rgba(184,134,11,0.15)','rgba(184,134,11,0.25)','rgba(184,134,11,0.35)','rgba(184,134,11,0.5)','rgba(184,134,11,0.65)','rgba(184,134,11,0.85)'], borderColor: '#b8860b', borderWidth: 1, borderRadius: 6 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { grid: { display: false }, ticks: { font: { size: 9 } } }, y: { grid: { color: 'rgba(0,0,0,0.04)' }, ticks: { font: { size: 9 }, stepSize: 4 }, beginAtZero: true } }, animation: { duration: 1200 } } });
+            }
+        }
+        document.addEventListener('DOMContentLoaded', () => new SlidePresentation());
+    </script>
+</body>
+</html>
