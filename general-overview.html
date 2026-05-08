@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -423,152 +423,402 @@
     <div class="keyboard-hint" id="keyHint">Use arrow keys or scroll to navigate</div>
     <div class="slide-counter" id="slideCounter"></div>
 
-    <!-- ==========================================
-         SLIDE 0: TITLE
-         ========================================== -->
-    <section class="slide slide-title" data-slide="0">
-        <div class="bg-dots">
-            <div class="bg-dot" style="top:10%;left:15%"></div><div class="bg-dot" style="top:25%;right:20%;animation-delay:1s"></div>
-            <div class="bg-dot" style="bottom:20%;left:25%;animation-delay:2s"></div><div class="bg-dot" style="bottom:30%;right:15%;animation-delay:3s"></div>
-            <div class="bg-dot" style="top:50%;left:8%;animation-delay:1.5s"></div><div class="bg-dot" style="top:45%;right:10%;animation-delay:2.5s"></div>
+<!-- ==========================================
+     SLIDE: WHAT IS TASTEBUDDY?
+     4-pillar grid — reuses .origin-timeline / .origin-step
+     ========================================== -->
+<section class="slide slide-replace" data-slide="0">
+    <div class="slide-content stagger">
+        <h2 class="reveal">What is TasteBuddy?</h2>
+        <p class="slide-subtitle reveal">One app for your entire food life &mdash; build your food identity, get AI recs, and track everything</p>
+
+        <div class="origin-timeline reveal stagger">
+            <div class="origin-step card reveal">
+                <div class="origin-icon" style="color:var(--tb-amber)">&#127919;</div>
+                <h4>Build Your Tastie Profile</h4>
+                <p>Add places, create categories, rank them to build your food identity</p>
+            </div>
+            <div class="origin-step card reveal">
+                <div class="origin-icon" style="color:var(--tb-burgundy)">&#129302;</div>
+                <h4>Ask TasteBuddy AI</h4>
+                <p>Ask any question about where to eat, powered by your personal ranking data</p>
+            </div>
+            <div class="origin-step card reveal">
+                <div class="origin-icon" style="color:var(--tb-sage)">&#128200;</div>
+                <h4>Track on TasteBoard</h4>
+                <p>Your personal food dashboard with stats, charts, and maps</p>
+            </div>
+            <div class="origin-step card reveal">
+                <div class="origin-icon" style="color:var(--tb-blue)">&#128101;</div>
+                <h4>Connect &amp; Share</h4>
+                <p>Share your Tastie Profile, follow Personas, chat with friends&rsquo; AI</p>
+            </div>
         </div>
+
+        <div class="reveal" style="display:flex;gap:clamp(6px,1vw,10px);justify-content:center;flex-wrap:wrap;">
+            <span style="background:rgba(184,134,11,0.1);color:var(--tb-amber);padding:0.3rem 0.75rem;border-radius:1rem;font-size:var(--tag-size);font-weight:600;">&#127919; Ranking</span>
+            <span style="background:rgba(163,65,91,0.1);color:var(--tb-burgundy);padding:0.3rem 0.75rem;border-radius:1rem;font-size:var(--tag-size);font-weight:600;">&#129302; AI Concierge</span>
+            <span style="background:rgba(45,138,78,0.1);color:var(--tb-sage);padding:0.3rem 0.75rem;border-radius:1rem;font-size:var(--tag-size);font-weight:600;">&#128200; TasteBoard</span>
+            <span style="background:rgba(13,110,253,0.1);color:var(--tb-blue);padding:0.3rem 0.75rem;border-radius:1rem;font-size:var(--tag-size);font-weight:600;">&#128101; Personas</span>
+        </div>
+    </div>
+</section>
+
+<!-- ==========================================
+     SLIDE: WHY TASTEBUDDY?
+     2x2 differentiator grid — reuses .cat-layout / .cat-demo-card / .vs-beli-row
+     ========================================== -->
+<section class="slide slide-categories" data-slide="1">
+    <div class="slide-content stagger">
+        <h2 class="reveal">Why TasteBuddy?</h2>
+        <p class="slide-subtitle reveal">Four things no other dining app does</p>
+
+        <div class="cat-layout reveal stagger">
+            <div class="cat-demo-card card reveal-left">
+                <div style="font-size:clamp(1.3rem,2.2vw,1.6rem);margin-bottom:clamp(4px,0.5vw,8px);">&#127919;</div>
+                <h4 style="color:var(--tb-amber);">Custom Rankings</h4>
+                <p style="font-size:var(--small-size);color:var(--tb-muted);margin-top:clamp(4px,0.5vw,6px);line-height:1.5;">Rank every restaurant S/A/B/C &mdash; with S-tier ordered 1 through N via pairwise comparison. Not just &ldquo;saved&rdquo; or &ldquo;liked.&rdquo;</p>
+                <div style="display:flex;flex-direction:column;gap:3px;margin-top:clamp(6px,0.6vw,8px);">
+                    <div class="vs-beli-row"><span class="vs-x">&#10007;</span> Google Maps: flat &ldquo;saved&rdquo; pins, no ranking</div>
+                    <div class="vs-beli-row"><span class="vs-check">&#10003;</span> TasteBuddy: full S/A/B/C tier hierarchy</div>
+                </div>
+            </div>
+
+            <div class="cat-demo-card card reveal-right">
+                <div style="font-size:clamp(1.3rem,2.2vw,1.6rem);margin-bottom:clamp(4px,0.5vw,8px);">&#128200;</div>
+                <h4 style="color:var(--tb-sage);">TasteBoard + Tastie Score</h4>
+                <p style="font-size:var(--small-size);color:var(--tb-muted);margin-top:clamp(4px,0.5vw,6px);line-height:1.5;">Your personal food analytics dashboard: visit streaks, cuisine breakdown, spend trends &mdash; no other app visualizes your food identity.</p>
+                <div style="display:flex;flex-direction:column;gap:3px;margin-top:clamp(6px,0.6vw,8px);">
+                    <div class="vs-beli-row"><span class="vs-x">&#10007;</span> Beli / Yelp: no dashboard, no analytics</div>
+                    <div class="vs-beli-row"><span class="vs-check">&#10003;</span> TasteBuddy: charts, streaks, cuisine maps</div>
+                </div>
+            </div>
+
+            <div class="cat-demo-card card reveal-left">
+                <div style="font-size:clamp(1.3rem,2.2vw,1.6rem);margin-bottom:clamp(4px,0.5vw,8px);">&#129302;</div>
+                <h4 style="color:var(--tb-burgundy);">Persona AI Chat</h4>
+                <p style="font-size:var(--small-size);color:var(--tb-muted);margin-top:clamp(4px,0.5vw,6px);line-height:1.5;">Ask &ldquo;The Sushi Snob&rdquo; or a friend&rsquo;s AI concierge for recs &mdash; dining intelligence from real people with real taste profiles.</p>
+                <div style="display:flex;flex-direction:column;gap:3px;margin-top:clamp(6px,0.6vw,8px);">
+                    <div class="vs-beli-row"><span class="vs-x">&#10007;</span> Other apps: no persona-driven AI chat</div>
+                    <div class="vs-beli-row"><span class="vs-check">&#10003;</span> TasteBuddy: ask any persona&rsquo;s AI concierge</div>
+                </div>
+            </div>
+
+            <div class="cat-demo-card card reveal-right">
+                <div style="font-size:clamp(1.3rem,2.2vw,1.6rem);margin-bottom:clamp(4px,0.5vw,8px);">&#127775;</div>
+                <h4 style="color:var(--tb-blue);">Personalized AI Recs</h4>
+                <p style="font-size:var(--small-size);color:var(--tb-muted);margin-top:clamp(4px,0.5vw,6px);line-height:1.5;">Recommendations anchored to YOUR actual ranking data &mdash; S-tier history, visit log, wishlist, and active persona steer every response.</p>
+                <div style="display:flex;flex-direction:column;gap:3px;margin-top:clamp(6px,0.6vw,8px);">
+                    <div class="vs-beli-row"><span class="vs-x">&#10007;</span> ChatGPT / Zesty: generic city-level recs</div>
+                    <div class="vs-beli-row"><span class="vs-check">&#10003;</span> TasteBuddy: recs from your own data</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==========================================
+     SLIDE: HOW IT WORKS — ONBOARDING
+     3-phase walkthrough — reuses .input-flow-grid / .flow-card / .flow-mockup
+     ========================================== -->
+<section class="slide slide-input-flow" data-slide="2">
+    <div class="slide-content stagger">
+        <h2 class="reveal">How It Works &mdash; Onboarding</h2>
+        <p class="slide-subtitle reveal">Up and running in 3 steps</p>
+
+        <div class="input-flow-grid reveal stagger">
+            <!-- Phase 1 -->
+            <div class="flow-card card reveal">
+                <div style="width:clamp(32px,4vw,44px);height:clamp(32px,4vw,44px);border-radius:50%;background:linear-gradient(135deg,var(--tb-amber),#d4a017);display:flex;align-items:center;justify-content:center;color:#fff;font-family:var(--font-display);font-weight:800;font-size:var(--body-size);margin-bottom:clamp(6px,0.8vw,10px);">1</div>
+                <h4><span class="flow-card-icon">&#128100;</span> Create Profile</h4>
+                <div class="flow-mockup">
+                    <div class="flow-label">Pick your meal types</div>
+                    <div class="flow-chips">
+                        <span class="flow-chip active">Dinner</span>
+                        <span class="flow-chip active">Brunch</span>
+                        <span class="flow-chip">Dessert</span>
+                        <span class="flow-chip">Coffee</span>
+                    </div>
+                    <div class="flow-label">Pick your cuisines</div>
+                    <div class="flow-chips">
+                        <span class="flow-chip active">Japanese</span>
+                        <span class="flow-chip active">Italian</span>
+                        <span class="flow-chip">Korean</span>
+                    </div>
+                    <div class="flow-label">Choose a starter Persona</div>
+                    <div class="flow-chips">
+                        <span class="flow-chip">Sushi Snob</span>
+                        <span class="flow-chip active">Brooklyn Bruncher</span>
+                    </div>
+                </div>
+                <div style="font-size:var(--tag-size);color:var(--tb-muted);margin-top:auto;line-height:1.4;">~2 minutes. These choices immediately shape how your AI thinks about recommendations.</div>
+            </div>
+
+            <!-- Phase 2 -->
+            <div class="flow-card card reveal">
+                <div style="width:clamp(32px,4vw,44px);height:clamp(32px,4vw,44px);border-radius:50%;background:linear-gradient(135deg,#2d8a4e,#198754);display:flex;align-items:center;justify-content:center;color:#fff;font-family:var(--font-display);font-weight:800;font-size:var(--body-size);margin-bottom:clamp(6px,0.8vw,10px);">2</div>
+                <h4><span class="flow-card-icon">&#11088;</span> Add &amp; Rank Spots</h4>
+                <div class="flow-mockup">
+                    <div style="display:flex;flex-direction:column;gap:clamp(3px,0.4vw,5px);">
+                        <div class="flow-pill">
+                            <span>Le Bernardin</span>
+                            <span style="font-family:var(--font-display);font-weight:800;background:var(--tier-s);color:#333;padding:1px 6px;border-radius:5px;font-size:var(--tag-size);">S</span>
+                        </div>
+                        <div class="flow-pill">
+                            <span>L&rsquo;Artusi</span>
+                            <span style="font-family:var(--font-display);font-weight:800;background:var(--tier-a);color:#fff;padding:1px 6px;border-radius:5px;font-size:var(--tag-size);">A</span>
+                        </div>
+                        <div class="flow-pill">
+                            <span>Thai Diner</span>
+                            <span style="font-family:var(--font-display);font-weight:800;background:var(--tier-a);color:#fff;padding:1px 6px;border-radius:5px;font-size:var(--tag-size);">A</span>
+                        </div>
+                        <div class="flow-status">&#10003; 3 spots added &mdash; your AI is already learning</div>
+                    </div>
+                </div>
+                <div style="font-size:var(--tag-size);color:var(--tb-muted);margin-top:auto;line-height:1.4;">Search Google Places, pick a tier, done. Each ranking trains your AI to understand your taste.</div>
+            </div>
+
+            <!-- Phase 3 -->
+            <div class="flow-card card reveal">
+                <div style="width:clamp(32px,4vw,44px);height:clamp(32px,4vw,44px);border-radius:50%;background:linear-gradient(135deg,#0d6efd,#0dcaf0);display:flex;align-items:center;justify-content:center;color:#fff;font-family:var(--font-display);font-weight:800;font-size:var(--body-size);margin-bottom:clamp(6px,0.8vw,10px);">3</div>
+                <h4><span class="flow-card-icon">&#9889;</span> Explore Features</h4>
+                <div class="flow-mockup">
+                    <div style="display:flex;flex-direction:column;gap:clamp(4px,0.5vw,6px);">
+                        <div class="flow-status">&#129302; Ask AI: &ldquo;Best ramen near me?&rdquo;</div>
+                        <div class="flow-status" style="background:rgba(13,110,253,0.06);border-color:rgba(13,110,253,0.15);color:var(--tb-blue);">&#128200; Check your TasteBoard stats</div>
+                        <div class="flow-status" style="background:rgba(184,134,11,0.06);border-color:rgba(184,134,11,0.15);color:var(--tb-amber);">&#128100; Explore Persona profiles</div>
+                    </div>
+                </div>
+                <div style="font-size:var(--tag-size);color:var(--tb-muted);margin-top:auto;line-height:1.4;">Unlock the full platform &mdash; AI concierge, analytics, social discovery, and more. The more you rank, the smarter it gets.</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==========================================
+     SLIDE: CORE TRACKING
+     2x2 feature frames — reuses .card, .cat-chips, .flow-chip
+     ========================================== -->
+<section class="slide slide-tiering" data-slide="3">
+    <div class="slide-content stagger">
+        <h2 class="reveal">Core Tracking</h2>
+        <p class="slide-subtitle reveal">Four pillars that make TasteBuddy your definitive dining record</p>
+
+        <div class="reveal stagger" style="display:grid;grid-template-columns:1fr 1fr;gap:clamp(8px,1.2vw,16px);width:min(95%,820px);">
+            <!-- Frame 1: Custom Categories -->
+            <div class="card reveal-left" style="padding:clamp(12px,1.5vw,20px);display:flex;flex-direction:column;gap:clamp(6px,0.8vw,10px);">
+                <div style="font-size:clamp(1.3rem,2.2vw,1.6rem);">&#127860;</div>
+                <h4 style="font-size:var(--body-size);">Custom Categories</h4>
+                <p style="font-size:var(--tag-size);color:var(--tb-muted);line-height:1.45;">Create any meal type &mdash; Breakfast, Dinner, Tasting Menus, Ramen Night. Rank the same restaurant under multiple categories independently.</p>
+                <div class="cat-chips" style="margin-top:auto;">
+                    <span class="cat-chip core">Breakfast</span>
+                    <span class="cat-chip core">Dinner</span>
+                    <span class="cat-chip custom">Tasting Menus</span>
+                    <span class="cat-chip custom">Ramen Night</span>
+                </div>
+            </div>
+
+            <!-- Frame 2: Add New Places -->
+            <div class="card reveal-right" style="padding:clamp(12px,1.5vw,20px);display:flex;flex-direction:column;gap:clamp(6px,0.8vw,10px);">
+                <div style="font-size:clamp(1.3rem,2.2vw,1.6rem);">&#128205;</div>
+                <h4 style="font-size:var(--body-size);">Add New Places</h4>
+                <p style="font-size:var(--tag-size);color:var(--tb-muted);line-height:1.45;">Search any restaurant via Google Places, assign a tier, pick cuisine and meal type. Your entire dining history in one searchable library.</p>
+                <div style="display:flex;align-items:center;gap:8px;margin-top:auto;padding:clamp(5px,0.6vw,8px) clamp(8px,1vw,12px);border-radius:8px;background:var(--tb-bg);border:1px solid var(--tb-light-border);">
+                    <span>&#128269;</span>
+                    <span style="font-size:var(--tag-size);color:var(--tb-muted);flex:1;">Search Google Places&hellip;</span>
+                    <span style="padding:2px 8px;border-radius:6px;background:var(--tb-amber);color:#fff;font-size:var(--tag-size);font-weight:600;">Add</span>
+                </div>
+            </div>
+
+            <!-- Frame 3: Log a Visit -->
+            <div class="card reveal-left" style="padding:clamp(12px,1.5vw,20px);display:flex;flex-direction:column;gap:clamp(6px,0.8vw,10px);">
+                <div style="font-size:clamp(1.3rem,2.2vw,1.6rem);">&#128221;</div>
+                <h4 style="font-size:var(--body-size);">Log a Visit</h4>
+                <p style="font-size:var(--tag-size);color:var(--tb-muted);line-height:1.45;">Record occasion, spend, party size, notes, and photos. One entry per day per restaurant &mdash; keeps your log clean and intentional.</p>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-top:auto;">
+                    <div style="padding:clamp(3px,0.4vw,5px) clamp(6px,0.8vw,10px);border-radius:6px;background:var(--tb-bg);font-size:var(--tag-size);color:var(--tb-muted);">&#127358; Date Night</div>
+                    <div style="padding:clamp(3px,0.4vw,5px) clamp(6px,0.8vw,10px);border-radius:6px;background:var(--tb-bg);font-size:var(--tag-size);color:var(--tb-muted);">&#128176; $285</div>
+                    <div style="padding:clamp(3px,0.4vw,5px) clamp(6px,0.8vw,10px);border-radius:6px;background:var(--tb-bg);font-size:var(--tag-size);color:var(--tb-muted);">&#128101; Party of 2</div>
+                    <div style="padding:clamp(3px,0.4vw,5px) clamp(6px,0.8vw,10px);border-radius:6px;background:var(--tb-bg);font-size:var(--tag-size);color:var(--tb-muted);">&#128247; Photos</div>
+                </div>
+            </div>
+
+            <!-- Frame 4: Rankings S/A/B/C -->
+            <div class="card reveal-right" style="padding:clamp(12px,1.5vw,20px);display:flex;flex-direction:column;gap:clamp(6px,0.8vw,10px);">
+                <div style="font-size:clamp(1.3rem,2.2vw,1.6rem);">&#127942;</div>
+                <h4 style="font-size:var(--body-size);">Rankings: S / A / B / C</h4>
+                <p style="font-size:var(--tag-size);color:var(--tb-muted);line-height:1.45;">S-tier is pairwise ranked &mdash; every spot earns its position head-to-head. A, B, C sorted by preference. TBE for your wishlist.</p>
+                <div style="display:flex;gap:clamp(4px,0.5vw,6px);margin-top:auto;align-items:center;">
+                    <div style="flex:1;text-align:center;padding:clamp(4px,0.5vw,7px);border-radius:8px;background:linear-gradient(135deg,#ffd700,#ffec8b);font-family:var(--font-display);font-weight:800;font-size:var(--body-size);color:#333;">S</div>
+                    <div style="flex:1;text-align:center;padding:clamp(4px,0.5vw,7px);border-radius:8px;background:var(--tier-a);font-family:var(--font-display);font-weight:800;font-size:var(--body-size);color:#fff;">A</div>
+                    <div style="flex:1;text-align:center;padding:clamp(4px,0.5vw,7px);border-radius:8px;background:var(--tier-b);font-family:var(--font-display);font-weight:800;font-size:var(--body-size);color:#fff;">B</div>
+                    <div style="flex:1;text-align:center;padding:clamp(4px,0.5vw,7px);border-radius:8px;background:var(--tier-c);font-family:var(--font-display);font-weight:800;font-size:var(--body-size);color:#555;">C</div>
+                    <div style="flex:1;text-align:center;padding:clamp(4px,0.5vw,7px);border-radius:8px;background:rgba(163,65,91,0.12);font-family:var(--font-display);font-weight:800;font-size:var(--tag-size);color:var(--tb-burgundy);">TBE</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+        <!-- ==========================================
+         SLIDE 4: TASTEBOARD
+         ========================================== -->
+<section class="slide slide-dashboard" data-slide="4">
         <div class="slide-content stagger">
-            <div class="title-eyebrow reveal">Overview Deck 2026</div>
-            <h1 class="title-main reveal">TasteBuddy</h1>
-            <div class="title-divider reveal"></div>
-            <p class="title-tagline reveal">The all-in-one restaurant tracker with AI-powered dining intelligence</p>
-            <div class="title-date reveal">April 2026</div>
-            <div class="reveal" style="margin-top: clamp(0.5rem, 1.5vw, 1rem);">
-                <a href="https://tastebuddy-colinchia2.pythonanywhere.com/" target="_blank" rel="noopener"
-                   style="display: inline-block; padding: 0.6rem 1.5rem; background: var(--tb-sage); color: white; border-radius: 2rem; font-family: var(--font-display); font-weight: 600; font-size: var(--body-size); text-decoration: none; transition: transform 0.2s, box-shadow 0.2s;"
-                   onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(45,138,78,0.3)'"
-                   onmouseout="this.style.transform=''; this.style.boxShadow=''">
-                    Explore the Live Site &rarr;
-                </a>
-                <div style="font-size: var(--small-size); color: var(--tb-muted); margin-top: 0.4rem;">
-                    Browse 1,000+ rankings, try the AI concierge, and see it all in action &mdash; or keep scrolling to learn more
+            <h2 class="reveal">Meet the TasteBoard &mdash; Your TasteBuddy Analytics Dashboard</h2>
+            <div class="dash-top reveal stagger" style="grid-template-columns: repeat(4, 1fr);">
+                <div class="stat-tile card"><div class="stat-value" data-count="1001">0</div><div class="stat-label">Listings</div></div>
+                <div class="stat-tile card"><div class="stat-value" style="font-size:clamp(0.9rem,2vw,1.3rem)">Japanese</div><div class="stat-label">Top Category</div></div>
+                <div class="stat-tile card"><div class="stat-value" style="font-size:clamp(0.9rem,2vw,1.3rem)">Italian</div><div class="stat-label">Top Cuisine</div></div>
+                <div class="stat-tile card"><div class="stat-value" style="color:var(--tb-amber)">847</div><div class="stat-label">Tastie Score</div></div>
+            </div>
+            <div class="dash-mid reveal">
+                <div class="chart-card card"><h4>Visits Over Time</h4><div class="chart-wrap"><canvas id="lineChart"></canvas></div></div>
+                <div class="chart-card card"><h4>Categories</h4><div class="chart-wrap"><canvas id="pieChart"></canvas></div></div>
+            </div>
+            <div class="crown-row reveal stagger">
+                <div class="crown-tile glass-card"><div class="crown-icon">&#128081;</div><div class="crown-label">Greatness</div><div class="crown-desc">Most S-Tier picks</div></div>
+                <div class="crown-tile glass-card"><div class="crown-icon">&#128293;</div><div class="crown-label">Dependency</div><div class="crown-desc">Most revisited spot</div></div>
+                <div class="crown-tile glass-card"><div class="crown-icon">&#127775;</div><div class="crown-label">Versatility</div><div class="crown-desc">Widest cuisine range</div></div>
+            </div>
+
+            <!-- Tastie Score -->
+            <div class="reveal" style="width:min(95%,780px);background:var(--tb-white);border-radius:12px;border:1px solid var(--tb-light-border);box-shadow:0 2px 12px rgba(0,0,0,0.05);padding:clamp(10px,1.2vw,14px) clamp(12px,1.5vw,18px);">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:clamp(6px,0.7vw,9px);">
+                    <div>
+                        <span style="font-family:var(--font-display);font-weight:700;font-size:var(--small-size);color:var(--tb-dark);">&#11088; Tastie Score</span>
+                        <span style="font-family:var(--font-display);font-weight:800;font-size:clamp(1rem,2vw,1.3rem);color:var(--tb-amber);margin-left:8px;">847</span>
+                        <div style="font-size:var(--tag-size);color:var(--tb-muted);margin-top:2px;">Your food engagement score &mdash; based on how many places you&rsquo;ve tracked, ranked, visited, and explored</div>
+                    </div>
+                    <div style="flex-shrink:0;margin-left:16px;padding:clamp(3px,0.4vw,5px) clamp(10px,1.2vw,14px);border-radius:20px;background:rgba(184,134,11,0.1);border:1px solid rgba(184,134,11,0.25);font-family:var(--font-display);font-weight:700;font-size:var(--tag-size);color:var(--tb-amber);white-space:nowrap;">Food Connoisseur</div>
+                </div>
+                <div style="position:relative;height:6px;background:var(--tb-bg);border-radius:3px;margin-bottom:clamp(5px,0.6vw,7px);overflow:hidden;">
+                    <div style="position:absolute;left:0;top:0;height:100%;width:84.7%;background:linear-gradient(90deg,var(--tb-sage) 0%,var(--tb-amber) 70%,#d4a017 100%);border-radius:3px;"></div>
+                </div>
+                <div style="display:flex;justify-content:space-between;gap:clamp(2px,0.3vw,4px);">
+                    <span style="font-size:var(--tag-size);color:var(--tb-muted);padding:2px 5px;border-radius:6px;background:var(--tb-bg);white-space:nowrap;">Picky Eater</span>
+                    <span style="font-size:var(--tag-size);color:var(--tb-muted);padding:2px 5px;border-radius:6px;background:var(--tb-bg);white-space:nowrap;">Casual Diner</span>
+                    <span style="font-size:var(--tag-size);color:var(--tb-muted);padding:2px 5px;border-radius:6px;background:var(--tb-bg);white-space:nowrap;">Food Explorer</span>
+                    <span style="font-size:var(--tag-size);color:var(--tb-muted);padding:2px 5px;border-radius:6px;background:var(--tb-bg);white-space:nowrap;">Serious Eater</span>
+                    <span style="font-size:var(--tag-size);font-weight:700;color:var(--tb-amber);padding:2px 5px;border-radius:6px;background:rgba(184,134,11,0.08);border:1px solid rgba(184,134,11,0.25);white-space:nowrap;">Food Connoisseur &#9664;</span>
+                    <span style="font-size:var(--tag-size);color:var(--tb-muted);padding:2px 5px;border-radius:6px;background:var(--tb-bg);white-space:nowrap;">True Foodie</span>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ==========================================
-         SLIDE 1: ORIGIN STORY
+        <!-- ==========================================
+         SLIDE 5: AI CONCIERGE
          ========================================== -->
-    <section class="slide slide-origin" data-slide="1">
+<section class="slide slide-ai" data-slide="5">
         <div class="slide-content stagger">
-            <h2 class="reveal">How It Started</h2>
-            <p class="slide-subtitle reveal">From spreadsheets and group texts to a fully automated dining workflow</p>
+            <h2 class="reveal">Your AI Food Concierge</h2>
+            <p class="slide-subtitle reveal">Like Zesty from DoorDash, but it actually knows your dining history and personal taste</p>
 
-            <div class="origin-timeline reveal stagger">
-                <div class="origin-step card reveal">
-                    <div class="origin-num">01</div>
-                    <div class="origin-icon">&#129298;</div>
-                    <h4>Got sick, couldn't eat out</h4>
-                    <p>Recovering from critical illness and stripped away from eating, I realized I wanted to be intentional about every restaurant visit after I was discharged</p>
+            <div class="ai-layout">
+                <div class="chat-mockup card reveal-left">
+                    <div class="chat-header">
+                        <div class="chat-avatar" style="background:linear-gradient(135deg,var(--tb-amber),var(--tb-burgundy));color:#fff">&#129302;</div>
+                        <span class="chat-header-text">TasteBuddy AI</span>
+                    </div>
+                    <div class="chat-bubble chat-user">Anniversary dinner? She loves Italian.</div>
+                    <div class="chat-bubble chat-ai">Based on your rankings, <strong>L'Artusi</strong> is your top Italian (A-tier). For a special upgrade, <strong>Torrisi</strong> is on your HP wishlist &mdash; reservations open Mondays at 10 AM. Want me to set a reminder?</div>
+                    <div class="chat-bubble chat-user">Yes, remind me for Saturday</div>
+                    <div class="chat-bubble chat-ai"><strong>Done!</strong> I'll remind you Monday at 10 AM to grab a Torrisi reservation for Saturday. Added to your planner.</div>
+                    <div class="chat-input">&#128172; Ask about your restaurants...</div>
                 </div>
-                <div class="origin-step card reveal">
-                    <div class="origin-num">02</div>
-                    <div class="origin-icon">&#128202;</div>
-                    <h4>Tried Excel tracking</h4>
-                    <p>My spreadsheet was clunky &mdash; manual, no smart ranking, no AI, and no reservation planning</p>
+
+                <div class="ai-caps reveal-right stagger">
+                    <div class="ai-cap-card card reveal">
+                        <div class="ai-cap-icon" style="background:rgba(184,134,11,0.08)">&#127919;</div>
+                        <div class="ai-cap-text">
+                            <h4>Personalized Recommendations</h4>
+                            <p>Analyzes your S-tier favorites, visit patterns, and cuisine preferences — not generic reviews</p>
+                        </div>
+                    </div>
+                    <div class="ai-cap-card card reveal">
+                        <div class="ai-cap-icon" style="background:rgba(13,110,253,0.08)">&#128197;</div>
+                        <div class="ai-cap-text">
+                            <h4>Reservation Planning &amp; Reminders</h4>
+                            <p>Save when reservations open and when you want to eat &mdash; get reminded so you never miss a booking window</p>
+                        </div>
+                    </div>
+                    <div class="ai-cap-card card reveal">
+                        <div class="ai-cap-icon" style="background:rgba(45,138,78,0.08)">&#127758;</div>
+                        <div class="ai-cap-text">
+                            <h4>New Place Discovery</h4>
+                            <p>Finds restaurants via Google Places and web search, cross-referenced with your taste profile</p>
+                        </div>
+                    </div>
+                    <div class="ai-cap-card card reveal">
+                        <div class="ai-cap-icon" style="background:rgba(163,65,91,0.08)">&#128200;</div>
+                        <div class="ai-cap-text">
+                            <h4>Ask Anything About Your Data</h4>
+                            <p>"What's my most-visited cuisine?" or "Plan a food tour of my S-tier spots in Manhattan"</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="origin-step card reveal">
-                    <div class="origin-num">03</div>
-                    <div class="origin-icon">&#128107;</div>
-                    <h4>Friends as food concierge</h4>
-                    <p>Texting friends "where should I eat?" every weekend wasn't scalable</p>
+            </div>
+            <p class="ai-powered-by reveal">Powered by <strong>Perplexity Research Agent</strong> + <strong>Claude Sonnet 4.6</strong></p>
+        </div>
+    </section>
+
+        <!-- ==========================================
+         SLIDE 6: RESEARCH AGENT PIPELINE
+         ========================================== -->
+<section class="slide slide-research" data-slide="6">
+        <div class="slide-content stagger">
+            <h2 class="reveal">Research Agent Pipeline</h2>
+            <p class="slide-subtitle reveal">Parallel web research + personalized AI synthesis anchored to your taste profile</p>
+
+            <div class="research-pipeline reveal stagger" style="width: min(95%, 780px);">
+                <!-- Stage 1 -->
+                <div class="research-stage card reveal" style="display: grid; grid-template-columns: auto 1fr; gap: clamp(10px, 1.5vw, 16px); padding: clamp(12px, 1.5vw, 18px); align-items: center;">
+                    <div style="width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, var(--tb-amber), #d4a017); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 1.1rem;">1</div>
+                    <div>
+                        <h4 style="margin: 0 0 4px; font-size: clamp(0.85rem, 1.3vw, 1rem); color: var(--tb-amber);">Perplexity Research Agent &mdash; 2 Parallel Searches</h4>
+                        <p style="margin: 0; font-size: clamp(0.7rem, 1vw, 0.85rem); color: var(--tb-muted); line-height: 1.5;"><strong>Food media</strong> (Eater, Infatuation, Beli, Resy, Bon App&eacute;tit) + <strong>Reddit threads</strong> run simultaneously &mdash; both steered by your S/A-tier taste profile for relevance</p>
+                    </div>
                 </div>
-                <div class="origin-step card reveal">
-                    <div class="origin-num">04</div>
-                    <div class="origin-icon">&#129302;</div>
-                    <h4>Built TasteBuddy</h4>
-                    <p>Automated the entire workflow: discover &#8594; rank &#8594; plan &#8594; book &#8594; log</p>
+
+                <!-- Arrow -->
+                <div class="reveal" style="text-align: center; font-size: 1.5rem; color: var(--tb-muted); margin: 0.25rem 0;">&#8595;</div>
+
+                <!-- Stage 2 -->
+                <div class="research-stage card reveal" style="display: grid; grid-template-columns: auto 1fr; gap: clamp(10px, 1.5vw, 16px); padding: clamp(12px, 1.5vw, 18px); align-items: center;">
+                    <div style="width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, #2d8a4e, #198754); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 1.1rem;">2</div>
+                    <div>
+                        <h4 style="margin: 0 0 4px; font-size: clamp(0.85rem, 1.3vw, 1rem); color: #2d8a4e;">Your Database</h4>
+                        <p style="margin: 0; font-size: clamp(0.7rem, 1vw, 0.85rem); color: var(--tb-muted); line-height: 1.5;">Full <strong>tier rankings, visit history &amp; wishlist</strong> sent to Claude &mdash; S/A-tier cuisines steer research retrieval; C-tier spots flagged as explicit negative signals</p>
+                    </div>
                 </div>
+
+                <!-- Arrow -->
+                <div class="reveal" style="text-align: center; font-size: 1.5rem; color: var(--tb-muted); margin: 0.25rem 0;">&#8595;</div>
+
+                <!-- Stage 3 -->
+                <div class="research-stage card reveal" style="display: grid; grid-template-columns: auto 1fr; gap: clamp(10px, 1.5vw, 16px); padding: clamp(12px, 1.5vw, 18px); align-items: center;">
+                    <div style="width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, #0d6efd, #0dcaf0); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 1.1rem;">3</div>
+                    <div>
+                        <h4 style="margin: 0 0 4px; font-size: clamp(0.85rem, 1.3vw, 1rem); color: #0d6efd;">Claude Sonnet 4.6</h4>
+                        <p style="margin: 0; font-size: clamp(0.7rem, 1vw, 0.85rem); color: var(--tb-muted); line-height: 1.5;">Synthesizes research with your data &mdash; every recommendation includes a <strong>TasteBuddy Connection</strong> linking it to your S/A-tier favorites so you know exactly why it fits your palate</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="reveal" style="display: flex; gap: clamp(8px, 1.2vw, 14px); justify-content: center; flex-wrap: wrap; margin-top: 0.5rem;">
+                <span style="background: rgba(184,134,11,0.1); color: var(--tb-amber); padding: 0.3rem 0.7rem; border-radius: 1rem; font-size: clamp(0.65rem, 0.9vw, 0.78rem); font-weight: 600;">Smart Question Classifier</span>
+                <span style="background: rgba(45,138,78,0.1); color: #2d8a4e; padding: 0.3rem 0.7rem; border-radius: 1rem; font-size: clamp(0.65rem, 0.9vw, 0.78rem); font-weight: 600;">Database-Only = Skip Research (Fast)</span>
+                <span style="background: rgba(13,110,253,0.1); color: #0d6efd; padding: 0.3rem 0.7rem; border-radius: 1rem; font-size: clamp(0.65rem, 0.9vw, 0.78rem); font-weight: 600;">Graceful Fallback</span>
+                <span style="background: rgba(163,65,91,0.1); color: var(--tb-burgundy); padding: 0.3rem 0.7rem; border-radius: 1rem; font-size: clamp(0.65rem, 0.9vw, 0.78rem); font-weight: 600;">Source Citations</span>
             </div>
         </div>
     </section>
 
-    <!-- ==========================================
-         SLIDE 1: ONE APP, NOT FIVE (existing)
+        <!-- ==========================================
+         SLIDE 7: INPUT & RESERVATION FLOW
          ========================================== -->
-    <section class="slide slide-replace" data-slide="2">
-        <div class="slide-content stagger">
-            <h2 class="reveal">One App, Not Five</h2>
-            <p class="slide-subtitle reveal">Stop juggling multiple apps to manage your dining life</p>
-
-            <div class="replace-grid reveal">
-                <div class="app-stack stagger">
-                    <div class="app-row reveal">
-                        <div class="app-icon" style="background:rgba(163,65,91,0.1)">&#127942;</div>
-                        <div class="app-info">
-                            <div class="app-name">Beli</div>
-                            <div class="app-for">Tracking &amp; social, but fixed categories only</div>
-                        </div>
-                    </div>
-                    <div class="app-row reveal">
-                        <div class="app-icon" style="background:rgba(13,110,253,0.1)">&#128197;</div>
-                        <div class="app-info">
-                            <div class="app-name">Resy / OpenTable</div>
-                            <div class="app-for">Reservations &amp; booking only</div>
-                        </div>
-                    </div>
-                    <div class="app-row reveal">
-                        <div class="app-icon" style="background:rgba(45,138,78,0.1)">&#128205;</div>
-                        <div class="app-info">
-                            <div class="app-name">Google Maps Saved</div>
-                            <div class="app-for">"Want to go" pins with no ranking or detail</div>
-                        </div>
-                    </div>
-                    <div class="app-row reveal">
-                        <div class="app-icon" style="background:rgba(184,134,11,0.1)">&#129302;</div>
-                        <div class="app-info">
-                            <div class="app-name">Zesty / ChatGPT</div>
-                            <div class="app-for">AI food recs, but doesn't know your history</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="arrow-merge reveal-scale">&#10132;</div>
-
-                <div class="tb-result glass-card reveal-scale">
-                    <div style="font-size:clamp(1.5rem,3vw,2.2rem)">&#127860;</div>
-                    <div class="tb-logo-text">TasteBuddy</div>
-                    <div class="tb-features">
-                        <span><span class="check">&#10003;</span> Flexible ranking &amp; custom categories</span>
-                        <span><span class="check">&#10003;</span> Reservation planning &amp; reminders</span>
-                        <span><span class="check">&#10003;</span> Smart wishlist with priorities</span>
-                        <span><span class="check">&#10003;</span> AI concierge that knows your taste</span>
-                        <span><span class="check">&#10003;</span> Visit history, analytics &amp; maps</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ==========================================
-         SLIDE 2: HERO (NEW)
-         ========================================== -->
-    <section class="slide slide-hero" data-slide="3">
-        <div class="slide-content stagger">
-            <div class="reveal" style="font-size:clamp(2rem,4vw,3rem);opacity:0.15;letter-spacing:0.3em">&#127860; &#127863; &#127869;</div>
-            <h1 class="hero-tagline reveal">TasteBuddy</h1>
-            <div style="font-size:clamp(0.9rem,1.8vw,1.25rem);font-weight:400;color:var(--tb-muted);max-width:580px;text-align:center" class="reveal">The AI-Powered Restaurant &ldquo;Buddy&rdquo; for your tastebuds</div>
-            <div style="width:clamp(40px,8vw,80px);height:3px;border-radius:2px;background:var(--tb-amber)" class="reveal"></div>
-            <p class="hero-sub reveal">Remembers every meal. Helps you rank your favorites. Plans your next reservation. Gives you suggestions. Connect with your friends. Dine like your favorite foodie influencer.</p>
-            <div class="hero-badges reveal">
-                <span class="hero-badge">&#127919; Ranking</span>
-                <span class="hero-badge">&#129302; Concierge</span>
-                <span class="hero-badge">&#128197; Reservation Intel</span>
-                <span class="hero-badge">&#128200; Analytics</span>
-            </div>
-        </div>
-    </section>
-
-    <!-- ==========================================
-         SLIDE 3: INPUT & RESERVATION FLOW (NEW)
-         ========================================== -->
-    <section class="slide slide-input-flow" data-slide="4">
+<section class="slide slide-input-flow" data-slide="7">
         <div class="slide-content stagger">
             <h2 class="reveal">Smart Input &amp; Reservation Flow</h2>
             <p class="slide-subtitle reveal">From choosing what to eat to booking your table &mdash; all in one place</p>
@@ -635,10 +885,285 @@
         </div>
     </section>
 
-    <!-- ==========================================
-         SLIDE 4: FLEXIBLE CATEGORIES (existing)
+        <!-- ==========================================
+         SLIDE 8: PERSONA ECOSYSTEM
          ========================================== -->
-    <section class="slide slide-categories" data-slide="5">
+<section class="slide slide-personas" data-slide="8">
+        <div class="slide-content stagger">
+            <h2 class="reveal">Persona Ecosystem</h2>
+            <p class="slide-subtitle reveal">Eat like your favorite food personality &mdash; or become one yourself</p>
+
+            <p class="reveal" style="text-align:center; color:var(--tb-text-muted); font-size:0.85rem; margin-bottom:0.25rem; letter-spacing:0.5px; text-transform:uppercase; font-weight:600;">What You Can Do</p>
+
+            <div class="persona-features reveal stagger">
+                <div class="persona-feat card reveal" style="position:relative;">
+                    <div class="persona-feat-icon">&#128218;</div>
+                    <h4>Browse Personas</h4>
+                    <p>Discover curated lists from NYC food archetypes</p>
+                    <div style="position:absolute; right:-18px; top:50%; transform:translateY(-50%); color:var(--tb-text-muted); font-size:1.1rem;">&#8594;</div>
+                </div>
+                <div class="persona-feat card reveal" style="position:relative;">
+                    <div class="persona-feat-icon">&#129302;</div>
+                    <h4>Eat Like [X]</h4>
+                    <p>Ask AI: &#8220;Dinner in Chelsea like The Sushi Snob would pick&#8221;</p>
+                    <div style="position:absolute; right:-18px; top:50%; transform:translateY(-50%); color:var(--tb-text-muted); font-size:1.1rem;">&#8594;</div>
+                </div>
+                <div class="persona-feat card reveal">
+                    <div class="persona-feat-icon">&#128100;</div>
+                    <h4>Build Your Own</h4>
+                    <p>Your rankings auto-generate your public persona profile</p>
+                </div>
+            </div>
+
+            <p class="reveal" style="text-align:center; color:var(--tb-text-muted); font-size:0.85rem; margin-top:1rem; margin-bottom:0.25rem; letter-spacing:0.5px; text-transform:uppercase; font-weight:600;">Example Personas</p>
+
+            <div class="persona-grid reveal stagger">
+                <div class="persona-card card reveal">
+                    <div class="persona-avatar">&#127843;</div>
+                    <h4>The Sushi Snob</h4>
+                    <p>Only eats fish flown in this morning and knows exactly how much wasabi is too much.</p>
+                </div>
+                <div class="persona-card card reveal">
+                    <div class="persona-avatar">&#127798;</div>
+                    <h4>The Spice Seeker</h4>
+                    <p>On a relentless quest to find the dish that finally makes them sweat.</p>
+                </div>
+                <div class="persona-card card reveal">
+                    <div class="persona-avatar">&#127769;</div>
+                    <h4>The Midnight Muncher</h4>
+                    <p>The ultimate authority on which greasy spoons and food trucks are open at 3:00 AM.</p>
+                </div>
+                <div class="persona-card card reveal">
+                    <div class="persona-avatar">&#127863;</div>
+                    <h4>The Sophisticated Sommelier</h4>
+                    <p>Pairing high-end plates with the perfect pour and impeccable service.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<!-- ==========================================
+     SLIDE: WHAT ELSE CAN TASTEBUDDY DO?
+     6-card use-case grid — reuses .persona-features / .persona-feat
+     ========================================== -->
+<section class="slide slide-dashboard" data-slide="9">
+    <div class="slide-content stagger">
+        <h2 class="reveal">What Else Can TasteBuddy Do?</h2>
+        <p class="slide-subtitle reveal">Beyond rankings &mdash; a full suite of tools for the serious food lover</p>
+
+        <div class="persona-features reveal stagger" style="width:min(95%,860px);">
+            <div class="persona-feat card reveal">
+                <div class="persona-feat-icon">&#128197;</div>
+                <h4>Plan Reservations</h4>
+                <p>Save release dates and get reminded exactly when to book hard-to-get tables</p>
+            </div>
+            <div class="persona-feat card reveal">
+                <div class="persona-feat-icon">&#11088;</div>
+                <h4>Tastie Score &amp; Badges</h4>
+                <p>Earn badges and a score that measures the depth and diversity of your food identity</p>
+            </div>
+            <div class="persona-feat card reveal">
+                <div class="persona-feat-icon">&#128247;</div>
+                <h4>Photo Journal</h4>
+                <p>Attach photos to specific visits &mdash; permanently linked to your rankings and memories</p>
+            </div>
+            <div class="persona-feat card reveal">
+                <div class="persona-feat-icon">&#128202;</div>
+                <h4>Social Feed</h4>
+                <p>See what friends are ranking and discovering in real time &mdash; with reactions and comments</p>
+            </div>
+            <div class="persona-feat card reveal">
+                <div class="persona-feat-icon">&#128196;</div>
+                <h4>CSV Import &amp; Export</h4>
+                <p>Bring in your existing spreadsheet data or export your full rankings anytime</p>
+            </div>
+            <div class="persona-feat card reveal">
+                <div class="persona-feat-icon">&#128205;</div>
+                <h4>Neighborhood Maps</h4>
+                <p>Visualize your S-tier spots on interactive Leaflet maps, filterable by neighborhood</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+        <!-- ==========================================
+         SLIDE 10: BUILT WITH
+         ========================================== -->
+<section class="slide slide-tech" data-slide="10">
+        <div class="slide-content stagger">
+            <h2 class="reveal">Built With</h2>
+            <div class="tech-grid reveal stagger">
+                <div class="tech-badge card">
+                    <div class="tech-icon" style="background:rgba(45,138,78,0.08)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="#2d8a4e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                    <span class="tech-name">Flask</span><span class="tech-desc">Backend</span>
+                </div>
+                <div class="tech-badge card">
+                    <div class="tech-icon" style="background:rgba(13,110,253,0.08)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h16M4 18h10" stroke="#0d6efd" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="12" r="9" stroke="#0d6efd" stroke-width="2" fill="none"/></svg></div>
+                    <span class="tech-name">MySQL</span><span class="tech-desc">Database</span>
+                </div>
+                <div class="tech-badge card">
+                    <div class="tech-icon" style="background:rgba(163,65,91,0.08)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#a3415b" stroke-width="2" fill="none"/><path d="M8 12h8M12 8v8" stroke="#a3415b" stroke-width="2" stroke-linecap="round"/></svg></div>
+                    <span class="tech-name">Claude Sonnet 4.6</span><span class="tech-desc">Concierge</span>
+                </div>
+                <div class="tech-badge card">
+                    <div class="tech-icon" style="background:rgba(184,134,11,0.08)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" stroke="#b8860b" stroke-width="2" fill="none"/><circle cx="12" cy="9" r="2.5" fill="#b8860b"/></svg></div>
+                    <span class="tech-name">Google Places</span><span class="tech-desc">Search API</span>
+                </div>
+                <div class="tech-badge card">
+                    <div class="tech-icon" style="background:rgba(45,138,78,0.08)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z" stroke="#2d8a4e" stroke-width="2" fill="none"/></svg></div>
+                    <span class="tech-name">Leaflet</span><span class="tech-desc">Maps</span>
+                </div>
+                <div class="tech-badge card">
+                    <div class="tech-icon" style="background:rgba(163,65,91,0.08)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="3" stroke="#a3415b" stroke-width="2" fill="none"/><path d="M3 9h18M9 3v18" stroke="#a3415b" stroke-width="2"/></svg></div>
+                    <span class="tech-name">Bootstrap 5</span><span class="tech-desc">UI Framework</span>
+                </div>
+                <div class="tech-badge card">
+                    <div class="tech-icon" style="background:rgba(13,110,253,0.08)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><polyline points="22,6 13.5,15.5 8.5,10.5 2,17" stroke="#0d6efd" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                    <span class="tech-name">Chart.js</span><span class="tech-desc">Visualizations</span>
+                </div>
+                <div class="tech-badge card">
+                    <div class="tech-icon" style="background:rgba(184,134,11,0.08)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#b8860b" stroke-width="2" fill="none"/><path d="M12 8v4l3 3" stroke="#b8860b" stroke-width="2" stroke-linecap="round"/></svg></div>
+                    <span class="tech-name">Perplexity</span><span class="tech-desc">Research Agent</span>
+                </div>
+            </div>
+            <div class="slide-footer reveal">
+                <a href="https://tastebuddy-colinchia2.pythonanywhere.com" target="_blank">tastebuddy-colinchia2.pythonanywhere.com</a>
+                <div class="built-by">Built by Colin and Claude Code</div>
+            </div>
+        </div>
+    </section>
+
+<!-- ==========================================
+     SLIDE: APPENDIX DIVIDER
+     Dark transition slide — minimal, centered
+     ========================================== -->
+<section class="slide" style="background:var(--tb-dark);" data-slide="11">
+    <div class="slide-content" style="gap:clamp(0.75rem,2vw,1.5rem);">
+        <div class="reveal" style="font-size:var(--tag-size);font-weight:600;text-transform:uppercase;letter-spacing:0.2em;color:rgba(255,255,255,0.35);font-family:var(--font-display);">TasteBuddy &mdash; Overview Deck 2026</div>
+        <div style="width:clamp(40px,8vw,80px);height:1px;background:rgba(255,255,255,0.15);margin:0 auto;" class="reveal"></div>
+        <h2 class="reveal" style="font-size:clamp(2rem,5vw,3.5rem);font-weight:800;color:rgba(255,255,255,0.9);letter-spacing:-0.02em;">Appendix</h2>
+        <div style="width:clamp(40px,8vw,80px);height:1px;background:rgba(255,255,255,0.15);margin:0 auto;" class="reveal"></div>
+        <div class="reveal" style="font-size:var(--small-size);color:rgba(255,255,255,0.3);font-weight:300;">Additional context, technical detail, and supporting slides</div>
+    </div>
+</section>
+
+        <!-- ==========================================
+         SLIDE 12: ORIGIN STORY
+         ========================================== -->
+<section class="slide slide-origin" data-slide="12">
+        <div class="slide-content stagger">
+            <h2 class="reveal">How It Started</h2>
+            <p class="slide-subtitle reveal">From spreadsheets and group texts to a fully automated dining workflow</p>
+
+            <div class="origin-timeline reveal stagger">
+                <div class="origin-step card reveal">
+                    <div class="origin-num">01</div>
+                    <div class="origin-icon">&#129298;</div>
+                    <h4>Got sick, couldn't eat out</h4>
+                    <p>Recovering from critical illness and stripped away from eating, I realized I wanted to be intentional about every restaurant visit after I was discharged</p>
+                </div>
+                <div class="origin-step card reveal">
+                    <div class="origin-num">02</div>
+                    <div class="origin-icon">&#128202;</div>
+                    <h4>Tried Excel tracking</h4>
+                    <p>My spreadsheet was clunky &mdash; manual, no smart ranking, no AI, and no reservation planning</p>
+                </div>
+                <div class="origin-step card reveal">
+                    <div class="origin-num">03</div>
+                    <div class="origin-icon">&#128107;</div>
+                    <h4>Friends as food concierge</h4>
+                    <p>Texting friends "where should I eat?" every weekend wasn't scalable</p>
+                </div>
+                <div class="origin-step card reveal">
+                    <div class="origin-num">04</div>
+                    <div class="origin-icon">&#129302;</div>
+                    <h4>Built TasteBuddy</h4>
+                    <p>Automated the entire workflow: discover &#8594; rank &#8594; plan &#8594; book &#8594; log</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+        <!-- ==========================================
+         SLIDE 13: ONE APP NOT FIVE
+         ========================================== -->
+<section class="slide slide-replace" data-slide="13">
+        <div class="slide-content stagger">
+            <h2 class="reveal">One App, Not Five</h2>
+            <p class="slide-subtitle reveal">Stop juggling multiple apps to manage your dining life</p>
+
+            <div class="replace-grid reveal">
+                <div class="app-stack stagger">
+                    <div class="app-row reveal">
+                        <div class="app-icon" style="background:rgba(163,65,91,0.1)">&#127942;</div>
+                        <div class="app-info">
+                            <div class="app-name">Beli</div>
+                            <div class="app-for">Tracking &amp; social, but fixed categories only</div>
+                        </div>
+                    </div>
+                    <div class="app-row reveal">
+                        <div class="app-icon" style="background:rgba(13,110,253,0.1)">&#128197;</div>
+                        <div class="app-info">
+                            <div class="app-name">Resy / OpenTable</div>
+                            <div class="app-for">Reservations &amp; booking only</div>
+                        </div>
+                    </div>
+                    <div class="app-row reveal">
+                        <div class="app-icon" style="background:rgba(45,138,78,0.1)">&#128205;</div>
+                        <div class="app-info">
+                            <div class="app-name">Google Maps Saved</div>
+                            <div class="app-for">"Want to go" pins with no ranking or detail</div>
+                        </div>
+                    </div>
+                    <div class="app-row reveal">
+                        <div class="app-icon" style="background:rgba(184,134,11,0.1)">&#129302;</div>
+                        <div class="app-info">
+                            <div class="app-name">Zesty / ChatGPT</div>
+                            <div class="app-for">AI food recs, but doesn't know your history</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="arrow-merge reveal-scale">&#10132;</div>
+
+                <div class="tb-result glass-card reveal-scale">
+                    <div style="font-size:clamp(1.5rem,3vw,2.2rem)">&#127860;</div>
+                    <div class="tb-logo-text">TasteBuddy</div>
+                    <div class="tb-features">
+                        <span><span class="check">&#10003;</span> Flexible ranking &amp; custom categories</span>
+                        <span><span class="check">&#10003;</span> Reservation planning &amp; reminders</span>
+                        <span><span class="check">&#10003;</span> Smart wishlist with priorities</span>
+                        <span><span class="check">&#10003;</span> AI concierge that knows your taste</span>
+                        <span><span class="check">&#10003;</span> Visit history, analytics &amp; maps</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+        <!-- ==========================================
+         SLIDE 14: HERO
+         ========================================== -->
+<section class="slide slide-hero" data-slide="14">
+        <div class="slide-content stagger">
+            <div class="reveal" style="font-size:clamp(2rem,4vw,3rem);opacity:0.15;letter-spacing:0.3em">&#127860; &#127863; &#127869;</div>
+            <h1 class="hero-tagline reveal">TasteBuddy</h1>
+            <div style="font-size:clamp(0.9rem,1.8vw,1.25rem);font-weight:400;color:var(--tb-muted);max-width:580px;text-align:center" class="reveal">The AI-Powered Restaurant &ldquo;Buddy&rdquo; for your tastebuds</div>
+            <div style="width:clamp(40px,8vw,80px);height:3px;border-radius:2px;background:var(--tb-amber)" class="reveal"></div>
+            <p class="hero-sub reveal">Remembers every meal. Helps you rank your favorites. Plans your next reservation. Gives you suggestions. Connect with your friends. Dine like your favorite foodie influencer.</p>
+            <div class="hero-badges reveal">
+                <span class="hero-badge">&#127919; Ranking</span>
+                <span class="hero-badge">&#129302; Concierge</span>
+                <span class="hero-badge">&#128197; Reservation Intel</span>
+                <span class="hero-badge">&#128200; Analytics</span>
+            </div>
+        </div>
+    </section>
+
+        <!-- ==========================================
+         SLIDE 15: FLEXIBLE CATEGORIES
+         ========================================== -->
+<section class="slide slide-categories" data-slide="15">
         <div class="slide-content stagger">
             <h2 class="reveal">Categories Your Way</h2>
             <p class="slide-subtitle reveal">Unlike Beli's fixed system, create custom categories and rank the same restaurant multiple ways</p>
@@ -712,10 +1237,10 @@
         </div>
     </section>
 
-    <!-- ==========================================
-         SLIDE 5: TIERING SYSTEM (NEW)
+        <!-- ==========================================
+         SLIDE 16: TIERING SYSTEM
          ========================================== -->
-    <section class="slide slide-tiering" data-slide="6">
+<section class="slide slide-tiering" data-slide="16">
         <div class="slide-content stagger">
             <h2 class="reveal">The Tiering System</h2>
             <p class="slide-subtitle reveal">A structured hierarchy for every restaurant you visit</p>
@@ -774,10 +1299,10 @@
         </div>
     </section>
 
-    <!-- ==========================================
-         SLIDE 7: LOG EVERY VISIT (updated)
+        <!-- ==========================================
+         SLIDE 17: LOG EVERY VISIT
          ========================================== -->
-    <section class="slide slide-visit-log" data-slide="7">
+<section class="slide slide-visit-log" data-slide="17">
         <div class="slide-content stagger">
             <h2 class="reveal">Log Every Visit</h2>
 
@@ -833,198 +1358,10 @@
         </div>
     </section>
 
-    <!-- ==========================================
-         SLIDE 8: AI CONCIERGE (existing)
+        <!-- ==========================================
+         SLIDE 18: ACTIVITY FEED
          ========================================== -->
-    <section class="slide slide-ai" data-slide="8">
-        <div class="slide-content stagger">
-            <h2 class="reveal">Your AI Food Concierge</h2>
-            <p class="slide-subtitle reveal">Like Zesty from DoorDash, but it actually knows your dining history and personal taste</p>
-
-            <div class="ai-layout">
-                <div class="chat-mockup card reveal-left">
-                    <div class="chat-header">
-                        <div class="chat-avatar" style="background:linear-gradient(135deg,var(--tb-amber),var(--tb-burgundy));color:#fff">&#129302;</div>
-                        <span class="chat-header-text">TasteBuddy AI</span>
-                    </div>
-                    <div class="chat-bubble chat-user">Anniversary dinner? She loves Italian.</div>
-                    <div class="chat-bubble chat-ai">Based on your rankings, <strong>L'Artusi</strong> is your top Italian (A-tier). For a special upgrade, <strong>Torrisi</strong> is on your HP wishlist &mdash; reservations open Mondays at 10 AM. Want me to set a reminder?</div>
-                    <div class="chat-bubble chat-user">Yes, remind me for Saturday</div>
-                    <div class="chat-bubble chat-ai"><strong>Done!</strong> I'll remind you Monday at 10 AM to grab a Torrisi reservation for Saturday. Added to your planner.</div>
-                    <div class="chat-input">&#128172; Ask about your restaurants...</div>
-                </div>
-
-                <div class="ai-caps reveal-right stagger">
-                    <div class="ai-cap-card card reveal">
-                        <div class="ai-cap-icon" style="background:rgba(184,134,11,0.08)">&#127919;</div>
-                        <div class="ai-cap-text">
-                            <h4>Personalized Recommendations</h4>
-                            <p>Analyzes your S-tier favorites, visit patterns, and cuisine preferences — not generic reviews</p>
-                        </div>
-                    </div>
-                    <div class="ai-cap-card card reveal">
-                        <div class="ai-cap-icon" style="background:rgba(13,110,253,0.08)">&#128197;</div>
-                        <div class="ai-cap-text">
-                            <h4>Reservation Planning &amp; Reminders</h4>
-                            <p>Save when reservations open and when you want to eat &mdash; get reminded so you never miss a booking window</p>
-                        </div>
-                    </div>
-                    <div class="ai-cap-card card reveal">
-                        <div class="ai-cap-icon" style="background:rgba(45,138,78,0.08)">&#127758;</div>
-                        <div class="ai-cap-text">
-                            <h4>New Place Discovery</h4>
-                            <p>Finds restaurants via Google Places and web search, cross-referenced with your taste profile</p>
-                        </div>
-                    </div>
-                    <div class="ai-cap-card card reveal">
-                        <div class="ai-cap-icon" style="background:rgba(163,65,91,0.08)">&#128200;</div>
-                        <div class="ai-cap-text">
-                            <h4>Ask Anything About Your Data</h4>
-                            <p>"What's my most-visited cuisine?" or "Plan a food tour of my S-tier spots in Manhattan"</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <p class="ai-powered-by reveal">Powered by <strong>Perplexity Research Agent</strong> + <strong>Claude Sonnet 4.6</strong></p>
-        </div>
-    </section>
-
-    <!-- ==========================================
-         SLIDE 9: RESEARCH AGENT PIPELINE (NEW)
-         ========================================== -->
-    <section class="slide slide-research" data-slide="9">
-        <div class="slide-content stagger">
-            <h2 class="reveal">Research Agent Pipeline</h2>
-            <p class="slide-subtitle reveal">Parallel web research + personalized AI synthesis anchored to your taste profile</p>
-
-            <div class="research-pipeline reveal stagger" style="width: min(95%, 780px);">
-                <!-- Stage 1 -->
-                <div class="research-stage card reveal" style="display: grid; grid-template-columns: auto 1fr; gap: clamp(10px, 1.5vw, 16px); padding: clamp(12px, 1.5vw, 18px); align-items: center;">
-                    <div style="width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, var(--tb-amber), #d4a017); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 1.1rem;">1</div>
-                    <div>
-                        <h4 style="margin: 0 0 4px; font-size: clamp(0.85rem, 1.3vw, 1rem); color: var(--tb-amber);">Perplexity Research Agent &mdash; 2 Parallel Searches</h4>
-                        <p style="margin: 0; font-size: clamp(0.7rem, 1vw, 0.85rem); color: var(--tb-muted); line-height: 1.5;"><strong>Food media</strong> (Eater, Infatuation, Beli, Resy, Bon App&eacute;tit) + <strong>Reddit threads</strong> run simultaneously &mdash; both steered by your S/A-tier taste profile for relevance</p>
-                    </div>
-                </div>
-
-                <!-- Arrow -->
-                <div class="reveal" style="text-align: center; font-size: 1.5rem; color: var(--tb-muted); margin: 0.25rem 0;">&#8595;</div>
-
-                <!-- Stage 2 -->
-                <div class="research-stage card reveal" style="display: grid; grid-template-columns: auto 1fr; gap: clamp(10px, 1.5vw, 16px); padding: clamp(12px, 1.5vw, 18px); align-items: center;">
-                    <div style="width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, #2d8a4e, #198754); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 1.1rem;">2</div>
-                    <div>
-                        <h4 style="margin: 0 0 4px; font-size: clamp(0.85rem, 1.3vw, 1rem); color: #2d8a4e;">Your Database</h4>
-                        <p style="margin: 0; font-size: clamp(0.7rem, 1vw, 0.85rem); color: var(--tb-muted); line-height: 1.5;">Full <strong>tier rankings, visit history &amp; wishlist</strong> sent to Claude &mdash; S/A-tier cuisines steer research retrieval; C-tier spots flagged as explicit negative signals</p>
-                    </div>
-                </div>
-
-                <!-- Arrow -->
-                <div class="reveal" style="text-align: center; font-size: 1.5rem; color: var(--tb-muted); margin: 0.25rem 0;">&#8595;</div>
-
-                <!-- Stage 3 -->
-                <div class="research-stage card reveal" style="display: grid; grid-template-columns: auto 1fr; gap: clamp(10px, 1.5vw, 16px); padding: clamp(12px, 1.5vw, 18px); align-items: center;">
-                    <div style="width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, #0d6efd, #0dcaf0); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 1.1rem;">3</div>
-                    <div>
-                        <h4 style="margin: 0 0 4px; font-size: clamp(0.85rem, 1.3vw, 1rem); color: #0d6efd;">Claude Sonnet 4.6</h4>
-                        <p style="margin: 0; font-size: clamp(0.7rem, 1vw, 0.85rem); color: var(--tb-muted); line-height: 1.5;">Synthesizes research with your data &mdash; every recommendation includes a <strong>TasteBuddy Connection</strong> linking it to your S/A-tier favorites so you know exactly why it fits your palate</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="reveal" style="display: flex; gap: clamp(8px, 1.2vw, 14px); justify-content: center; flex-wrap: wrap; margin-top: 0.5rem;">
-                <span style="background: rgba(184,134,11,0.1); color: var(--tb-amber); padding: 0.3rem 0.7rem; border-radius: 1rem; font-size: clamp(0.65rem, 0.9vw, 0.78rem); font-weight: 600;">Smart Question Classifier</span>
-                <span style="background: rgba(45,138,78,0.1); color: #2d8a4e; padding: 0.3rem 0.7rem; border-radius: 1rem; font-size: clamp(0.65rem, 0.9vw, 0.78rem); font-weight: 600;">Database-Only = Skip Research (Fast)</span>
-                <span style="background: rgba(13,110,253,0.1); color: #0d6efd; padding: 0.3rem 0.7rem; border-radius: 1rem; font-size: clamp(0.65rem, 0.9vw, 0.78rem); font-weight: 600;">Graceful Fallback</span>
-                <span style="background: rgba(163,65,91,0.1); color: var(--tb-burgundy); padding: 0.3rem 0.7rem; border-radius: 1rem; font-size: clamp(0.65rem, 0.9vw, 0.78rem); font-weight: 600;">Source Citations</span>
-            </div>
-        </div>
-    </section>
-
-    <!-- ==========================================
-         SLIDE 10: PERSONA ECOSYSTEM (NEW)
-         ========================================== -->
-    <section class="slide slide-personas" data-slide="10">
-        <div class="slide-content stagger">
-            <h2 class="reveal">Persona Ecosystem</h2>
-            <p class="slide-subtitle reveal">Eat like your favorite food personality &mdash; or become one yourself</p>
-
-            <p class="reveal" style="text-align:center; color:var(--tb-text-muted); font-size:0.85rem; margin-bottom:0.25rem; letter-spacing:0.5px; text-transform:uppercase; font-weight:600;">What You Can Do</p>
-
-            <div class="persona-features reveal stagger">
-                <div class="persona-feat card reveal" style="position:relative;">
-                    <div class="persona-feat-icon">&#128218;</div>
-                    <h4>Browse Personas</h4>
-                    <p>Discover curated lists from NYC food archetypes</p>
-                    <div style="position:absolute; right:-18px; top:50%; transform:translateY(-50%); color:var(--tb-text-muted); font-size:1.1rem;">&#8594;</div>
-                </div>
-                <div class="persona-feat card reveal" style="position:relative;">
-                    <div class="persona-feat-icon">&#129302;</div>
-                    <h4>Eat Like [X]</h4>
-                    <p>Ask AI: &#8220;Dinner in Chelsea like The Sushi Snob would pick&#8221;</p>
-                    <div style="position:absolute; right:-18px; top:50%; transform:translateY(-50%); color:var(--tb-text-muted); font-size:1.1rem;">&#8594;</div>
-                </div>
-                <div class="persona-feat card reveal">
-                    <div class="persona-feat-icon">&#128100;</div>
-                    <h4>Build Your Own</h4>
-                    <p>Your rankings auto-generate your public persona profile</p>
-                </div>
-            </div>
-
-            <p class="reveal" style="text-align:center; color:var(--tb-text-muted); font-size:0.85rem; margin-top:1rem; margin-bottom:0.25rem; letter-spacing:0.5px; text-transform:uppercase; font-weight:600;">Example Personas</p>
-
-            <div class="persona-grid reveal stagger">
-                <div class="persona-card card reveal">
-                    <div class="persona-avatar">&#127843;</div>
-                    <h4>The Sushi Snob</h4>
-                    <p>Only eats fish flown in this morning and knows exactly how much wasabi is too much.</p>
-                </div>
-                <div class="persona-card card reveal">
-                    <div class="persona-avatar">&#127798;</div>
-                    <h4>The Spice Seeker</h4>
-                    <p>On a relentless quest to find the dish that finally makes them sweat.</p>
-                </div>
-                <div class="persona-card card reveal">
-                    <div class="persona-avatar">&#127769;</div>
-                    <h4>The Midnight Muncher</h4>
-                    <p>The ultimate authority on which greasy spoons and food trucks are open at 3:00 AM.</p>
-                </div>
-                <div class="persona-card card reveal">
-                    <div class="persona-avatar">&#127863;</div>
-                    <h4>The Sophisticated Sommelier</h4>
-                    <p>Pairing high-end plates with the perfect pour and impeccable service.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ==========================================
-         SLIDE 11: TASTEBOARD (existing)
-         ========================================== -->
-    <section class="slide slide-dashboard" data-slide="11">
-        <div class="slide-content stagger">
-            <h2 class="reveal">Meet the TasteBoard &mdash; Your TasteBuddy Analytics Dashboard</h2>
-            <div class="dash-top reveal stagger">
-                <div class="stat-tile card"><div class="stat-value" data-count="1001">0</div><div class="stat-label">Listings</div></div>
-                <div class="stat-tile card"><div class="stat-value" style="font-size:clamp(0.9rem,2vw,1.3rem)">Japanese</div><div class="stat-label">Top Category</div></div>
-                <div class="stat-tile card"><div class="stat-value" style="font-size:clamp(0.9rem,2vw,1.3rem)">Italian</div><div class="stat-label">Top Cuisine</div></div>
-            </div>
-            <div class="dash-mid reveal">
-                <div class="chart-card card"><h4>Visits Over Time</h4><div class="chart-wrap"><canvas id="lineChart"></canvas></div></div>
-                <div class="chart-card card"><h4>Categories</h4><div class="chart-wrap"><canvas id="pieChart"></canvas></div></div>
-            </div>
-            <div class="crown-row reveal stagger">
-                <div class="crown-tile glass-card"><div class="crown-icon">&#128081;</div><div class="crown-label">Greatness</div><div class="crown-desc">Most S-Tier picks</div></div>
-                <div class="crown-tile glass-card"><div class="crown-icon">&#128293;</div><div class="crown-label">Dependency</div><div class="crown-desc">Most revisited spot</div></div>
-                <div class="crown-tile glass-card"><div class="crown-icon">&#127775;</div><div class="crown-label">Versatility</div><div class="crown-desc">Widest cuisine range</div></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ==========================================
-         SLIDE 12: ACTIVITY FEED
-         ========================================== -->
-    <section class="slide slide-activity" data-slide="12">
+<section class="slide slide-activity" data-slide="18">
         <div class="slide-content stagger">
             <h2 class="reveal">Activity Feed &mdash; Your Dining Timeline</h2>
             <p class="slide-subtitle reveal">Every addition, ranking, and visit is captured &mdash; watch your taste profile evolve in real time</p>
@@ -1097,10 +1434,10 @@
         </div>
     </section>
 
-    <!-- ==========================================
-         SLIDE 13: VISIT LOG & CALENDAR
+        <!-- ==========================================
+         SLIDE 19: VISIT LOG & CALENDAR
          ========================================== -->
-    <section class="slide slide-visit-cal" data-slide="13">
+<section class="slide slide-visit-cal" data-slide="19">
         <div class="slide-content stagger">
             <h2 class="reveal">Visit History &mdash; Log, Calendar &amp; Streaks</h2>
 
@@ -1190,53 +1527,6 @@
         </div>
     </section>
 
-    <!-- ==========================================
-         SLIDE 14: TECH STACK (existing)
-         ========================================== -->
-    <section class="slide slide-tech" data-slide="14">
-        <div class="slide-content stagger">
-            <h2 class="reveal">Built With</h2>
-            <div class="tech-grid reveal stagger">
-                <div class="tech-badge card">
-                    <div class="tech-icon" style="background:rgba(45,138,78,0.08)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="#2d8a4e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-                    <span class="tech-name">Flask</span><span class="tech-desc">Backend</span>
-                </div>
-                <div class="tech-badge card">
-                    <div class="tech-icon" style="background:rgba(13,110,253,0.08)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h16M4 18h10" stroke="#0d6efd" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="12" r="9" stroke="#0d6efd" stroke-width="2" fill="none"/></svg></div>
-                    <span class="tech-name">MySQL</span><span class="tech-desc">Database</span>
-                </div>
-                <div class="tech-badge card">
-                    <div class="tech-icon" style="background:rgba(163,65,91,0.08)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#a3415b" stroke-width="2" fill="none"/><path d="M8 12h8M12 8v8" stroke="#a3415b" stroke-width="2" stroke-linecap="round"/></svg></div>
-                    <span class="tech-name">Claude Sonnet 4.6</span><span class="tech-desc">Concierge</span>
-                </div>
-                <div class="tech-badge card">
-                    <div class="tech-icon" style="background:rgba(184,134,11,0.08)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" stroke="#b8860b" stroke-width="2" fill="none"/><circle cx="12" cy="9" r="2.5" fill="#b8860b"/></svg></div>
-                    <span class="tech-name">Google Places</span><span class="tech-desc">Search API</span>
-                </div>
-                <div class="tech-badge card">
-                    <div class="tech-icon" style="background:rgba(45,138,78,0.08)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z" stroke="#2d8a4e" stroke-width="2" fill="none"/></svg></div>
-                    <span class="tech-name">Leaflet</span><span class="tech-desc">Maps</span>
-                </div>
-                <div class="tech-badge card">
-                    <div class="tech-icon" style="background:rgba(163,65,91,0.08)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="3" stroke="#a3415b" stroke-width="2" fill="none"/><path d="M3 9h18M9 3v18" stroke="#a3415b" stroke-width="2"/></svg></div>
-                    <span class="tech-name">Bootstrap 5</span><span class="tech-desc">UI Framework</span>
-                </div>
-                <div class="tech-badge card">
-                    <div class="tech-icon" style="background:rgba(13,110,253,0.08)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><polyline points="22,6 13.5,15.5 8.5,10.5 2,17" stroke="#0d6efd" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-                    <span class="tech-name">Chart.js</span><span class="tech-desc">Visualizations</span>
-                </div>
-                <div class="tech-badge card">
-                    <div class="tech-icon" style="background:rgba(184,134,11,0.08)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#b8860b" stroke-width="2" fill="none"/><path d="M12 8v4l3 3" stroke="#b8860b" stroke-width="2" stroke-linecap="round"/></svg></div>
-                    <span class="tech-name">Perplexity</span><span class="tech-desc">Research Agent</span>
-                </div>
-            </div>
-            <div class="slide-footer reveal">
-                <a href="https://tastebuddy-colinchia2.pythonanywhere.com" target="_blank">tastebuddy-colinchia2.pythonanywhere.com</a>
-                <div class="built-by">Built by Colin and Claude Code</div>
-            </div>
-        </div>
-    </section>
-
     <script>
         class SlidePresentation {
             constructor() {
@@ -1280,8 +1570,8 @@
                             const idx = parseInt(entry.target.dataset.slide);
                             this.currentSlide = idx;
                             this.updateNav();
-                            if (idx === 10 && !this.chartsInit) { this.chartsInit = true; setTimeout(() => this.initCharts(), 400); }
-                            if (idx === 10) this.animateCounters();
+                            if (idx === 4 && !this.chartsInit) { this.chartsInit = true; setTimeout(() => this.initCharts(), 400); }
+                            if (idx === 4) this.animateCounters();
                         }
                     });
                 }, { threshold: 0.5 });
