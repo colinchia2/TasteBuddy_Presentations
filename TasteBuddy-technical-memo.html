@@ -256,13 +256,13 @@
         <div class="header-left">
             <div class="header-eyebrow">Technical Memo · April 2026</div>
             <div class="header-title">TasteBuddy</div>
-            <div class="header-tagline">A full-stack restaurant intelligence platform powered by AI research agents</div>
+            <div class="header-tagline">The AI-Powered Restaurant Buddy for your tastebuds</div>
         </div>
         <div class="header-meta">
             <div><strong>Author</strong> Colin Chiapello</div>
             <div><strong>Live Web App</strong> tastebuddy-colinchia2.pythonanywhere.com</div>
             <div><strong>Status</strong> Production · Multi-user</div>
-            <div><strong>AI Layer</strong> Perplexity sonar-pro + Claude Sonnet</div>
+            <div><strong>AI Layer</strong> Perplexity sonar-pro + Claude Sonnet 4.6</div>
         </div>
     </div>
 
@@ -275,9 +275,11 @@
             <!-- OVERVIEW -->
             <div class="section">
                 <div class="section-label">What It Is</div>
-                <p>TasteBuddy is a personal restaurant intelligence platform I built end-to-end. It lets users track every restaurant they visit, tier-rank them by cuisine category, manage a wishlist, and get AI-generated dining recommendations — all from one place.</p>
+                <p>TasteBuddy is a personal restaurant intelligence platform I built end-to-end. It lets users track every restaurant they visit, rank them across custom categories (Breakfast, Dinner, Tasting Menus, Ramen Night — whatever fits your life), manage a wishlist, and get AI-generated dining recommendations — all from one place.</p>
                 <p>The app solves a real fragmentation problem: most food-obsessed people scatter notes across Yelp, Google Maps, Beli, and saved Instagram posts. TasteBuddy consolidates everything into a structured, searchable record with social and AI layers on top.</p>
-                <p>Features include visit logging (with occasion, spend, party size), a tiered ranking system (S/A/B/C by cuisine), a Google Places–powered listing lookup, neighborhood maps, an AI concierge, and a persona ecosystem for browsing other users' taste profiles.</p>
+                <p>Core features: visit logging (occasion, spend, party size, photos), a tiered ranking system (S/A/B/C across custom categories), Google Places–powered listing lookup, neighborhood Leaflet maps, an AI concierge, and a persona ecosystem for browsing other users' taste profiles.</p>
+                <p><strong>TasteBoard</strong> is the personal analytics dashboard — visit streaks, cuisine breakdowns, spend trends, and crown awards (Most S-Tier Picks, Most Revisited, Widest Cuisine Range). The <strong>Tastie Score</strong> is a single engagement metric (0–1000) that grows as users rank more spots, log visits, explore cuisines, and follow personas — earning titles from Picky Eater to True Foodie.</p>
+                <p>Additional features: <strong>Photo Journal</strong> (photos tied to specific visits, permanently linked to rankings), <strong>Reservation Intel</strong> (save release dates + target dinner dates, get reminded when to book), and a <strong>Social Feed</strong> (public visit reactions and activity from followed users).</p>
             </div>
 
             <!-- STACK -->
@@ -316,7 +318,7 @@
                             <span class="stack-badge badge-ai">AI</span>
                         </div>
                         <div class="stack-item-body">
-                            <div class="stack-item-name">Claude Sonnet (Anthropic)</div>
+                            <div class="stack-item-name">Claude Sonnet 4.6 (Anthropic)</div>
                             <div class="stack-item-desc">Synthesis layer — personalizes Perplexity findings against user's actual taste history.</div>
                         </div>
                     </li>
@@ -326,7 +328,16 @@
                         </div>
                         <div class="stack-item-body">
                             <div class="stack-item-name">Jinja2 · Bootstrap · Leaflet.js</div>
-                            <div class="stack-item-desc">Server-rendered templates, interactive maps, HTMX for async updates.</div>
+                            <div class="stack-item-desc">Server-rendered templates, interactive neighborhood maps, HTMX for async updates.</div>
+                        </div>
+                    </li>
+                    <li class="stack-item">
+                        <div>
+                            <span class="stack-badge badge-infra">Frontend</span>
+                        </div>
+                        <div class="stack-item-body">
+                            <div class="stack-item-name">Chart.js</div>
+                            <div class="stack-item-desc">TasteBoard visualizations — visit-over-time line chart and cuisine breakdown pie chart.</div>
                         </div>
                     </li>
                 </ul>
@@ -339,7 +350,7 @@
             <div class="section-label">AI Research Pipeline · How It Works</div>
             <div class="pipeline">
                 <p style="font-size:12px; color:var(--tb-muted); line-height:1.5;">
-                    When a user asks the AI concierge a question (e.g. <em>"I'm in a new area, help me find a restaurant I would like based on my preferences back home"</em>), a two-stage agent pipeline fires. First, a question classifier decides whether the query needs live web data or can be answered from the local database alone — skipping Perplexity entirely for simple lookups (zero API cost). For richer queries, Perplexity <code>sonar-pro</code> runs a targeted search across food media sources (Eater, Infatuation, NYT Food, TikTok), returning citations and fresh restaurant intel. Claude Sonnet then receives both the research output <em>and</em> a structured snapshot of the user's actual taste history — their rankings, visit log, wishlist, and active persona — producing a recommendation personalized to that specific user, not a generic answer.
+                    When a user asks the AI concierge a question (e.g. <em>"Help me find a restaurant for our anniversary dinner — she loves Italian"</em>), a two-stage agent pipeline fires. First, a question classifier decides whether the query needs live web data or can be answered from the local database alone — skipping Perplexity entirely for simple lookups (zero API cost). For richer queries, Perplexity <code>sonar-pro</code> runs <strong>two parallel searches</strong>: one across food media (Eater, Infatuation, Beli, Resy, Bon Appétit) and one across Reddit threads — both steered by the user's S/A-tier taste profile. Claude Sonnet 4.6 then receives the combined research output <em>and</em> a structured snapshot of the user's actual taste history — their rankings, visit log, wishlist, and active persona — producing a recommendation personalized to that specific user, with citations and a TasteBuddy Connection explaining exactly why each pick fits their palate.
                 </p>
                 <div class="pipeline-flow">
                     <div class="pipeline-step">
@@ -386,7 +397,7 @@
 
     <!-- ── FOOTER ── -->
     <div class="footer">
-        <div class="footer-left">Built by Colin Chia · Flask · MySQL · Perplexity sonar-pro · Claude Sonnet</div>
+        <div class="footer-left">Built by Colin Chiapello · Flask · MySQL · Perplexity sonar-pro · Claude Sonnet 4.6</div>
         <div class="footer-right">TasteBuddy · Technical Memo · April 2026</div>
     </div>
 
