@@ -21,7 +21,6 @@ TasteBuddy is for people who care about where they eat and want to be intentiona
 ## Live links (GitHub Pages)
 
 - **[General Overview](https://colinchia2.github.io/TasteBuddy_Presentations/general-overview.html)** — 16-slide product walkthrough covering the full feature set, the AI engine, and the persona ecosystem
-- **[Technical Memo](https://colinchia2.github.io/TasteBuddy_Presentations/TasteBuddy-technical-memo.html)** — deep-dive on the architecture, tech stack, and implementation
 
 ## The app
 
