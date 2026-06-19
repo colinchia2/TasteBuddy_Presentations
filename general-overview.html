@@ -960,8 +960,112 @@
     </div>
 </section>
 
-<!-- ========================== SLIDE 15 — BUILT WITH ========================== -->
-<section class="slide" style="background:var(--glossy-warm);" data-slide="15">
+<!-- ========================================================================
+     SLIDE — HOW SUGGESTIONS WORK: VENUE / DAYPART / DISH
+     ======================================================================== -->
+<section class="slide" style="background:var(--glossy-cool);" data-slide="15">
+    <div class="slide-content stagger">
+        <div class="eyebrow reveal">Under the hood · onboarding</div>
+        <h2 class="slide-h2 reveal">How we find <em>your</em> spots</h2>
+        <p class="slide-subtitle reveal" style="max-width:740px;">Every category you add is read by AI and sorted into one of three types — and that type decides what you tell us <em>and</em> how we hunt for your picks.</p>
+
+        <div class="reveal" style="width:min(96%,900px);display:flex;align-items:center;gap:clamp(8px,1.4vw,16px);justify-content:center;flex-wrap:nowrap;">
+            <div style="flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:5px;">
+                <div class="card" style="padding:clamp(8px,1vw,12px) clamp(11px,1.4vw,17px);text-align:center;">
+                    <div style="font-size:1.2rem;line-height:1;">🏷️</div>
+                    <div style="font-family:var(--font-display);font-weight:700;font-size:var(--small-size);margin-top:3px;">New category</div>
+                    <div style="font-size:var(--tag-size);color:var(--muted);">"Ramen Night"</div>
+                </div>
+            </div>
+            <span style="color:var(--gold);font-size:1.1rem;flex-shrink:0;">→</span>
+            <div style="flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:4px;background:linear-gradient(135deg,var(--gold-soft),#fff 80%);border:1px solid var(--card-border);border-radius:12px;padding:clamp(8px,1vw,12px) clamp(10px,1.3vw,16px);box-shadow:var(--shadow-card);">
+                <div style="font-size:1.1rem;line-height:1;">✨</div>
+                <div style="font-family:var(--font-display);font-weight:700;font-size:var(--tag-size);color:var(--gold);">AI classifies</div>
+                <div style="font-size:10px;color:var(--muted);">Claude Haiku</div>
+            </div>
+            <span style="color:var(--gold);font-size:1.1rem;flex-shrink:0;">→</span>
+            <div style="flex:1;display:flex;gap:clamp(4px,0.7vw,8px);min-width:0;">
+                <div style="flex:1;text-align:center;padding:clamp(5px,0.7vw,9px) 4px;border-radius:9px;background:var(--b-bg);color:var(--b-tx);font-family:var(--font-display);font-weight:800;font-size:var(--tag-size);">VENUE</div>
+                <div style="flex:1;text-align:center;padding:clamp(5px,0.7vw,9px) 4px;border-radius:9px;background:var(--a-bg);color:var(--a-tx);font-family:var(--font-display);font-weight:800;font-size:var(--tag-size);">DAYPART</div>
+                <div style="flex:1;text-align:center;padding:clamp(5px,0.7vw,9px) 4px;border-radius:9px;background:var(--nu-bg);color:var(--nu-tx);font-family:var(--font-display);font-weight:800;font-size:var(--tag-size);">DISH</div>
+            </div>
+        </div>
+
+        <div class="grid g3 reveal stagger" style="width:min(96%,900px);">
+
+            <div class="card icard reveal-left" style="gap:clamp(6px,0.9vw,11px);">
+                <div style="display:flex;align-items:center;gap:7px;">
+                    <span style="font-size:1.3rem;">🍽️</span>
+                    <h4 style="font-size:var(--body-size);color:var(--b-tx);">Venue</h4>
+                </div>
+                <div style="font-size:var(--tag-size);color:var(--muted);line-height:1.4;">A <strong>place type</strong> — defined by what kind of spot it is.</div>
+                <div style="display:flex;gap:4px;flex-wrap:wrap;">
+                    <span class="pill" style="background:var(--cat-bg);color:var(--cat-tx);">Dinner</span>
+                    <span class="pill" style="background:var(--cat-bg);color:var(--cat-tx);">Coffee Shops</span>
+                    <span class="pill" style="background:var(--cat-bg);color:var(--cat-tx);">Pizza</span>
+                </div>
+                <div style="border-top:1px solid var(--border);padding-top:7px;margin-top:2px;">
+                    <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted);">You give</div>
+                    <div style="font-size:var(--tag-size);color:var(--ink);line-height:1.45;margin-top:2px;">Nothing required — anchors optional.</div>
+                </div>
+                <div>
+                    <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted);">How we find spots</div>
+                    <div style="font-size:var(--tag-size);color:var(--ink);line-height:1.45;margin-top:2px;">Match the <strong>type</strong> + lean off-the-beaten-path. A real-restaurant filter keeps out the noise.</div>
+                </div>
+            </div>
+
+            <div class="card icard reveal" style="gap:clamp(6px,0.9vw,11px);">
+                <div style="display:flex;align-items:center;gap:7px;">
+                    <span style="font-size:1.3rem;">🕘</span>
+                    <h4 style="font-size:var(--body-size);color:var(--a-tx);">Daypart</h4>
+                </div>
+                <div style="font-size:var(--tag-size);color:var(--muted);line-height:1.4;">A <strong>time of day</strong> — the same spot means something different at noon vs. 8pm.</div>
+                <div style="display:flex;gap:4px;flex-wrap:wrap;">
+                    <span class="pill" style="background:var(--cat-bg);color:var(--cat-tx);">Lunch</span>
+                    <span class="pill" style="background:var(--cat-bg);color:var(--cat-tx);">Brunch</span>
+                    <span class="pill" style="background:var(--cat-bg);color:var(--cat-tx);">Breakfast</span>
+                </div>
+                <div style="border-top:1px solid var(--border);padding-top:7px;margin-top:2px;">
+                    <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted);">You give</div>
+                    <div style="font-size:var(--tag-size);color:var(--ink);line-height:1.45;margin-top:2px;"><strong style="color:var(--a-tx);">3 favorites</strong> to anchor your taste.</div>
+                </div>
+                <div>
+                    <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted);">How we find spots</div>
+                    <div style="font-size:var(--tag-size);color:var(--ink);line-height:1.45;margin-top:2px;"><strong>Time-aware</strong> — Lunch leans fast-casual &amp; quick, not fine-dining. Freshly found, every time.</div>
+                </div>
+            </div>
+
+            <div class="card icard reveal-right" style="gap:clamp(6px,0.9vw,11px);">
+                <div style="display:flex;align-items:center;gap:7px;">
+                    <span style="font-size:1.3rem;">🍪</span>
+                    <h4 style="font-size:var(--body-size);color:var(--nu-tx);">Dish</h4>
+                </div>
+                <div style="font-size:var(--tag-size);color:var(--muted);line-height:1.4;">A <strong>specific food</strong> — open-ended, and uniquely yours.</div>
+                <div style="display:flex;gap:4px;flex-wrap:wrap;">
+                    <span class="pill" style="background:var(--cat-bg);color:var(--cat-tx);">Cookies</span>
+                    <span class="pill" style="background:var(--cat-bg);color:var(--cat-tx);">Tacos</span>
+                    <span class="pill" style="background:var(--cat-bg);color:var(--cat-tx);">Dumplings</span>
+                </div>
+                <div style="border-top:1px solid var(--border);padding-top:7px;margin-top:2px;">
+                    <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted);">You give</div>
+                    <div style="font-size:var(--tag-size);color:var(--ink);line-height:1.45;margin-top:2px;"><strong style="color:var(--nu-tx);">3 favorites</strong> — required, they define the category.</div>
+                </div>
+                <div>
+                    <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted);">How we find spots</div>
+                    <div style="font-size:var(--tag-size);color:var(--ink);line-height:1.45;margin-top:2px;"><strong>Similar to your 3</strong> — "more places in this spirit," not a generic food-type match.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="reveal" style="width:min(96%,900px);border-radius:14px;padding:clamp(9px,1.2vw,15px) clamp(16px,2vw,24px);background:linear-gradient(120deg,var(--gold-soft),#fff 80%);border:1px solid var(--card-border);box-shadow:var(--shadow-card);display:flex;align-items:center;gap:clamp(10px,1.6vw,18px);">
+            <div style="font-size:clamp(1.3rem,2.4vw,1.9rem);flex-shrink:0;">🎯</div>
+            <div style="font-size:var(--small-size);color:var(--ink);line-height:1.5;">One label changes everything downstream — so <strong style="color:var(--gold);">"Lunch"</strong> never returns a fine-dining tasting menu, and <strong style="color:var(--gold);">"Cookies"</strong> never drifts into dim sum. The category knows what it <em>is</em>.</div>
+        </div>
+    </div>
+</section>
+
+<!-- ========================== SLIDE 16 — BUILT WITH ========================== -->
+<section class="slide" style="background:var(--glossy-warm);" data-slide="16">
     <div class="slide-content stagger">
         <div class="eyebrow reveal">Under the hood</div>
         <h2 class="slide-h2 reveal">Built with</h2>
@@ -984,8 +1088,8 @@
     </div>
 </section>
 
-<!-- ========================== SLIDE 16 — ONE APP, NOT FIVE (closer) ========================== -->
-<section class="slide" style="background:var(--glossy-warm);" data-slide="16">
+<!-- ========================== SLIDE 17 — ONE APP, NOT FIVE (closer) ========================== -->
+<section class="slide" style="background:var(--glossy-warm);" data-slide="17">
     <div class="bg-dots" aria-hidden="true">
         <span class="bg-dot" style="width:7px;height:7px;top:22%;left:10%;animation-delay:0.4s;"></span>
         <span class="bg-dot" style="width:9px;height:9px;top:70%;left:88%;animation-delay:1.5s;"></span>
